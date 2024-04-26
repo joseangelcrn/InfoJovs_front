@@ -1,8 +1,8 @@
 <template>
   <v-app>
-    <v-main v-if="user.data">
-      <v-card class="mx-auto overflow-hidden">
-        <v-app-bar color="deep-purple" dark>
+    <v-main v-if="user.data" >
+      <v-card class="mx-auto overflow-hidden" style="height:100%">
+        <v-app-bar color="light-blue" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
           <v-toolbar-title>InfoJovs</v-toolbar-title>
@@ -12,7 +12,7 @@
           <v-list nav dense>
             <v-list-item-group
               v-model="group"
-              active-class="deep-purple--text text--accent-4"
+              active-class="light-blue--text text--accent-4"
             >
               <v-list-item>
                 <v-list-item-icon>
@@ -30,14 +30,12 @@
             </v-list-item-group>
           </v-list>
         </v-navigation-drawer>
-    <router-view/>
-
+        <router-view />
       </v-card>
-      
     </v-main>
 
     <v-main v-else>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -53,11 +51,11 @@ export default {
     group: null,
   }),
   methods: {
-    ...mapMutations('user',['removeUser']),
-    logout: function (){
-      console.log('log oout !');
+    ...mapMutations("user", ["removeUser"]),
+    logout: function () {
+      console.log("log oout !");
       this.removeUser();
-    }
+    },
   },
   computed: {
     ...mapState(["user"]),
