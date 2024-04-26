@@ -2,7 +2,7 @@
   <v-app>
     <v-main v-if="user.data">
       <v-card class="mx-auto overflow-hidden" style="height: 100%">
-        <v-app-bar color="light-blue" dark>
+        <v-app-bar color="primary" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
           <v-toolbar-title>InfoJovs</v-toolbar-title>
@@ -12,7 +12,7 @@
           <v-list nav dense>
             <v-list-item-group
               v-model="group"
-              active-class="light-blue--text text--accent-4"
+              active-class="primary--text text--accent-4"
             >
               <v-list-item to="/home">
                 <v-list-item-icon>

@@ -1,6 +1,6 @@
 <template>
   <div class="pa-10 elevation-5 rounded-xl mt-10">
-    <h1 class="light-blue--text my-3">Login</h1>
+    <h1 class="primary--text my-3">Login</h1>
     <v-text-field
       :error="errors.username.length > 0"
       :error-messages="errors.username"
@@ -20,7 +20,7 @@
       outlined
       @keypress.enter="login"
     ></v-text-field>
-    <v-btn @click="login" class="light-blue--text" elevation="2" outlined
+    <v-btn @click="login" class="primary--text" elevation="2" outlined
       >Login</v-btn
     >
   </div>

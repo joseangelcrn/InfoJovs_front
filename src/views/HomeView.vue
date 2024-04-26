@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="mx-auto light-blue py-5">
+        <v-card class="mx-auto primary py-5">
           <v-list-item three-line>
             <v-list-item-avatar
               tile
