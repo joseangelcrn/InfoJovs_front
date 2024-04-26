@@ -66,7 +66,7 @@ export default {
       {
         title: "Offer a Job",
         icon: "mdi-draw",
-        url: "/offert_job",
+        url: "/offer_job",
         role: "recruiter",
       }, //Recruiter
       {
