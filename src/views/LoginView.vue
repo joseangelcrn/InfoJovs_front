@@ -1,7 +1,7 @@
 <template>
   <v-container>
-    <v-row d-flex justify-center>
-      <v-col cols="10">
+    <v-row d-flex justify="center">
+      <v-col cols="6">
         <Login  />
       </v-col>
     </v-row>
