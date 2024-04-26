@@ -20,14 +20,14 @@
       outlined
       @keypress.enter="login"
     ></v-text-field>
-    <v-btn @click="login"  class="light-blue--text" elevation="2" outlined
+    <v-btn @click="login" class="light-blue--text" elevation="2" outlined
       >Login</v-btn
     >
   </div>
 </template>
 
 <script>
-import { mapMutations } from 'vuex';
+import { mapMutations } from "vuex";
 export default {
   name: "Login",
   data: () => ({
@@ -40,17 +40,19 @@ export default {
   }),
 
   methods: {
-    ...mapMutations('user',['setUser']),
+    ...mapMutations("user", ["setUser"]),
     login: function () {
-      this.errors.username =[];
-       this.errors.password = [];
+      this.errors.username = [];
+      this.errors.password = [];
       if (this.username.trim().length === 0) {
         this.errors.username.push("Username is required");
       } else if (this.password.trim().length === 0) {
         this.errors.password.push("Password is required");
+      } else {
+        this.setUser({ username: this.username, password: this.password });
+        console.log("doing login !");
+        this.$router.push("/home");
       }
-      this.setUser({username:this.username,password:this.password})
-      console.log('doing login !');
     },
   },
 };
