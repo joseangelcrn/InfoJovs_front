@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <v-main v-if="user.data" >
-      <v-card class="mx-auto overflow-hidden" style="height:100%">
+    <v-main v-if="user.data">
+      <v-card class="mx-auto overflow-hidden" style="height: 100%">
         <v-app-bar color="light-blue" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
@@ -19,6 +19,13 @@
                   <v-icon>mdi-home</v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>Home</v-list-item-title>
+              </v-list-item>
+
+              <v-list-item v-for="(entry, index) in entries" :key="index">
+                <v-list-item-icon>
+                  <v-icon>{{ entry.icon }}</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>{{ entry.title }}</v-list-item-title>
               </v-list-item>
 
               <v-list-item v-on:click="logout">
@@ -49,12 +56,33 @@ export default {
   data: () => ({
     drawer: false,
     group: null,
+    entries: [
+      {
+        title: "Jobs",
+        icon: "mdi-magnify-expand",
+        url: "/jobs",
+        role: "employer",
+      }, //Employer
+      {
+        title: "Offer a Job",
+        icon: "mdi-draw",
+        url: "/offert_job",
+        role: "recruiter",
+      }, //Recruiter
+      {
+        title: "My Jobs",
+        icon: "mdi-form-select",
+        url: "/my_jobs",
+        role: null,
+      }, //Employer
+    ],
   }),
   methods: {
     ...mapMutations("user", ["removeUser"]),
     logout: function () {
       console.log("log oout !");
       this.removeUser();
+      this.$router.push({name:'login'})
     },
   },
   computed: {
