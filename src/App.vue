@@ -14,14 +14,14 @@
               v-model="group"
               active-class="light-blue--text text--accent-4"
             >
-              <v-list-item>
+              <v-list-item to="/home">
                 <v-list-item-icon>
                   <v-icon>mdi-home</v-icon>
                 </v-list-item-icon>
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item v-for="(entry, index) in entries" :key="index">
+              <v-list-item v-for="(entry, index) in entries" :key="index" :to="entry.url">
                 <v-list-item-icon>
                   <v-icon>{{ entry.icon }}</v-icon>
                 </v-list-item-icon>
