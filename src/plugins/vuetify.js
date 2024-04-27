@@ -8,7 +8,8 @@ const opts = {
   theme: {
     themes: {
       light: {
-        primary: '#03A9F4', // #E53935
+        primary:'#03A9F4'
+
       },
     },
   },
