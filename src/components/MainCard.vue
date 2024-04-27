@@ -8,6 +8,10 @@
       <slot name="subtitle"></slot>
     </v-card-subtitle>
 
+    <v-card-text>
+        <slot name="content"></slot>
+    </v-card-text>
+
     <v-card-actions>
       <slot name="actions"></slot>
     </v-card-actions>

@@ -2,8 +2,8 @@
   <v-container>
     <v-row>
       <v-col>
-        <v-card class="primary" elevation="2">
-          <v-card-text>
+        <main-card>
+          <template #content>
             <v-row>
               <v-col cols="3">
                 <v-text-field
@@ -23,17 +23,23 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn text class="ml-2   white primary--text"> Search </v-btn>
-          </v-card-actions>
-        </v-card>
+          </template>
+          <template #actions>
+            <v-btn text class="ml-2 white primary--text"> Search </v-btn>
+          </template>
+        </main-card>
       </v-col>
     </v-row>
 
     <v-row>
       <v-col>
         <h5>Finder result</h5>
+        <main-card>
+          <template #title>Mi Custom titulo</template>
+          <template #subtitle>Mi Subtitle</template>
+          <template #content>Content</template>
+          <template #actions>Mi Subtitle</template>
+        </main-card>
       </v-col>
     </v-row>
   </v-container>
@@ -41,6 +47,7 @@
 
 <script>
 export default {
+  components: {  },
   data: () => ({}),
   methods: {},
 };
