@@ -1,6 +1,10 @@
 <template>
-  <div class="pa-10 elevation-5 rounded-xl mt-10">
-    <h1 class="primary--text my-3">Login</h1>
+  <div class="pa-10 elevation-5 rounded-xl mt-10" 
+  style="background-color: white;"
+  > 
+  <!-- style="background-color:red;" -->
+
+  <h1 class="primary--text my-3">Login</h1>
     <v-text-field
       :error="errors.username.length > 0"
       :error-messages="errors.username"

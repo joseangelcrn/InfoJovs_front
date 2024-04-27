@@ -22,7 +22,11 @@
                 <v-list-item-title>Home</v-list-item-title>
               </v-list-item>
 
-              <v-list-item v-for="(entry, index) in entries" :key="index" :to="entry.url">
+              <v-list-item
+                v-for="(entry, index) in entries"
+                :key="index"
+                :to="entry.url"
+              >
                 <v-list-item-icon>
                   <v-icon>{{ entry.icon }}</v-icon>
                 </v-list-item-icon>
@@ -43,12 +47,16 @@
     </v-main>
 
     <!-- No auth view -->
-    <v-main v-else>
+    <v-main class="bgColorPrimary" v-else>
       <router-view />
     </v-main>
   </v-app>
 </template>
-
+<style scoped>
+.bgColorPrimary {
+  background-color: #03a9f4;
+}
+</style>
 <script>
 import { mapMutations, mapState } from "vuex";
 
@@ -84,7 +92,7 @@ export default {
     logout: function () {
       console.log("log oout !");
       this.removeUser();
-      this.$router.push({name:'login'})
+      this.$router.push({ name: "login" });
     },
   },
   computed: {
