@@ -1,6 +1,6 @@
 <template>
   <v-card class="primary" elevation="2">
-    <v-card-title>
+    <v-card-title class="white--text">
       <slot name="title"></slot>
     </v-card-title>
 
