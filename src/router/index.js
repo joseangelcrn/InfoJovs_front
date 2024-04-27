@@ -42,28 +42,29 @@ const routes = [
   }
 ]
 
-// {
-//   title: "Jobs",
-//   icon: "mdi-magnify-expand",
-//   url: "/jobs",
-//   role: "employer",
-// }, //Employer
-// {
-//   title: "Offer a Job",
-//   icon: "mdi-draw",
-//   url: "/offer_job",
-//   role: "recruiter",
-// }, //Recruiter
-// {
-//   title: "My Jobs",
-//   icon: "mdi-form-select",
-//   url: "/my_jobs",
-//   role: null,
-// }, //Employer
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
+
+
+router.beforeEach(async (to, from,next) => {
+  console.log('middleware');
+  let user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null ;
+  console.log('user = ',user);
+  console.log('to = ', to)
+
+  if (to.name == 'login' && user){
+    next({name:'home'})
+  }
+  else if(to.name == 'home' && !user){
+    next({name:'login'}) 
+  }
+  next();
+
+  
+})
+
 
 export default router
