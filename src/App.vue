@@ -1,5 +1,6 @@
 <template>
   <v-app>
+    <!-- Auth view -->
     <v-main v-if="user.data">
       <v-card class="mx-auto overflow-hidden" style="height: 100%">
         <v-app-bar color="primary" dark>
@@ -41,6 +42,7 @@
       </v-card>
     </v-main>
 
+    <!-- No auth view -->
     <v-main v-else>
       <router-view />
     </v-main>
