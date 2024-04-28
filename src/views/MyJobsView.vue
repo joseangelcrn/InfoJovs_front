@@ -28,7 +28,9 @@
           statusColor="blue-grey"
         />
       </template>
-      <template #actions> Pagination </template>
+      <template #actions>
+        <v-pagination color="primary" v-model="currentPage" :length="6"></v-pagination>
+      </template>
     </main-card>
   </v-container>
 </template>
@@ -37,7 +39,9 @@
 import JobPreview from "@/components/JobPreview.vue";
 export default {
   components: { JobPreview },
-  data: () => ({}),
+  data: () => ({
+    currentPage: 1,
+  }),
 };
 </script>
 

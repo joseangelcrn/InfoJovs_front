@@ -52,7 +52,9 @@
               />
             </v-list-item>
           </template>
-          <template #actions>Pagination</template>
+          <template #actions>
+            <v-pagination color="primary"  v-model="currentPage" :length="6"></v-pagination>
+          </template>
         </main-card>
       </v-col>
     </v-row>
@@ -65,6 +67,7 @@ export default {
   components: { JobPreview },
   data: () => ({
     jobResults: 3,
+    currentPage:1
   }),
   methods: {},
 };
