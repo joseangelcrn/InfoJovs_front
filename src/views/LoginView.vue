@@ -1,7 +1,7 @@
 <template>
   <v-container>
     <v-row d-flex justify="center">
-      <v-col cols="6">
+      <v-col  md="8" lg="6"  cols="12"   >
         <Login  />
       </v-col>
     </v-row>
