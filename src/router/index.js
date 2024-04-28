@@ -53,8 +53,6 @@ router.beforeEach(async (to, from, next) => {
   let user = localStorage.getItem("user")
     ? JSON.parse(localStorage.getItem("user"))
     : null;
-  console.log("user = ", user);
-  console.log("to = ", to);
 
   if ((to.name == "login" || to.path == "/") && user) {
     next({ name: "home" });
