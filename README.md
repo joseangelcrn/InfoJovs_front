@@ -8,6 +8,10 @@
 
 ![login](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/57437325-0f2c-40d3-9845-5fca8e85c56b)
 
+### My profile ( as employee )
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/22cb01be-fecb-4ea0-833e-ac2ef939cc9b)
+
 
 ### My Jobs ( as employee )
 
