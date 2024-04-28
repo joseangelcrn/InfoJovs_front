@@ -6,7 +6,7 @@
         <main-card>
           <template #content>
             <v-row>
-              <v-col cols="3">
+              <v-col sm="3" md="3" lg="3" cols="12">
                 <v-text-field
                   dense
                   x-small
@@ -15,7 +15,7 @@
                   placeholder="Key Workd"
                 ></v-text-field>
               </v-col>
-              <v-col cols="3">
+              <v-col sm="3" md="3" lg="3" cols="12">
                 <v-text-field
                   dense
                   background-color="white"
