@@ -6,6 +6,7 @@ import NotFound from "@/views/NotFound.vue";
 import JobView from "@/views/JobView.vue";
 import JobCrudView from "@/views/JobCrudView.vue";
 import MyJobsView from "@/views/MyJobsView.vue";
+import SignUpView from "@/views/SignUpView.vue";
 
 Vue.use(VueRouter);
 
@@ -14,6 +15,11 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+  },
+  {
+    path: "/signup",
+    name: "signup",
+    component: SignUpView,
   },
   {
     path: "/home",
