@@ -1,33 +1,34 @@
 <template>
-  <div class="pa-10 elevation-5 rounded-xl mt-10" 
-  style="background-color: white;"
-  > 
-  <!-- style="background-color:red;" -->
-
-  <h1 class="primary--text my-3">Login</h1>
-    <v-text-field
-      :error="errors.username.length > 0"
-      :error-messages="errors.username"
-      error-count="1"
-      v-model="username"
-      label="Username"
-      outlined
-      @keypress.enter="login"
-    ></v-text-field>
-    <v-text-field
-      :error="errors.password.length > 0"
-      :error-messages="errors.password"
-      error-count="1"
-      v-model="password"
-      label="Password"
-      type="password"
-      outlined
-      @keypress.enter="login"
-    ></v-text-field>
-    <v-btn @click="login" class="primary--text" elevation="2" outlined
-      >Login</v-btn
-    >
-  </div>
+  <main-card
+    customClassVcard="white pa-10 rounded-xl mt-10"
+    customClassContent="pa-0"
+  >
+    <template #content>
+      <h1 class="primary--text my-3">Login</h1>
+      <v-text-field
+        :error="errors.username.length > 0"
+        :error-messages="errors.username"
+        error-count="1"
+        v-model="username"
+        label="Username"
+        outlined
+        @keypress.enter="login"
+      ></v-text-field>
+      <v-text-field
+        :error="errors.password.length > 0"
+        :error-messages="errors.password"
+        error-count="1"
+        v-model="password"
+        label="Password"
+        type="password"
+        outlined
+        @keypress.enter="login"
+      ></v-text-field>
+      <v-btn @click="login" class="primary--text" elevation="2" outlined
+        >Login</v-btn
+      >
+    </template>
+  </main-card>
 </template>
 
 <script>
