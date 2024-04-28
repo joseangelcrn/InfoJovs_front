@@ -24,9 +24,22 @@
         outlined
         @keypress.enter="login"
       ></v-text-field>
-      <v-btn @click="login" class="primary--text" elevation="2" outlined
-        >Login</v-btn
-      >
+      <div class="d-flex justify-space-between">
+        <div>
+          <v-btn @click="login" class="light-blue darken-4 primary--text " elevation="2" outlined
+            >Login</v-btn
+          >
+        </div>
+        <div>
+          <v-btn
+            class="primary--text"
+            to="/signup"
+            elevation="2"
+            outlined
+            >Sign in</v-btn
+          >
+        </div>
+      </div>
     </template>
   </main-card>
 </template>
