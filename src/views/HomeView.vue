@@ -42,12 +42,9 @@
 </template>
 
 <script>
-import MainCard from "@/components/MainCard.vue";
 
 export default {
-  comments: {
-    MainCard,
-  },
+
 };
 </script>
 
