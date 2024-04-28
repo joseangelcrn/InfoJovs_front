@@ -1,6 +1,13 @@
 # InfoJovs (v of Vue)
  
- ## An infojobs app based (in progress..) 
+## An infojobs app based (in progress..) 
+
+```
+cd InfoJovs_front
+npm install
+npm run serve
+```
+
  
 ## Images 
 
