@@ -17,7 +17,7 @@
                   José Ángel Cabeza Rodiguez-Navas
                 </div>
                 <v-list-item-title class="text-h5 mb-1">
-                  Full-Stack Programmer
+                  Full-Stack Developer
                 </v-list-item-title>
                 <v-list-item-subtitle
                   >I develop frontend and backend applications
