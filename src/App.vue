@@ -2,7 +2,7 @@
   <v-app>
     <!-- Auth view -->
     <v-main v-if="user.data">
-      <v-card class="mx-auto overflow-hidden" style="height: 100%">
+      <v-card class="mx-auto overflow-hidden authLayout">
         <v-app-bar color="primary" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
@@ -56,6 +56,11 @@
 .bgColorPrimary {
   background-color: #03a9f4;
 }
+
+.authLayout {
+  height: 100%;
+  background: #03a8f41b;
+}
 </style>
 <script>
 import { mapMutations, mapState } from "vuex";
@@ -84,7 +89,7 @@ export default {
         icon: "mdi-form-select",
         url: "/my_jobs",
         role: null,
-      }, //Employer
+      }, //Employer and Recruiter
     ],
   }),
   methods: {
