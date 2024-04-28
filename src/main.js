@@ -4,10 +4,16 @@ import router from './router'
 import store from './store'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
 import MainCard from './components/MainCard.vue'
+import proxy from './proxy'
 
 Vue.config.productionTip = false
 
-Vue.component('main-card',MainCard)
+//Global components
+Vue.component('main-card',MainCard);
+
+
+//Global classes/variables
+Vue.prototype.$proxy = proxy;
 
 new Vue({
   router,
