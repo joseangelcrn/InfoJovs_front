@@ -40,14 +40,16 @@
           <template #title>Search results:</template>
           <template #subtitle>{{ jobResults }} results</template>
           <template #content>
-            <v-list-item v-for="(item,index) in jobResults" :key="index" three-line class="white rounded mt-2">
-              <v-list-item-content>
-                <v-list-item-title>Job title</v-list-item-title>
-                <v-list-item-subtitle>Job description, Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus explicabo, beatae laborum ipsa doloribus exercitationem dolores ipsum debitis inventore sint ea nemo voluptate ipsam sit ex sequi eligendi. Saepe, eos.</v-list-item-subtitle>
-              </v-list-item-content>
-              <v-list-item-icon class="mt-6">
-                <v-btn icon class="align-center"> <v-icon>mdi-eye</v-icon> </v-btn>
-              </v-list-item-icon>
+            <v-list-item
+              v-for="(item, index) in jobResults"
+              :key="index"
+              three-line
+              class="white rounded mt-2"
+            >
+              <job-preview
+                title="Job Title"
+                description="Job description, Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus explicabo, beatae laborum ipsa doloribus exercitationem dolores ipsum debitis inventore sint ea nemo voluptate ipsam sit ex sequi eligendi. Saepe, eos."
+              />
             </v-list-item>
           </template>
           <template #actions>Pagination</template>
@@ -58,10 +60,11 @@
 </template>
 
 <script>
+import JobPreview from "@/components/JobPreview.vue";
 export default {
-  components: {},
+  components: { JobPreview },
   data: () => ({
-    jobResults:3
+    jobResults: 3,
   }),
   methods: {},
 };
