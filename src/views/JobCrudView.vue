@@ -28,7 +28,7 @@
               </v-row>
             </template>
             <template #actions>
-              <v-btn class="primary--text">Save</v-btn>
+              <v-btn small class="primary--text">Save</v-btn>
             </template>
           </main-card>
         </v-col>

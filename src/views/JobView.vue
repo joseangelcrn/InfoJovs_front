@@ -26,7 +26,7 @@
             </v-row>
           </template>
           <template #actions>
-            <v-btn text class="ml-2 white primary--text"> Search </v-btn>
+            <v-btn small text class="ml-2 white primary--text"> Search </v-btn>
           </template>
         </main-card>
       </v-col>
