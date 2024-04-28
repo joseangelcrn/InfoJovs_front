@@ -27,11 +27,9 @@
             <v-list-item>
               <v-list-item-content>
                 <span class="white--text mb-4"
-                  >You have <b class="black--text">10</b> Job Applications</span
+                  >You have <b class="black--text">{{jobApplications}}</b> Job Applications</span
                 >
-                <v-btn elevation="2" max-width="150" to="/my_jobs">
-                  See my jobs</v-btn
-                >
+                <v-btn elevation="2" max-width="150" to="/my_jobs"> See my jobs</v-btn>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -42,11 +40,13 @@
 </template>
 
 <script>
-
 export default {
-
+  data() {
+    return {
+      jobApplications:9
+    };
+  },
 };
 </script>
 
-<style>
-</style>
+<style></style>

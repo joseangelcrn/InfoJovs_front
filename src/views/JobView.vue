@@ -13,6 +13,7 @@
                   background-color="white"
                   outlined
                   placeholder="Key Workd"
+                  v-model="filter.keyWord"
                 ></v-text-field>
               </v-col>
               <v-col sm="3" md="3" lg="3" cols="12">
@@ -20,13 +21,14 @@
                   dense
                   background-color="white"
                   outlined
-                  placeholder="Value"
+                  placeholder="Disabled Input"
+                  disabled
                 ></v-text-field>
               </v-col>
             </v-row>
           </template>
           <template #actions>
-            <v-btn small text class="ml-2 white primary--text"> Search </v-btn>
+            <v-btn v-on:click="onSearch" small text class="ml-2 white primary--text"> Search </v-btn>
           </template>
         </main-card>
       </v-col>
@@ -53,7 +55,7 @@
             </v-list-item>
           </template>
           <template #actions>
-            <v-pagination color="primary"  v-model="currentPage" :length="6"></v-pagination>
+            <v-pagination  v-on:input="onChangePage" color="primary"  v-model="currentPage" total-visible="10" :length="pageLength"></v-pagination>
           </template>
         </main-card>
       </v-col>
@@ -67,9 +69,20 @@ export default {
   components: { JobPreview },
   data: () => ({
     jobResults: 3,
-    currentPage:1
+    currentPage:1,
+    pageLength:50,
+    filter:{
+      keyWord:''
+    }
   }),
-  methods: {},
+  methods: {
+    onSearch: function (){
+      console.log('on search !');
+    },
+    onChangePage: function (){
+      console.log('on change page !');
+    }
+  },
 };
 </script>
 

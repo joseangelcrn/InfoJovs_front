@@ -29,7 +29,7 @@
         />
       </template>
       <template #actions>
-        <v-pagination color="primary" v-model="currentPage" :length="6"></v-pagination>
+        <v-pagination v-on:input="onChangePage" color="primary" v-model="currentPage" total-visible="10" :length="pageLength"></v-pagination>
       </template>
     </main-card>
   </v-container>
@@ -41,9 +41,16 @@ export default {
   components: { JobPreview },
   data: () => ({
     currentPage: 1,
+    pageLength:50,
+
   }),
+  methods: {
+    onChangePage: function (){
+      console.log('on change page !');
+    }
+  },
+
 };
 </script>
 
-<style>
-</style>
+<style></style>
