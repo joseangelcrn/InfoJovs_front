@@ -7,8 +7,8 @@
       }}</v-list-item-subtitle>
       <v-list-item-subtitle>{{ description }}</v-list-item-subtitle>
       <v-list-item-subtitle class="mt-1">
-        <v-chip class="mr-1" small color="primary" >Developer</v-chip>
         <v-chip class="mr-1" small color="primary" >Web Developer</v-chip>
+        <v-chip class="mr-1" small color="primary" >Laravel</v-chip>
         <v-chip class="mr-1" small color="primary" >PHP</v-chip>
         <v-chip class="mr-1" small color="primary" >JavaScript</v-chip>
         <v-chip class="mr-1" small color="primary" >HTML</v-chip>
