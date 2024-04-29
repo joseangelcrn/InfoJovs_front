@@ -1,23 +1,30 @@
+import proxy from "@/proxy";
+import router from "@/router";
+
 const user = {
-    namespaced:true,
-    state: () => ({ 
-        data:localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) :  null
-     }),
-    mutations: { 
-        setUser: function(state,user){
-            console.log('vuex user - setUser');
-            state.data = user;
-            localStorage.setItem('user',JSON.stringify(user))
-        },
-        removeUser: function(state){
-            console.log('vuex user - removeUser');
-            state.data = null;
-            localStorage.removeItem('user');
-        }
-     },
-    actions: { 
+  namespaced: true,
+  state: () => ({
+    token: localStorage.getItem("token") ?? null,
+  }),
+  mutations: {
+    setToken: function (state, token) {
+      state.token = token;
+      localStorage.setItem("token", token);
+    },
+    removeToken: function (state) {
+      console.log("vuex user - removeUser");
+      state.token = null;
+      localStorage.removeItem("token");
+    },
+  },
+  actions: {
+    login: async function ({ commit }, { email, password }) {
+      let response = await proxy.login(email, password);
+      let { token } = response.data;
+      commit("setToken", token);
+      router.push("/home");
+    },
+  },
+};
 
-     }
-  }
-
-  export default user;
+export default user;

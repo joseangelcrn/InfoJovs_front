@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <!-- Auth view -->
-    <v-main v-if="user.data">
+    <v-main v-if="user.token">
       <v-card class="mx-auto overflow-hidden authLayout">
         <v-app-bar color="primary" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
@@ -96,13 +96,13 @@ export default {
   }),
   methods: {
     ...mapMutations({
-      removeUser: 'user/removeUser',
+      removeToken : 'user/removeToken',
       manageModal:'modal/manageModal',
       hideModal:'modal/hide'
     }),
     logout: function () {
       console.log("log oout !");
-      this.removeUser();
+      this.removeToken();
       this.$router.push({ name: "login" });
     },
 

@@ -6,6 +6,11 @@ import vuetify from '@/plugins/vuetify' // path to vuetify export
 import MainCard from './components/MainCard.vue'
 import proxy from './proxy'
 import Modal from './components/Modal.vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+//axios
+Vue.use(VueAxios, axios)
 
 Vue.config.productionTip = false
 

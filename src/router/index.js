@@ -56,13 +56,11 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
   console.log("middleware");
-  let user = localStorage.getItem("user")
-    ? JSON.parse(localStorage.getItem("user"))
-    : null;
+  let token = localStorage.getItem("token") ?? null;
 
-  if ((to.name == "login" || to.path == "/") && user) {
+  if ((to.name == "login" || to.path == "/") && token) {
     next({ name: "home" });
-  } else if ((to.name == "home" || to.path == "/") && !user) {
+  } else if ((to.name == "home" || to.path == "/") && !token) {
     next({ name: "login" });
   }
 
