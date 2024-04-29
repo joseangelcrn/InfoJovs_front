@@ -5,11 +5,14 @@ import store from './store'
 import vuetify from '@/plugins/vuetify' // path to vuetify export
 import MainCard from './components/MainCard.vue'
 import proxy from './proxy'
+import Modal from './components/Modal.vue'
 
 Vue.config.productionTip = false
 
 //Global components
 Vue.component('main-card',MainCard);
+Vue.component('modal',Modal);
+
 
 
 //Global classes/variables

@@ -43,6 +43,7 @@
           </v-list>
         </v-navigation-drawer>
         <router-view />
+        <modal/>
       </v-card>
     </v-main>
 
@@ -64,6 +65,7 @@
 </style>
 <script>
 import { mapMutations, mapState } from "vuex";
+import Modal from "./components/Modal.vue";
 
 export default {
   name: "App",
@@ -93,18 +95,30 @@ export default {
     ],
   }),
   methods: {
-    ...mapMutations("user", ["removeUser"]),
+    ...mapMutations({
+      removeUser: 'user/removeUser',
+      manageModal:'modal/manageModal',
+      hideModal:'modal/hide'
+    }),
     logout: function () {
       console.log("log oout !");
       this.removeUser();
       this.$router.push({ name: "login" });
     },
+
   },
   computed: {
     ...mapState(["user"]),
   },
-  mounted: () => {
-    console.log("mounted !");
+  mounted: function() {
+    //Example how work custom modal => 
+
+    // this.manageModal({
+    //   title:'Titulo',
+    //   text:'Mi texto',
+    //   onClickYes:()=>{console.log("Si modificado"); this.hideModal()},
+    //   onClickNot:()=>{console.log("No modificado");this.hideModal()},
+    // });
   },
 };
 </script>
