@@ -1,7 +1,7 @@
 const modal = {
   namespaced: false,
   state: () => ({
-    show: true,
+    show: false,
     title: "Default title",
     text: "Default text d",
     textBtnYes:"Ok",
