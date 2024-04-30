@@ -13,7 +13,7 @@
                   background-color="white"
                   outlined
                   placeholder="Key Workd"
-                  v-model="filter.keyWord"
+                  v-model="filter.title"
                 ></v-text-field>
               </v-col>
               <v-col sm="3" md="3" lg="3" cols="12">
@@ -28,7 +28,14 @@
             </v-row>
           </template>
           <template #actions>
-            <v-btn v-on:click="onSearch" small text class="ml-2 white primary--text"> Search </v-btn>
+            <v-btn
+              v-on:click="onSearch"
+              small
+              text
+              class="ml-2 white primary--text"
+            >
+              Search
+            </v-btn>
           </template>
         </main-card>
       </v-col>
@@ -40,22 +47,28 @@
         <h5>Finder result</h5>
         <main-card>
           <template #title>Search results:</template>
-          <template #subtitle>{{ jobResults }} results</template>
+          <template #subtitle>{{ job.data.length }} results</template>
           <template #content>
             <v-list-item
-              v-for="(item, index) in jobResults"
+              v-for="(item, index) in job.data"
               :key="index"
               three-line
               class="white rounded mt-2"
             >
               <job-preview
-                title="Job Title"
-                description="Job description, Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus explicabo, beatae laborum ipsa doloribus exercitationem dolores ipsum debitis inventore sint ea nemo voluptate ipsam sit ex sequi eligendi. Saepe, eos."
+                :title="item.title"
+                :description="item.description"
               />
             </v-list-item>
           </template>
           <template #actions>
-            <v-pagination  v-on:input="onChangePage" color="primary"  v-model="currentPage" total-visible="10" :length="pageLength"></v-pagination>
+            <v-pagination
+              v-on:input="onChangePage"
+              color="primary"
+              v-model="job.pagination.currentPage"
+              :total-visible="job.pagination.perPage"
+              :length="job.pagination.lastPage"
+            ></v-pagination>
           </template>
         </main-card>
       </v-col>
@@ -65,23 +78,36 @@
 
 <script>
 import JobPreview from "@/components/JobPreview.vue";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   components: { JobPreview },
   data: () => ({
-    jobResults: 3,
-    currentPage:1,
-    pageLength:50,
-    filter:{
-      keyWord:''
-    }
+    filter: {
+      title: "",
+    },
   }),
   methods: {
-    onSearch: function (){
-      console.log('on search !');
+    ...mapActions({
+      searchJobs: "job/search",
+    }),
+    ...mapMutations({
+      setCurrentPage: "job/setCurrentPage",
+    }),
+    onSearch: async function () {
+      await this.setCurrentPage(1);
+      console.log("on search !");
+      console.log("filter = ", this.filter);
+      await this.searchJobs(this.filter);
     },
-    onChangePage: function (){
-      console.log('on change page !');
-    }
+    onChangePage:async function (newCurrentPage) {
+      console.log("on change page !");
+      console.log(newCurrentPage);
+      this.setCurrentPage(newCurrentPage);
+      await this.searchJobs(this.filter);
+    },
+  },
+  computed: {
+    ...mapState(["job"]),
   },
 };
 </script>

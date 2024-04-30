@@ -1,7 +1,16 @@
+import proxy from "@/proxy";
+
 const job = {
   namespaced: true,
   state: () => ({
     data: [],
+    pagination:{
+      currentPage:1,
+      perPage:5,
+      lastPage:0,
+      totalItems:0
+      
+    }
   }),
   mutations: {
     setJobs: function (state, data) {
@@ -14,8 +23,24 @@ const job = {
       let filteredData = state.data.filter((item) => item.id !== id);
       state.data = filteredData;
     },
+    setPagination: function (state,data){
+      state.pagination = data;
+    },
+    setCurrentPage: function(state,data){
+      console.log('seteo de pagina a '+data);
+      state.pagination.currentPage = data;
+    }
   },
-  actions: {},
+  actions: {
+    search: async function ({ commit,state }, filter) {
+      console.log('vuex- search actions ');
+      console.log('vuex - filter ',filter);
+      let response = await proxy.searchJobs({...filter,...state.pagination})
+      console.log(response.data);
+      commit('setJobs',response.data.jobs);
+      commit('setPagination',response.data.pagination);
+    },
+  },
 };
 
 export default job;
