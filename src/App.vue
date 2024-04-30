@@ -26,6 +26,7 @@
                 v-for="(entry, index) in entries"
                 :key="index"
                 :to="entry.url"
+                :disabled="mustDisabled(entry)"
               >
                 <v-list-item-icon>
                   <v-icon>{{ entry.icon }}</v-icon>
@@ -78,7 +79,7 @@ export default {
         title: "Jobs",
         icon: "mdi-magnify-expand",
         url: "/jobs",
-        role: "employer",
+        role: "employee",
       }, //Employer
       {
         title: "Offer a Job",
@@ -108,20 +109,28 @@ export default {
       this.removeToken();
       this.$router.push({ name: "login" });
     },
+    mustDisabled: function (entry) {
+      let entryRole = entry.role;
+      console.log("entry role =  " + entryRole);
+      console.log("user = ", this.user.roles);
+      if (entryRole == null || this.user.roles.includes(entryRole)) {
+        return false;
+      }
+
+      return true;
+    },
   },
   computed: {
     ...mapState(["user"]),
   },
   mounted: function () {
     //Example how work custom modal =>
-
     // this.manageModal({
     //   title:'Titulo',
     //   text:'Mi texto',
     //   onClickYes:()=>{console.log("Si modificado"); this.hideModal()},
     //   onClickNot:()=>{console.log("No modificado");this.hideModal()},
     // });
-    
     // let that = this;
     // this.userInfo().catch((error) => {
     //   that.manageModal({
