@@ -1,4 +1,4 @@
-# InfoJovs (v of Vue) || Frontend of [InfoJovs_backend](https://github.com/joseangelcrn/InfoJovs_back)
+# InfoJovs (v of Vue) || Frontend of [InfoJovs_back](https://github.com/joseangelcrn/InfoJovs_back)
 
  
 ## An infojobs app based (in progress..) 
