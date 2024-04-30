@@ -1,5 +1,5 @@
 const modal = {
-  namespaced: false,
+  namespaced: true,
   state: () => ({
     show: false,
     title: "Default title",

@@ -1,4 +1,5 @@
 import Vue from "vue";
+import store from "@/store";
 import VueRouter from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
@@ -15,36 +16,43 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
+    meta:{auth:false}
   },
   {
     path: "/signup",
     name: "signup",
     component: SignUpView,
+    meta:{auth:false}
   },
   {
     path: "/home",
     name: "home",
     component: HomeView,
+    meta:{auth:true}
   },
   {
     path: "/jobs",
     name: "jobs",
     component: JobView,
+    meta:{auth:true}
   },
   {
     path: "/offer_job",
     name: "offerJob",
     component: JobCrudView,
+    meta:{auth:true}
   },
   {
     path: "/my_jobs",
     name: "myJobs",
     component: MyJobsView,
+    meta:{auth:true}
   },
   {
     path: "*",
     name: "notFound",
     component: NotFound,
+    meta:{auth:false}
   },
 ];
 
@@ -54,17 +62,36 @@ const router = new VueRouter({
   routes,
 });
 
-router.beforeEach(async (to, from, next) => {
-  console.log("middleware");
-  let token = localStorage.getItem("token") ?? null;
 
-  if ((to.name == "login" || to.path == "/") && token) {
-    next({ name: "home" });
-  } else if ((to.name == "home" || to.path == "/") && !token) {
-    next({ name: "login" });
+
+router.beforeEach(async(to, from, next) => {
+  console.log("middleware");
+  let token = null;
+  let data = null;
+  let roles = null;
+
+  try {
+    await store.dispatch('user/info');
+    let user  = store.state.user;
+    token = user.token;
+    data = user.data;
+    roles = user.roles;
+  } catch (error) {
+    console.error('error in middleware routes');
+    store.commit('user/removeToken');
+  }
+ 
+
+  if (!token && to.meta.auth) {
+    next('/login');
+  }
+  else if(token && !to.meta.auth){
+    next('/home')
+  }
+  else{
+    next()
   }
 
-  next();
 });
 
 export default router;

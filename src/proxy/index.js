@@ -8,6 +8,16 @@ const login = async (email, password) => {
   });
 };
 
+const userInfo = async (token) => {
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  return await axios.get(host + "/user/info", config);
+};
+
 const logout = async () => {};
 
 const getUserById = async (id) => {};
@@ -20,6 +30,7 @@ const deleteJob = async (id) => {};
 
 export default {
   login,
+  userInfo,
   logout,
   getUserById,
   getJobById,

@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import router from '@/router';
 import { mapActions, mapMutations } from "vuex";
 export default {
   name: "Login",
@@ -75,7 +76,9 @@ export default {
         this.login({
           email:this.email,
           password:this.password
-        }).catch((error)=>{
+        })
+        .then(()=>{router.push('/home')})
+        .catch((error)=>{
           this.errors.email.push('Wrong credentials ! :(')
           this.errors.password.push('Wrong credentials ! :(')
         });

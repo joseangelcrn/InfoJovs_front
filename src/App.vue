@@ -43,7 +43,7 @@
           </v-list>
         </v-navigation-drawer>
         <router-view />
-        <modal/>
+        <modal />
       </v-card>
     </v-main>
 
@@ -64,7 +64,7 @@
 }
 </style>
 <script>
-import { mapMutations, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import Modal from "./components/Modal.vue";
 
 export default {
@@ -96,28 +96,43 @@ export default {
   }),
   methods: {
     ...mapMutations({
-      removeToken : 'user/removeToken',
-      manageModal:'modal/manageModal',
-      hideModal:'modal/hide'
+      removeToken: "user/removeToken",
+      manageModal: "modal/manageModal",
+      hideModal: "modal/hide",
+    }),
+    ...mapActions({
+      userInfo: "user/info",
     }),
     logout: function () {
       console.log("log oout !");
       this.removeToken();
       this.$router.push({ name: "login" });
     },
-
   },
   computed: {
     ...mapState(["user"]),
   },
-  mounted: function() {
-    //Example how work custom modal => 
+  mounted: function () {
+    //Example how work custom modal =>
 
     // this.manageModal({
     //   title:'Titulo',
     //   text:'Mi texto',
     //   onClickYes:()=>{console.log("Si modificado"); this.hideModal()},
     //   onClickNot:()=>{console.log("No modificado");this.hideModal()},
+    // });
+    
+    // let that = this;
+    // this.userInfo().catch((error) => {
+    //   that.manageModal({
+    //     title: "Error",
+    //     text: "Session expired !",
+    //     onClickYes: () => {
+    //       this.removeToken();
+    //       this.hideModal();
+    //       this.$router.push('/login')
+    //     },
+    //   });
     // });
   },
 };
