@@ -51,8 +51,7 @@ const routes = [
   {
     path: "*",
     name: "notFound",
-    component: NotFound,
-    meta:{auth:false}
+    component: NotFound
   },
 ];
 
@@ -80,9 +79,11 @@ router.beforeEach(async(to, from, next) => {
     console.error('error in middleware routes');
     store.commit('user/removeToken');
   }
- 
 
-  if (!token && to.meta.auth) {
+  if (to.name == 'notFound') {
+    next();
+  }
+  else if (!token && to.meta.auth) {
     next('/login');
   }
   else if(token && !to.meta.auth){

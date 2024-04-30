@@ -6,7 +6,9 @@
         <v-app-bar color="primary" dark>
           <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-          <v-toolbar-title>InfoJovs</v-toolbar-title>
+          <v-toolbar-title
+            >InfoJovs <b v-if="general.title">| {{ general.title }}</b>
+          </v-toolbar-title>
         </v-app-bar>
 
         <v-navigation-drawer v-model="drawer" absolute temporary>
@@ -15,7 +17,7 @@
               v-model="group"
               active-class="primary--text text--accent-4"
             >
-              <v-list-item to="/home">
+              <v-list-item to="/home" v-on:click="onClickNavLink('Home')">
                 <v-list-item-icon>
                   <v-icon>mdi-home</v-icon>
                 </v-list-item-icon>
@@ -27,6 +29,7 @@
                 :key="index"
                 :to="entry.url"
                 :disabled="mustDisabled(entry)"
+                v-on:click="onClickNavLink(entry.title)"
               >
                 <v-list-item-icon>
                   <v-icon>{{ entry.icon }}</v-icon>
@@ -67,6 +70,7 @@
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
 import Modal from "./components/Modal.vue";
+import router from "./router";
 
 export default {
   name: "App",
@@ -100,6 +104,7 @@ export default {
       removeToken: "user/removeToken",
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
+      setTitle: "general/setTitle",
     }),
     ...mapActions({
       userInfo: "user/info",
@@ -111,19 +116,35 @@ export default {
     },
     mustDisabled: function (entry) {
       let entryRole = entry.role;
-      console.log("entry role =  " + entryRole);
-      console.log("user = ", this.user.roles);
       if (entryRole == null || this.user.roles.includes(entryRole)) {
         return false;
       }
 
       return true;
     },
+    onClickNavLink: function (title) {
+      this.setTitle(title);
+    },
+    capitalizeFirstLetter(string) {
+      return string.charAt(0).toUpperCase() + string.slice(1);
+    },
   },
   computed: {
-    ...mapState(["user"]),
+    ...mapState(["user", "general"]),
   },
   mounted: function () {
+    //Resolve title:
+    let routes = router.options.routes;
+    let currentPath = window.location.pathname;
+
+    let matchedRoute = routes.filter((item) => {
+      return item.path === currentPath;
+    })[0];
+
+    if (typeof matchedRoute !== "undefined") {
+      this.setTitle(this.capitalizeFirstLetter(matchedRoute.name));
+    }
+    
     //Example how work custom modal =>
     // this.manageModal({
     //   title:'Titulo',
