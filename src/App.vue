@@ -79,7 +79,7 @@ export default {
         title: "Jobs",
         icon: "mdi-magnify-expand",
         url: "/jobs",
-        role: "employee",
+        role: null,
       }, //Employer
       {
         title: "Offer a Job",
