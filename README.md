@@ -3,6 +3,17 @@
  
 ## An infojobs app based (in progress..) 
 
+# Setup 
+
+## .Env 
+You must configure `.env` file by replacing `VUE_APP_HOST_BACKEND` for your **Infojovs_back** host. Example:
+
+Example: 
+```
+VUE_APP_HOST_BACKEND="http://localhost:8686/api" 
+```
+
+## Run
 ```
 cd InfoJovs_front
 npm install
