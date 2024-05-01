@@ -92,11 +92,11 @@ export default {
         role: "recruiter",
       }, //Recruiter
       {
-        title: "My Jobs",
+        title: "My Candidatures",
         icon: "mdi-form-select",
-        url: "/my_jobs",
+        url: "/my_candidatures",
         role: null,
-      }, //Employer and Recruiter
+      }, //Employer 
     ],
   }),
   methods: {

@@ -6,8 +6,8 @@ import HomeView from "@/views/HomeView.vue";
 import NotFound from "@/views/NotFound.vue";
 import JobView from "@/views/JobView.vue";
 import JobCrudView from "@/views/JobCrudView.vue";
-import MyJobsView from "@/views/MyJobsView.vue";
 import SignUpView from "@/views/SignUpView.vue";
+import MyCandidaturesView from "@/views/MyCandidaturesView.vue";
 
 Vue.use(VueRouter);
 
@@ -43,9 +43,9 @@ const routes = [
     meta:{auth:true}
   },
   {
-    path: "/my_jobs",
-    name: "myJobs",
-    component: MyJobsView,
+    path: "/my_candidatures",
+    name: "myCandidatures",
+    component: MyCandidaturesView,
     meta:{auth:true}
   },
   {
