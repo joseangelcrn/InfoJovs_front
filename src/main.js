@@ -8,6 +8,7 @@ import proxy from './proxy'
 import Modal from './components/Modal.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Common from './Utils/Common'
 
 //axios
 Vue.use(VueAxios, axios)
@@ -22,6 +23,7 @@ Vue.component('modal',Modal);
 
 //Global classes/variables
 Vue.prototype.$proxy = proxy;
+Vue.prototype.$common = Common;
 
 new Vue({
   router,

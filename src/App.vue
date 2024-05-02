@@ -123,7 +123,7 @@ export default {
       return true;
     },
     onClickNavLink: function (title) {
-      this.setTitle(title);
+      this.$common.setTitle(title);
     },
     capitalizeFirstLetter(string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
@@ -134,16 +134,8 @@ export default {
   },
   mounted: function () {
     //Resolve title:
-    let routes = router.options.routes;
-    let currentPath = window.location.pathname;
+    this.$common.setTitle();
 
-    let matchedRoute = routes.filter((item) => {
-      return item.path === currentPath;
-    })[0];
-
-    if (typeof matchedRoute !== "undefined") {
-      this.setTitle(this.capitalizeFirstLetter(matchedRoute.name));
-    }
     
     //Example how work custom modal =>
     // this.manageModal({
