@@ -108,11 +108,11 @@ export default {
     }),
     ...mapActions({
       userInfo: "user/info",
+      userLogout:'user/logout'
     }),
-    logout: function () {
-      console.log("log oout !");
-      this.removeToken();
-      this.$router.push({ name: "login" });
+    logout: async function () {
+     await this.userLogout();
+     this.$router.push({ name: "login" });
     },
     mustDisabled: function (entry) {
       let entryRole = entry.role;

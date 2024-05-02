@@ -40,6 +40,11 @@ const user = {
       commit("setUser", user);
       commit("setRoles", roles);
     },
+    logout: async function ({commit}){
+      let response = await proxy.logout();
+      commit('setUser',null);
+      commit('removeToken');
+    }
   },
 };
 

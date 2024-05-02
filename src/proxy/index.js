@@ -23,7 +23,9 @@ const userInfo = async () => {
   return await axios.get(host + "/user/info",   defaultConfig());
 };
 
-const logout = async () => {};
+const logout = async () => {
+  return await axios.post(host + "/user/logout", null,defaultConfig());
+};
 
 const searchJobs = async (filters) =>{
   const config = defaultConfig();
