@@ -1,7 +1,11 @@
-# InfoJovs (v of Vue) || Frontend of [InfoJovs_back](https://github.com/joseangelcrn/InfoJovs_back)
+<img src="https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/d791fb03-8a2c-4dcf-af0d-00152e932339" width="100" height="100"> 
+
+# InfoJovs (v of Vue) || Frontend of [InfoJovs_back](https://github.com/joseangelcrn/InfoJovs_back)  
+
 
  
 ## An infojobs app based (in progress..) 
+
 
 # Setup 
 
