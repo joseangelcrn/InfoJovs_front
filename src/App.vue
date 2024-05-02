@@ -95,7 +95,7 @@ export default {
         title: "My Candidatures",
         icon: "mdi-form-select",
         url: "/my_candidatures",
-        role: 'employer',
+        role: 'employee',
       }, //Employer 
     ],
   }),
