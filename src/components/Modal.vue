@@ -6,9 +6,9 @@
   >
     <template>
       <v-card>
-        <v-toolbar color="primary" dark>{{ modal.title }}</v-toolbar>
-        <v-card-text>
-          <div class="text-h2 pa-12">{{ modal.text }}</div>
+        <v-toolbar color="primary" dark dense>{{ modal.title }}</v-toolbar>
+        <v-card-text class="mt-3 text-center text-h5">
+          {{ modal.text }}
         </v-card-text>
 
         <v-card-actions
