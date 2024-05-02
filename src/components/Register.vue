@@ -33,16 +33,6 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
-        :error="errors.username.length > 0"
-        :error-messages="errors.username"
-        error-count="1"
-        v-model="username"
-        label="Username"
-        type="text"
-        outlined
-        @keypress.enter="register"
-      ></v-text-field>
-      <v-text-field
         :error="errors.email.length > 0"
         :error-messages="errors.email"
         error-count="1"
@@ -72,19 +62,19 @@
         outlined
         @keypress.enter="register"
       ></v-text-field>
-      
+
       <div class="d-flex justify-space-between">
         <div>
-          <v-btn v-on:click="register" class="light-blue darken-4 primary--text" elevation="2" outlined
-        >Sign Up</v-btn
-      >
-        </div>
-        <div >
           <v-btn
-            class="primary--text"
-            to="/login"
+            v-on:click="register"
+            class="light-blue darken-4 primary--text"
             elevation="2"
             outlined
+            >Sign Up</v-btn
+          >
+        </div>
+        <div>
+          <v-btn class="primary--text" to="/login" elevation="2" outlined
             >Login</v-btn
           >
         </div>
@@ -94,13 +84,14 @@
 </template>
 
 <script>
+import router from '@/router';
+import { mapActions, mapMutations } from "vuex";
 export default {
   data: () => ({
     name: "",
     firstSurname: "",
     secondSurname: "",
     email: "",
-    username: "",
     password: "",
     repeatPassword: "",
     errors: {
@@ -108,21 +99,26 @@ export default {
       firstSurname: [],
       secondSurname: [],
       email: [],
-      username: [],
       password: [],
       repeatPassword: [],
     },
   }),
 
   methods: {
-    register: function () {
+    ...mapActions({
+      signUp: "user/signup",
+    }),
+    ...mapMutations({
+      manageModal: "modal/manageModal",
+      hideModal: "modal/hide",
+    }),
+    register: async function () {
       console.log("register !");
       this.errors = {
         name: [],
         firstSurname: [],
         secondSurname: [],
         email: [],
-        username: [],
         password: [],
         repeatPassword: [],
       };
@@ -133,8 +129,6 @@ export default {
         this.errors.firstSurname.push("First Surname is required");
       } else if (this.secondSurname.trim().length == 0) {
         this.errors.secondSurname.push("Second Surname is required");
-      } else if (this.username.trim().length === 0) {
-        this.errors.username.push("Username is required");
       } else if (this.email.trim().length == 0) {
         this.errors.email.push("Email is required");
       } else if (!this.validateEmail()) {
@@ -148,10 +142,31 @@ export default {
       } else if (this.password != this.repeatPassword) {
         this.errors.repeatPassword.push("Passwords are different");
       } else {
-
         //register in backend..
-        console.log("doing login !");
-        this.$router.push("/login");
+        try {
+          let response = await this.$proxy.signUp({
+            name: this.name,
+            first_surname: this.firstSurname,
+            second_surname: this.secondSurname,
+            email: this.email,
+            password: this.password,
+          });
+          console.log('sign up OK !! ');
+          this.manageModal({
+            title: "Congratulations !",
+            text: "You have been registered successfully !",
+            onClickYes: () => {
+              console.log("Si modificado");
+              router.push({name:'login'});
+              this.hideModal();
+            },
+          });
+        } catch (error) {
+          var { email = [] } = error.response.data.message;
+          this.errors.email = email;
+          console.log("error");
+          console.log(error.response.data.message);
+        }
       }
     },
     validateEmail: function () {

@@ -54,6 +54,7 @@
     <!-- No auth view -->
     <v-main class="bgColorPrimary authLayout" v-else>
       <router-view />
+    <modal />
     </v-main>
   </v-app>
 </template>

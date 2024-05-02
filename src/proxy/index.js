@@ -19,6 +19,14 @@ const login = async (email, password) => {
   });
 };
 
+const signUp = async (data) => {
+  console.log('url = '+host+'/signup');
+  return await axios.post(host + "/signup", null, {
+    params: { ...data },
+  });
+};
+
+
 const userInfo = async () => {
   return await axios.get(host + "/user/info",   defaultConfig());
 };
@@ -45,6 +53,7 @@ const myCandidatures = async(filters)=>{
 
 export default {
   login,
+  signUp,
   userInfo,
   logout,
   searchJobs,
