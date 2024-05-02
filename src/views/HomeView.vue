@@ -29,7 +29,7 @@
                 <span class="white--text mb-4"
                   >You have <b class="black--text">{{jobApplications}}</b> Job Applications</span
                 >
-                <v-btn elevation="2" max-width="150" :to="{name:'myCandidatures'}"> My Candidatures</v-btn>
+                <v-btn v-if="user.roles.includes('employee')" elevation="2" max-width="150" :to="{name:'myCandidatures'}"> My Candidatures</v-btn>
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -40,12 +40,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
   data() {
     return {
       jobApplications:9
     };
   },
+  computed:{
+    ...mapState({
+      user:'user'
+    })
+  }
 };
 </script>
 
