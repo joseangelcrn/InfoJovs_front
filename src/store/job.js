@@ -49,7 +49,7 @@ const job = {
       commit('setPagination',response.data.pagination);
     },
     myCandidatures: async function ({commit,state}){
-      let response = await proxy.myCandidatures();
+      let response = await proxy.myCandidatures(state.pagination);
       commit('setCandidatures',response.data.candidatures);
       commit('setPagination',response.data.pagination);
     }

@@ -27,7 +27,7 @@
 
 <script>
 import JobPreview from "@/components/JobPreview.vue";
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   components: { JobPreview },
   data: () => ({
@@ -38,8 +38,14 @@ export default {
     ...mapActions({
       loadMyCandidatures: "job/myCandidatures",
     }),
-    onChangePage: function () {
+    ...mapMutations({
+      setCurrentPage: "job/setCurrentPage",
+    }),
+    onChangePage:async function (newCurrentPage) {
       console.log("on change page !");
+      console.log(newCurrentPage);
+      this.setCurrentPage(newCurrentPage);
+      await this.loadMyCandidatures(this.filter);
     },
     statusColor: function (statusId) {
       switch (statusId) {

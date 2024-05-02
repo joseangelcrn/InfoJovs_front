@@ -29,7 +29,7 @@
                 <span class="white--text mb-4"
                   >You have <b class="black--text">{{jobApplications}}</b> Job Applications</span
                 >
-                <v-btn elevation="2" max-width="150" to="/my_jobs"> See my jobs</v-btn>
+                <v-btn elevation="2" max-width="150" :to="{name:'myCandidatures'}"> My Candidatures</v-btn>
               </v-list-item-content>
             </v-list-item>
           </template>

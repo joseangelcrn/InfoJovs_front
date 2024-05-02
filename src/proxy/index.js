@@ -33,8 +33,11 @@ const searchJobs = async (filters) =>{
 
 };
 
-const myCandidatures = async()=>{
-  return await axios.get(host + "/candidature/my_candidatures",   defaultConfig());
+const myCandidatures = async(filters)=>{
+  const config = defaultConfig();
+  config.params = filters;
+
+  return await axios.get(host + "/candidature/my_candidatures",   config);
 }
 
 
