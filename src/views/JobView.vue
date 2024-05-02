@@ -12,7 +12,7 @@
                   x-small
                   background-color="white"
                   outlined
-                  placeholder="Key Workd"
+                  placeholder="Job Title"
                   v-model="filter.title"
                 ></v-text-field>
               </v-col>
