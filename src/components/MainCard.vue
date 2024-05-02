@@ -11,7 +11,7 @@
       <slot name="subtitle"></slot>
     </v-card-subtitle>
 
-    <v-card-text>
+    <v-card-text v-if="loading">
       <v-progress-circular
         :size="80"
         :width="9"
