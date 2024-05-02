@@ -40,13 +40,13 @@ const routes = [
     path: "/offer_job",
     name: "offerJob",
     component: JobCrudView,
-    meta:{auth:true}
+    meta:{auth:true,role:'recruiter'}
   },
   {
     path: "/my_candidatures",
     name: "myCandidatures",
     component: MyCandidaturesView,
-    meta:{auth:true}
+    meta:{auth:true,role:'employee'}
   },
   {
     path: "*",
@@ -67,7 +67,7 @@ router.beforeEach(async(to, from, next) => {
   console.log("middleware");
   let token = null;
   let data = null;
-  let roles = null;
+  let roles = [];
 
   try {
     await store.dispatch('user/info');
@@ -80,18 +80,20 @@ router.beforeEach(async(to, from, next) => {
     store.commit('user/removeToken');
   }
 
-  if (to.name == 'notFound') {
+  if (to.name == 'notFound' && to.path != '/') {
     next();
   }
-  else if (!token && to.meta.auth) {
+  
+  //Token checks
+  else if (!token && (to.meta.auth || to.path == '/')) {
     next('/login');
   }
-  else if(token && !to.meta.auth){
+  else if(token && (!to.meta.auth || to.path == '/')){
     next('/home')
   }
-  else{
-    next()
-  }
+
+  //Normal way
+  next()
 
 });
 
