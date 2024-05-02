@@ -52,7 +52,7 @@
     </v-main>
 
     <!-- No auth view -->
-    <v-main class="bgColorPrimary" v-else>
+    <v-main class="bgColorPrimary authLayout" v-else>
       <router-view />
     </v-main>
   </v-app>
@@ -95,7 +95,7 @@ export default {
         title: "My Candidatures",
         icon: "mdi-form-select",
         url: "/my_candidatures",
-        role: null,
+        role: 'employer',
       }, //Employer 
     ],
   }),
