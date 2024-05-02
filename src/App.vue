@@ -145,18 +145,6 @@ export default {
     //   onClickYes:()=>{console.log("Si modificado"); this.hideModal()},
     //   onClickNot:()=>{console.log("No modificado");this.hideModal()},
     // });
-    // let that = this;
-    // this.userInfo().catch((error) => {
-    //   that.manageModal({
-    //     title: "Error",
-    //     text: "Session expired !",
-    //     onClickYes: () => {
-    //       this.removeToken();
-    //       this.hideModal();
-    //       this.$router.push('/login')
-    //     },
-    //   });
-    // });
   },
 };
 </script>
