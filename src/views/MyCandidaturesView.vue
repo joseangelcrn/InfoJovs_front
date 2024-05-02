@@ -1,6 +1,6 @@
 <template>
   <v-container>
-    <main-card>
+    <main-card :loading="loading">
       <template #title>My Candidatures:</template>
       <template #content>
         <job-preview
@@ -31,8 +31,7 @@ import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   components: { JobPreview },
   data: () => ({
-    currentPage: 1,
-    pageLength: 50,
+    loading:true
   }),
   methods: {
     ...mapActions({
@@ -40,12 +39,16 @@ export default {
     }),
     ...mapMutations({
       setCurrentPage: "job/setCurrentPage",
+      setCandidatures:'job/setCandidatures'
     }),
     onChangePage:async function (newCurrentPage) {
       console.log("on change page !");
       console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
+      this.setCandidatures([]);
+      this.loading = true;
       await this.loadMyCandidatures(this.filter);
+      this.loading = false;
     },
     statusColor: function (statusId) {
       switch (statusId) {
@@ -70,9 +73,11 @@ export default {
   computed: {
     ...mapState(["job"]),
   },
-  mounted() {
-    console.log("mounted !!");
-    this.loadMyCandidatures();
+  async mounted() {    
+    this.loading  = true;
+    this.setCandidatures([]);
+    await this.loadMyCandidatures();
+    this.loading  = false;
   },
 };
 </script>
