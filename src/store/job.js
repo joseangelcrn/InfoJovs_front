@@ -9,10 +9,12 @@ const job = {
       perPage:5,
       lastPage:0,
       totalItems:0
-      
-    }
+    },
+    candidatures:[]
   }),
   mutations: {
+    
+    //Jobs
     setJobs: function (state, data) {
       state.data = data;
     },
@@ -23,6 +25,12 @@ const job = {
       let filteredData = state.data.filter((item) => item.id !== id);
       state.data = filteredData;
     },
+
+    //Candidatures
+    setCandidatures : function(state,data){
+      state.candidatures = data;
+    },
+    //Jobs Pagination 
     setPagination: function (state,data){
       state.pagination = data;
     },
@@ -40,6 +48,11 @@ const job = {
       commit('setJobs',response.data.jobs);
       commit('setPagination',response.data.pagination);
     },
+    myCandidatures: async function ({commit,state}){
+      let response = await proxy.myCandidatures();
+      commit('setCandidatures',response.data.candidatures);
+      commit('setPagination',response.data.pagination);
+    }
   },
 };
 
