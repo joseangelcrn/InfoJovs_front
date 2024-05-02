@@ -33,21 +33,15 @@ const searchJobs = async (filters) =>{
 
 };
 
-const getUserById = async (id) => {};
+const myCandidatures = async()=>{
+  return await axios.get(host + "/candidature/my_candidatures",   defaultConfig());
+}
 
-const getJobById = async (id) => {};
-
-const storeJob = async () => {};
-
-const deleteJob = async (id) => {};
 
 export default {
   login,
   userInfo,
   logout,
   searchJobs,
-  getUserById,
-  getJobById,
-  storeJob,
-  deleteJob,
+  myCandidatures
 };
