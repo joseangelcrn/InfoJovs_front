@@ -4,7 +4,7 @@
       <v-row d-flex justify="center">
         <v-col cols="10">
           <main-card>
-            <template #title>Create a Job Offer:</template>
+            <template #title>{{id ? 'Edit': 'Create'}} a Job Offer:</template>
             <template #content>
               <v-row>
                 <v-col>
