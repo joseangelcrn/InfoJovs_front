@@ -55,6 +55,13 @@ const createJob = async(data)=>{
   return await axios.post(host + "/job", null,  config);
 }
 
+const updateJob = async(data)=>{
+  const config = defaultConfig();
+  config.params = data;
+  console.log('params backend ',config);
+  return await axios.put(host + "/job", null,  config);
+}
+
 const getJobById = async (id) => {
   return await axios.get(host + "/job/"+id,  defaultConfig());
 }
@@ -74,12 +81,17 @@ const myCandidatures = async(filters)=>{
 
 
 export default {
+
   login,
   signUp,
-  userInfo,
   logout,
+
+  userInfo,
+
   searchJobs,
-  myCandidatures,
+  getJobById,
   createJob,
-  getJobById
+  updateJob,
+
+  myCandidatures,
 };

@@ -5,6 +5,7 @@ const modal = {
     title: "Default title",
     text: "Default text d",
     textBtnYes:"Ok",
+    type:"info",
     onClickYes:()=>{ console.log('default on click yes !');},
     textBtnNot:null,
     onClickNot:()=>{console.log('default on click Not !')}
@@ -35,6 +36,9 @@ const modal = {
       state.onClickYes = config.onClickYes;
       state.onClickNot = config.onClickNot;
       state.show = true;
+      if (config.type) {
+        state.type = config.type;        
+      }
     }
     
   },

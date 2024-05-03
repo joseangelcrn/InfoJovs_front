@@ -80,9 +80,9 @@
               </v-row>
             </template>
             <template #actions>
-              <v-btn v-on:click="onSave" small class="primary--text"
-                >{{id ? 'Update' : 'Save'}}</v-btn
-              >
+              <v-btn v-on:click="onSave" small class="primary--text">{{
+                id ? "Update" : "Save"
+              }}</v-btn>
             </template>
           </main-card>
         </v-col>
@@ -92,12 +92,12 @@
 </template>
 
 <script>
-import router from '@/router';
-import { mapMutations } from 'vuex';
+import router from "@/router";
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
-      id:null,
+      id: null,
       title: "",
       description: "",
       tags: [],
@@ -130,26 +130,43 @@ export default {
       } else {
         console.log("save Job !");
         try {
-          await this.$proxy.createJob({
-            title: this.title,
-            description: this.description,
-            tags: this.tags,
-          });
+          if (this.id) {
+            let response = await this.$proxy.updateJob({
+              id: this.id,
+              title: this.title,
+              description: this.description,
+              tags: this.tags,
+            });
+            var message = response.data.message;
+
+          } else {
+            let response = await this.$proxy.createJob({
+              title: this.title,
+              description: this.description,
+              tags: this.tags,
+            });
+            var message = response.data.message;
+
+          }
+
           this.manageModal({
             title: "Info",
-            text: "Your Job has been successfully created",
+            text: message,
             onClickYes: () => {
               this.hideModal();
-              this.$router.push({name:'home'});
-            }
+              this.$router.push({ name: "home" });
+            },
           });
         } catch (error) {
+          var message = error.response.data.message ?? "Something was wrong. Please, try again later.";
+
           this.manageModal({
             title: "Error",
-            text: "Something was wrong. Try again.",
+            type:'error',
+            text:message,
             onClickYes: () => {
               this.hideModal();
-            }
+            },
           });
         }
       }
@@ -162,16 +179,16 @@ export default {
       this.tags.splice(this.tags.indexOf(item), 1);
     },
   },
-  mounted:async function() {
-    if (typeof this.$route.params.id !== 'undefined') {
+  mounted: async function () {
+    if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
       let response = await this.$proxy.getJobById(this.id);
       console.log(response);
       this.title = response.data.job.title;
       this.description = response.data.job.description;
-      this.tags =  this.$common.pluck(response.data.job.tags,'name')
+      this.tags = this.$common.pluck(response.data.job.tags, "name");
     }
-  }
+  },
 };
 </script>
 
