@@ -63,20 +63,19 @@
               <v-row>
                 <v-col>
                   <v-textarea
-                  v-model="description"
-                  :hint="'Describe extensively information about job. Such as required experience , which technologies you need to be experienced,retributions..'"
-                  solo
-                  outlined
-                  placeholder="Job description"
-                  background-color="white"
-                  :error="errors.description != null"
-                  :error-messages="errors.description"
-                  
-                >
-                  <template #message="{ message }">
-                    <b class="white rounded-pill pa-3">{{ message }}</b>
-                  </template>
-                </v-textarea>
+                    v-model="description"
+                    :hint="'Describe extensively information about job. Such as required experience , which technologies you need to be experienced,retributions..'"
+                    solo
+                    outlined
+                    placeholder="Job description"
+                    background-color="white"
+                    :error="errors.description != null"
+                    :error-messages="errors.description"
+                  >
+                    <template #message="{ message }">
+                      <b class="white rounded-pill pa-3">{{ message }}</b>
+                    </template>
+                  </v-textarea>
                 </v-col>
               </v-row>
             </template>
@@ -93,54 +92,73 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
       title: "",
       description: "",
-      tags:[],
-      items:[],
+      tags: [],
+      items: [],
       errors: {
         title: null,
         description: null,
-        tags:null
+        tags: null,
       },
     };
   },
   methods: {
+    ...mapMutations({
+      manageModal: "modal/manageModal",
+      hideModal: "modal/hide",
+    }),
     onSave: async function () {
       this.errors = {
         title: null,
         description: null,
-        tags:null
+        tags: null,
       };
 
       if (this.title.trim().length === 0) {
         this.errors.title = "Title can not be empty.";
-      } 
-      else if(this.tags.length < 3){
-        this.errors.tags = "Please add, at least, 3 tags."
-      }
-      else if (this.description.trim().length === 0) {
+      } else if (this.tags.length < 3) {
+        this.errors.tags = "Please add, at least, 3 tags.";
+      } else if (this.description.trim().length === 0) {
         this.errors.description = "Description can not be empty";
-      }
-      else {
+      } else {
         console.log("save Job !");
-        let response = await this.$proxy.createJob({
-          title:this.title,
-          description:this.description,
-          tags:this.tags
-        });
-        console.log('response ',response);
+        try {
+          await this.$proxy.createJob({
+            title: this.title,
+            description: this.description,
+            tags: this.tags,
+          });
+          this.manageModal({
+            title: "Info",
+            text: "Your Job has been successfully created",
+            onClickYes: () => {
+              this.hideModal();
+              this.$router.push({name:'home'});
+            }
+          });
+        } catch (error) {
+          this.manageModal({
+            title: "Error",
+            text: "Something was wrong. Try again.",
+            onClickYes: () => {
+              this.hideModal();
+            }
+          });
+        }
       }
     },
     onChangeTags: function (data) {
-      let newTag = this.tags[this.tags.length-1];
+      let newTag = this.tags[this.tags.length - 1];
     },
-    removeTag: function(item){
-      console.log('remove tag');
-      this.tags.splice(this.tags.indexOf(item), 1)
-    }
+    removeTag: function (item) {
+      console.log("remove tag");
+      this.tags.splice(this.tags.indexOf(item), 1);
+    },
   },
 };
 </script>
