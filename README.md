@@ -7,6 +7,31 @@
 ## An infojobs app based (in progress..) 
 
 
+<hr>
+
+An application with two main roles ( **Recruiter** and **Employee** )  where you can **offer jobs** if you are  Recruiter or **to apply for jobs** if are an Employee.
+
+
+### **Recruiter**
+
+- [ ] You can create offers
+- [ ] You can close your offers 
+- [ ] See how many employees have applied to the offer
+- [ ] Change status of candidatures for employees who are applied in your own offers
+
+
+### **Employee**
+
+- [ ] You can apply offers
+- [x] See your candidatures status
+- [ ] You can create a dynamic CV who recruiters will be able to see to get more information about your professional profile
+- [ ] You can search jobs filtering by different fields
+
+      
+<hr>
+
+
+
 # Setup 
 
 ## .Env 
