@@ -25,40 +25,6 @@
                     </template>
                   </v-text-field>
                 </v-col>
-                <v-col>
-                  <v-combobox
-                    v-model="tags"
-                    :items="items"
-                    chips
-                    clearable
-                    hint="Tags which describes job"
-                    multiple
-                    solo
-                    dense
-                    @change="onChangeTags"
-                    :error="errors.tags != null"
-                    :error-messages="errors.tags"
-                  >
-                    <template
-                      v-slot:selection="{ attrs, item, select, selected }"
-                    >
-                      <v-chip
-                        color="primary"
-                        v-bind="attrs"
-                        :input-value="selected"
-                        close
-                        @click="select"
-                        @click:close="removeTag(item)"
-                      >
-                        <strong>{{ item }}</strong
-                        >&nbsp;
-                      </v-chip>
-                    </template>
-                    <template #message="{ message }">
-                      <b class="white rounded-pill pa-3">{{ message }}</b>
-                    </template>
-                  </v-combobox>
-                </v-col>
               </v-row>
               <v-row>
                 <v-col>
@@ -78,6 +44,44 @@
                       <b class="white rounded-pill pa-3">{{ message }}</b>
                     </template>
                   </v-textarea>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-combobox
+                    v-model="tags"
+                    :items="items"
+                    chips
+                    clearable
+                    hint="Tags which describes job"
+                    multiple
+                    solo
+                    dense
+                    @change="onChangeTags"
+                    :error="errors.tags != null"
+                    :error-messages="errors.tags"
+                    
+                  >
+                    <template
+                      v-slot:selection="{ attrs, item, select, selected }"
+                    >
+                      <v-chip
+                        class="my-2"
+                        color="primary"
+                        v-bind="attrs"
+                        :input-value="selected"
+                        close
+                        @click="select"
+                        @click:close="removeTag(item)"
+                      >
+                        <strong>{{ item }}</strong
+                        >&nbsp;
+                      </v-chip>
+                    </template>
+                    <template #message="{ message }">
+                      <b class="white rounded-pill pa-3">{{ message }}</b>
+                    </template>
+                  </v-combobox>
                 </v-col>
               </v-row>
             </template>
@@ -125,13 +129,14 @@ export default {
 
       if (this.title.trim().length === 0) {
         this.errors.title = "Title can not be empty.";
-      } else if (this.tags.length < 3) {
-        this.errors.tags = "Please add, at least, 3 tags.";
       } else if (this.description.trim().length === 0) {
         this.errors.description = "Description can not be empty";
       }
       else if(this.description.length > 2000){
         this.errors.description = "Max characters : 2000";
+      }
+      else if (this.tags.length < 3) {
+        this.errors.tags = "Please add, at least, 3 tags.";
       }
       else {
         console.log("save Job !");
