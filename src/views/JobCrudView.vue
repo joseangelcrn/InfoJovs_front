@@ -71,6 +71,8 @@
                     background-color="white"
                     :error="errors.description != null"
                     :error-messages="errors.description"
+                    counter
+                    :height="textAreaHeight"
                   >
                     <template #message="{ message }">
                       <b class="white rounded-pill pa-3">{{ message }}</b>
@@ -179,6 +181,19 @@ export default {
       this.tags.splice(this.tags.indexOf(item), 1);
     },
   },
+  computed:{
+    textAreaHeight(){
+      let length = this.description.length;
+      if (length <= 300) {
+        return 250;
+      }
+      else if (length > 300 && length <= 600 ) {
+        return 400;
+      }
+
+      return 600;
+    }
+  },
   mounted: async function () {
     if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
@@ -187,6 +202,7 @@ export default {
       this.title = response.data.job.title;
       this.description = response.data.job.description;
       this.tags = this.$common.pluck(response.data.job.tags, "name");
+      console.log('length = '+this.description.length);
     }
   },
 };
