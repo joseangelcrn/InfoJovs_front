@@ -4,10 +4,10 @@ import VueRouter from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import HomeView from "@/views/HomeView.vue";
 import NotFound from "@/views/NotFound.vue";
-import JobView from "@/views/JobView.vue";
 import JobCrudView from "@/views/JobCrudView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import MyCandidaturesView from "@/views/MyCandidaturesView.vue";
+import JobFinderView from "@/views/JobFinderView.vue";
 
 Vue.use(VueRouter);
 
@@ -33,7 +33,7 @@ const routes = [
   {
     path: "/jobs",
     name: "jobs",
-    component: JobView,
+    component: JobFinderView,
     meta:{auth:true}
   },
   {

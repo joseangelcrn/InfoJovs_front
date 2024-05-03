@@ -69,7 +69,7 @@ export default {
     group: null,
     entries: [
       {
-        title: "Jobs",
+        title: "Jobs Finder",
         icon: "mdi-magnify-expand",
         url: "/jobs",
         role: null,
