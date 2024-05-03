@@ -13,6 +13,7 @@ const defaultConfig = ()=>{
   return config;
 };
 
+//Auth... (+)
 const login = async (email, password) => {
   return await axios.post(host + "/login", null, {
     params: { email, password },
@@ -26,15 +27,19 @@ const signUp = async (data) => {
   });
 };
 
-
-const userInfo = async () => {
-  return await axios.get(host + "/user/info",   defaultConfig());
-};
-
 const logout = async () => {
   return await axios.post(host + "/user/logout", null,defaultConfig());
 };
 
+//Auth... (-)
+
+//User Info (+)
+const userInfo = async () => {
+  return await axios.get(host + "/user/info",   defaultConfig());
+};
+//User Info (-)
+
+//Jobs (+)
 const searchJobs = async (filters) =>{
   const config = defaultConfig();
   config.params = filters;
@@ -43,12 +48,26 @@ const searchJobs = async (filters) =>{
 
 };
 
+const createJob = async(data)=>{
+  const config = defaultConfig();
+  config.params = data;
+  console.log('params backend ',config);
+  return await axios.post(host + "/job", null,  config);
+}
+
+//Jobs (-)
+
+//Candidatures (+)
+
 const myCandidatures = async(filters)=>{
   const config = defaultConfig();
   config.params = filters;
 
   return await axios.get(host + "/candidature/my_candidatures",   config);
 }
+
+//Candidatures (-)
+
 
 
 export default {
@@ -57,5 +76,6 @@ export default {
   userInfo,
   logout,
   searchJobs,
-  myCandidatures
+  myCandidatures,
+  createJob
 };
