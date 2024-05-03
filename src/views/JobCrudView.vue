@@ -129,7 +129,11 @@ export default {
         this.errors.tags = "Please add, at least, 3 tags.";
       } else if (this.description.trim().length === 0) {
         this.errors.description = "Description can not be empty";
-      } else {
+      }
+      else if(this.description.length > 2000){
+        this.errors.description = "Max characters : 2000";
+      }
+      else {
         console.log("save Job !");
         try {
           if (this.id) {
