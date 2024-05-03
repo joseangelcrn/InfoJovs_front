@@ -11,11 +11,11 @@
                 color="grey"
                 class="mr-10"
               ></v-list-item-avatar>
-
               <v-list-item-content class="white--text">
                 <div class="text-overline mb-4 white--text">
                   José Ángel Cabeza Rodiguez-Navas
                 </div>
+
                 <v-list-item-title class="text-h5 mb-1">
                   Full-Stack Developer
                 </v-list-item-title>
@@ -25,11 +25,25 @@
               </v-list-item-content>
             </v-list-item>
             <v-list-item>
+              <v-chip color="orange" label>
+                <b>Roles:&nbsp;&nbsp; </b> {{ user.roles.map((role)=>($common.capitalizeFirstLetter(role))).join(",") }}
+              </v-chip>
+            </v-list-item>
+            <v-divider class="my-2"></v-divider>
+            <v-list-item>
               <v-list-item-content>
                 <span class="white--text mb-4"
-                  >You have <b class="black--text">{{jobApplications}}</b> Job Applications</span
+                  >You have <b class="black--text">{{ jobApplications }}</b> Job
+                  Applications</span
                 >
-                <v-btn v-if="user.roles.includes('employee')" elevation="2" max-width="150" :to="{name:'myCandidatures'}"> My Candidatures</v-btn>
+                <v-btn
+                  v-if="user.roles.includes('employee')"
+                  elevation="2"
+                  max-width="150"
+                  :to="{ name: 'myCandidatures' }"
+                >
+                  My Candidatures</v-btn
+                >
               </v-list-item-content>
             </v-list-item>
           </template>
@@ -40,18 +54,18 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex";
 export default {
   data() {
     return {
-      jobApplications:9
+      jobApplications: 9,
     };
   },
-  computed:{
+  computed: {
     ...mapState({
-      user:'user'
-    })
-  }
+      user: "user",
+    }),
+  },
 };
 </script>
 
