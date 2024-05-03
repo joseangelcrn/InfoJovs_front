@@ -1,68 +1,58 @@
 <template>
   <v-app>
-    <!-- Auth view -->
-    <v-main v-if="user.token">
-      <v-card class="mx-auto overflow-hidden authLayout">
-        <v-app-bar color="primary" dark>
-          <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
+    <v-main>
+      <v-card class="mx-auto overflow-hidden  authLayout" :color="user.token ? 'white' :'primary'">
+        <template v-if="user.token">
+          <v-app-bar color="primary" dark>
+            <v-app-bar-nav-icon @click="drawer = true"></v-app-bar-nav-icon>
 
-          <v-toolbar-title
-            >InfoJovs <b v-if="general.title">| {{ general.title }}</b>
-          </v-toolbar-title>
-        </v-app-bar>
-
-        <v-navigation-drawer v-model="drawer" absolute temporary>
-          <v-list nav dense>
-            <v-list-item-group
-              v-model="group"
-              active-class="primary--text text--accent-4"
-            >
-              <v-list-item to="/home" v-on:click="onClickNavLink('Home')">
-                <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>Home</v-list-item-title>
-              </v-list-item>
-
-              <v-list-item
-                v-for="(entry, index) in entries"
-                :key="index"
-                :to="entry.url"
-                :disabled="mustDisabled(entry)"
-                v-on:click="onClickNavLink(entry.title)"
+            <v-toolbar-title
+              >InfoJovs <b v-if="general.title">| {{ general.title }}</b>
+            </v-toolbar-title>
+          </v-app-bar>
+          <v-navigation-drawer v-model="drawer" absolute temporary>
+            <v-list nav dense>
+              <v-list-item-group
+                v-model="group"
+                active-class="primary--text text--accent-4"
               >
-                <v-list-item-icon>
-                  <v-icon>{{ entry.icon }}</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>{{ entry.title }}</v-list-item-title>
-              </v-list-item>
+                <v-list-item to="/home" v-on:click="onClickNavLink('Home')">
+                  <v-list-item-icon>
+                    <v-icon>mdi-home</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>Home</v-list-item-title>
+                </v-list-item>
 
-              <v-list-item v-on:click="logout">
-                <v-list-item-icon>
-                  <v-icon>mdi-logout</v-icon>
-                </v-list-item-icon>
-                <v-list-item-title>Logout</v-list-item-title>
-              </v-list-item>
-            </v-list-item-group>
-          </v-list>
-        </v-navigation-drawer>
+                <v-list-item
+                  v-for="(entry, index) in entries"
+                  :key="index"
+                  :to="entry.url"
+                  :disabled="mustDisabled(entry)"
+                  v-on:click="onClickNavLink(entry.title)"
+                >
+                  <v-list-item-icon>
+                    <v-icon>{{ entry.icon }}</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>{{ entry.title }}</v-list-item-title>
+                </v-list-item>
+
+                <v-list-item v-on:click="logout">
+                  <v-list-item-icon>
+                    <v-icon>mdi-logout</v-icon>
+                  </v-list-item-icon>
+                  <v-list-item-title>Logout</v-list-item-title>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
+          </v-navigation-drawer>
+        </template>
         <router-view />
         <modal />
       </v-card>
     </v-main>
-
-    <!-- No auth view -->
-    <v-main class="bgColorPrimary authLayout" v-else>
-      <router-view />
-    <modal />
-    </v-main>
   </v-app>
 </template>
 <style scoped>
-.bgColorPrimary {
-  background-color: #03a9f4;
-}
-
 .authLayout {
   height: 100%;
   background: #03a8f41b;
@@ -70,8 +60,6 @@
 </style>
 <script>
 import { mapActions, mapMutations, mapState } from "vuex";
-import Modal from "./components/Modal.vue";
-import router from "./router";
 
 export default {
   name: "App",
@@ -96,8 +84,8 @@ export default {
         title: "My Candidatures",
         icon: "mdi-form-select",
         url: "/my_candidatures",
-        role: 'employee',
-      }, //Employer 
+        role: "employee",
+      }, //Employer
     ],
   }),
   methods: {
@@ -109,11 +97,11 @@ export default {
     }),
     ...mapActions({
       userInfo: "user/info",
-      userLogout:'user/logout'
+      userLogout: "user/logout",
     }),
     logout: async function () {
-     await this.userLogout();
-     this.$router.push({ name: "login" });
+      await this.userLogout();
+      this.$router.push({ name: "login" });
     },
     mustDisabled: function (entry) {
       let entryRole = entry.role;
@@ -137,7 +125,6 @@ export default {
     //Resolve title:
     this.$common.setTitle();
 
-    
     //Example how work custom modal =>
     // this.manageModal({
     //   title:'Titulo',
