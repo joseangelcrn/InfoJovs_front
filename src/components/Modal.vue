@@ -6,7 +6,7 @@
   >
     <template>
       <v-card>
-        <v-toolbar color="primary" dark dense>{{ modal.title }}</v-toolbar>
+        <v-toolbar :color="colorType" dark dense>{{ modal.title }}</v-toolbar>
         <v-card-text class="mt-3 text-center text-h5">
           {{ modal.text }}
         </v-card-text>
@@ -15,7 +15,7 @@
           v-if="modal.textBtnYes && !modal.textBtnNot"
           class="justify-end"
         >
-          <v-btn class="primary" text @click="modal.onClickYes()">{{
+          <v-btn :class="colorTypeButton" text @click="modal.onClickYes()">{{
             modal.textBtnYes
           }}</v-btn>
         </v-card-actions>
@@ -61,6 +61,22 @@ export default {
   },
   computed: {
     ...mapState(["modal"]),
+    colorType(){
+      if (this.modal.type == 'error') {
+        console.log('red');
+        return 'red';
+      }
+      
+      console.log('primary');
+      return 'primary';
+    },
+    colorTypeButton(){
+      if (this.modal.type === 'error') {
+        return 'yellow';
+      }
+
+      return 'primary'
+    }
   },
 };
 </script>
