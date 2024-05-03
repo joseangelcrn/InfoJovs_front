@@ -29,7 +29,10 @@ const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+const pluck = (arr, key) => arr.map(i => i[key]);
+
 export default {
   setTitle,
   capitalizeFirstLetter,
+  pluck
 };

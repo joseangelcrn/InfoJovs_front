@@ -37,7 +37,7 @@ const routes = [
     meta:{auth:true}
   },
   {
-    path: "/offer_job",
+    path: "/offer_job/:id?",
     name: "offerJob",
     component: JobCrudView,
     meta:{auth:true,role:'recruiter'}

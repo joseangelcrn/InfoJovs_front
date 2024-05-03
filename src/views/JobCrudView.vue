@@ -81,7 +81,7 @@
             </template>
             <template #actions>
               <v-btn v-on:click="onSave" small class="primary--text"
-                >Save</v-btn
+                >{{id ? 'Update' : 'Save'}}</v-btn
               >
             </template>
           </main-card>
@@ -92,10 +92,12 @@
 </template>
 
 <script>
+import router from '@/router';
 import { mapMutations } from 'vuex';
 export default {
   data() {
     return {
+      id:null,
       title: "",
       description: "",
       tags: [],
@@ -160,6 +162,16 @@ export default {
       this.tags.splice(this.tags.indexOf(item), 1);
     },
   },
+  mounted:async function() {
+    if (typeof this.$route.params.id !== 'undefined') {
+      this.id = this.$route.params.id;
+      let response = await this.$proxy.getJobById(this.id);
+      console.log(response);
+      this.title = response.data.job.title;
+      this.description = response.data.job.description;
+      this.tags =  this.$common.pluck(response.data.job.tags,'name')
+    }
+  }
 };
 </script>
 
