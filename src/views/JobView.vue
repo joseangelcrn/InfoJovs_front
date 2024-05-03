@@ -8,6 +8,7 @@
             <v-row>
               <v-col sm="3" md="3" lg="3" cols="12">
                 <v-text-field
+                  solo
                   dense
                   x-small
                   background-color="white"
@@ -18,6 +19,7 @@
               </v-col>
               <v-col sm="3" md="3" lg="3" cols="12">
                 <v-text-field
+                  solo
                   dense
                   background-color="white"
                   outlined

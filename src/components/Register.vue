@@ -6,6 +6,7 @@
     <template #content>
       <h1 class="primary--text my-3">Sign up</h1>
       <v-text-field
+        solo
         :error="errors.name.length > 0"
         :error-messages="errors.name"
         error-count="1"
@@ -15,6 +16,7 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.firstSurname.length > 0"
         :error-messages="errors.firstSurname"
         error-count="1"
@@ -24,6 +26,7 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.secondSurname.length > 0"
         :error-messages="errors.secondSurname"
         error-count="1"
@@ -33,6 +36,7 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.email.length > 0"
         :error-messages="errors.email"
         error-count="1"
@@ -43,6 +47,7 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.password.length > 0"
         :error-messages="errors.password"
         error-count="1"
@@ -53,6 +58,7 @@
         @keypress.enter="register"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.repeatPassword.length > 0"
         :error-messages="errors.repeatPassword"
         error-count="1"

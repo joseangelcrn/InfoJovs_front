@@ -7,15 +7,7 @@
       }}</v-list-item-subtitle>
       <v-list-item-subtitle>{{ description }}</v-list-item-subtitle>
       <v-list-item-subtitle class="mt-1">
-        
-        <v-chip v-for="(tag,index) in tags" :key="index" class="mr-1" small color="primary" >{{tag.name}}</v-chip>
-        <!-- <v-chip class="mr-1" small color="primary" >Web Developer</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >Laravel</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >PHP</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >JavaScript</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >HTML</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >CSS</v-chip> -->
-        <!-- <v-chip class="mr-1" small color="primary" >Vue2</v-chip> -->
+        <v-chip  v-for="(tag,index) in tags" :key="index" class="mr-1" small color="primary" >{{tag.name}}</v-chip>
       </v-list-item-subtitle>
     </v-list-item-content>
     <v-list-item-icon class="mt-6">

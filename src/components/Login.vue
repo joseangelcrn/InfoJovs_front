@@ -6,6 +6,7 @@
     <template #content>
       <h1 class="primary--text my-3">Login</h1>
       <v-text-field
+        solo
         :error="errors.email.length > 0"
         :error-messages="errors.email"
         error-count="1"
@@ -15,6 +16,7 @@
         @keypress.enter="handleLogin"
       ></v-text-field>
       <v-text-field
+        solo
         :error="errors.password.length > 0"
         :error-messages="errors.password"
         error-count="1"
