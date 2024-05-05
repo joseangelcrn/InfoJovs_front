@@ -91,6 +91,7 @@ export default {
     }),
     ...mapMutations({
       setCurrentPage: "job/setCurrentPage",
+      setJobs:'job/setJobs'
     }),
     onSearch: async function () {
       await this.setCurrentPage(1);
@@ -107,6 +108,9 @@ export default {
   },
   computed: {
     ...mapState(["job",'user']),
+  },
+  beforeMount() {
+    this.setJobs([]);
   },
 };
 </script>
