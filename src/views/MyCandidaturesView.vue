@@ -6,7 +6,8 @@
         <job-preview
           v-for="(candidature, index) in job.candidatures"
           :key="index"
-          :job="item"
+          :job="candidature.job"
+          :candStatus="candidature.status"
         />
       </template>
       <template #actions>

@@ -2,8 +2,8 @@
   <v-list-item three-line class="white rounded mt-2">
     <v-list-item-content>
       <v-list-item-title>{{ job.title }}</v-list-item-title>
-      <v-list-item-subtitle v-if="job.status" :class="statusColor  + '--text'">{{
-        job.status.name
+      <v-list-item-subtitle v-if="candStatus" :class="statusColor(candStatus.id)  + '--text'">{{
+        candStatus.name
       }}</v-list-item-subtitle>
       <v-list-item-subtitle>{{ job.description }}</v-list-item-subtitle>
       <v-list-item-subtitle class="mt-1">
@@ -24,6 +24,10 @@ export default {
     job: {
       type: Object,
       required: true,
+    },
+    candStatus:{
+      type:Object,
+      required:false
     }
   },
 
