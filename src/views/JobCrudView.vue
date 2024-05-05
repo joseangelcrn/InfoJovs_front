@@ -40,6 +40,9 @@
                     counter
                     :height="textAreaHeight"
                   >
+                    <template #counter="{props}">
+                      <b class="white--text">{{ props.value }}</b>
+                    </template>
                     <template #message="{ message }">
                       <b class="white rounded-pill pa-3">{{ message }}</b>
                     </template>
