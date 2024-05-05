@@ -137,5 +137,8 @@ export default {
     //   onClickNot:()=>{console.log("No modificado");this.hideModal()},
     // });
   },
+  updated() {
+    this.$common.setTitle();    
+  },
 };
 </script>
