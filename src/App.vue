@@ -84,13 +84,7 @@ export default {
         icon: "mdi-form-select",
         url: "/my_candidatures",
         role: "employee",
-      }, //Employer
-      {
-        title: "My Jobs",
-        icon: "mdi-briefcase",
-        url: "/my_jobs",
-        role: "recruiter",
-      }, //Recruiter
+      } //Employer
     ],
   }),
   methods: {
