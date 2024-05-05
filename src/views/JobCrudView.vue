@@ -102,7 +102,7 @@
 
 <script>
 import router from "@/router";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState } from "vuex";
 export default {
   data() {
     return {
@@ -194,6 +194,9 @@ export default {
     },
   },
   computed:{
+    ...mapState({
+      user:'user'
+    }),
     textAreaHeight(){
       let length = this.description.length;
       if (length <= 300) {
@@ -210,11 +213,23 @@ export default {
     if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
       let response = await this.$proxy.getJobById(this.id);
-      console.log(response);
-      this.title = response.data.job.title;
-      this.description = response.data.job.description;
-      this.tags = this.$common.pluck(response.data.job.tags, "name");
-      console.log('length = '+this.description.length);
+      let {job} = response.data;
+      console.log(job.recruiter_id,this.user.data.id);
+      if (job.recruiter_id != this.user.data.id) {
+        
+        this.manageModal({
+            title: "Error",
+            type:'error',
+            text:'Forbidden - Permission denied',
+            onClickYes: () => {
+              router.push({name:'home'});
+              this.hideModal();
+            },
+          });
+      }
+      this.title = job.title;
+      this.description = job.description;
+      this.tags = this.$common.pluck(job.tags, "name");
     }
   },
 };
