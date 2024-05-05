@@ -60,6 +60,13 @@
                           </v-btn>
                         </v-toolbar-items>
                       </v-toolbar>
+                      <v-card-text class="mt-3">
+                        <v-row>
+                          <v-col>
+                            <h1>Offer stats.. in progres...</h1>
+                          </v-col>
+                        </v-row>
+                      </v-card-text>
                     </v-card>
                   </v-dialog>
                 </v-col>
