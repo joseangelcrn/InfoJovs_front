@@ -4,7 +4,9 @@
       <v-row d-flex justify="center">
         <v-col cols="10">
           <main-card>
-            <template #title>{{id ? 'Edit': 'Create'}} a Job Offer:</template>
+            <template #title
+              >{{ id ? "Edit" : "Create" }} a Job Offer:</template
+            >
             <template #content>
               <v-row>
                 <v-col>
@@ -40,7 +42,7 @@
                     counter
                     :height="textAreaHeight"
                   >
-                    <template #counter="{props}">
+                    <template #counter="{ props }">
                       <b class="white--text">{{ props.value }}</b>
                     </template>
                     <template #message="{ message }">
@@ -63,7 +65,6 @@
                     @change="onChangeTags"
                     :error="errors.tags != null"
                     :error-messages="errors.tags"
-                    
                   >
                     <template
                       v-slot:selection="{ attrs, item, select, selected }"
@@ -134,14 +135,11 @@ export default {
         this.errors.title = "Title can not be empty.";
       } else if (this.description.trim().length === 0) {
         this.errors.description = "Description can not be empty";
-      }
-      else if(this.description.length > 2000){
+      } else if (this.description.length > 2000) {
         this.errors.description = "Max characters : 2000";
-      }
-      else if (this.tags.length < 3) {
+      } else if (this.tags.length < 3) {
         this.errors.tags = "Please add, at least, 3 tags.";
-      }
-      else {
+      } else {
         console.log("save Job !");
         try {
           if (this.id) {
@@ -152,7 +150,6 @@ export default {
               tags: this.tags,
             });
             var message = response.data.message;
-
           } else {
             let response = await this.$proxy.createJob({
               title: this.title,
@@ -160,7 +157,6 @@ export default {
               tags: this.tags,
             });
             var message = response.data.message;
-
           }
 
           this.manageModal({
@@ -172,12 +168,14 @@ export default {
             },
           });
         } catch (error) {
-          var message = error.response.data.message ?? "Something was wrong. Please, try again later.";
+          var message =
+            error.response.data.message ??
+            "Something was wrong. Please, try again later.";
 
           this.manageModal({
             title: "Error",
-            type:'error',
-            text:message,
+            type: "error",
+            text: message,
             onClickYes: () => {
               this.hideModal();
             },
@@ -193,43 +191,54 @@ export default {
       this.tags.splice(this.tags.indexOf(item), 1);
     },
   },
-  computed:{
+  computed: {
     ...mapState({
-      user:'user'
+      user: "user",
     }),
-    textAreaHeight(){
+    textAreaHeight() {
       let length = this.description.length;
       if (length <= 300) {
         return 250;
-      }
-      else if (length > 300 && length <= 600 ) {
+      } else if (length > 300 && length <= 600) {
         return 400;
       }
 
       return 600;
-    }
+    },
   },
   mounted: async function () {
     if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
-      let response = await this.$proxy.getJobById(this.id);
-      let {job} = response.data;
-      console.log(job.recruiter_id,this.user.data.id);
-      if (job.recruiter_id != this.user.data.id) {
-        
-        this.manageModal({
+      try {
+        let response = await this.$proxy.getJobById(this.id);
+        let { job } = response.data;
+        console.log(job.recruiter_id, this.user.data.id);
+        if (job.recruiter_id != this.user.data.id) {
+          this.manageModal({
             title: "Error",
-            type:'error',
-            text:'Forbidden - Permission denied',
+            type: "error",
+            text: "Forbidden - Permission denied",
             onClickYes: () => {
-              router.push({name:'home'});
+              router.push({ name: "home" });
               this.hideModal();
             },
           });
+        }
+        this.title = job.title;
+        this.description = job.description;
+        this.tags = this.$common.pluck(job.tags, "name");
+      } catch (error) {
+        console.log('errorrr',error.response.status);
+        this.manageModal({
+          title: "Error",
+          type: "error",
+          text: "Job Not Found",
+          onClickYes: () => {
+            router.push({ name: "home" });
+            this.hideModal();
+          },
+        });
       }
-      this.title = job.title;
-      this.description = job.description;
-      this.tags = this.$common.pluck(job.tags, "name");
     }
   },
 };
