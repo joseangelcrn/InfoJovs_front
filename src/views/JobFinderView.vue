@@ -57,7 +57,7 @@
               three-line
               class="white rounded mt-2"
             >
-              <job-preview :job="item"/>
+              <job-preview :job="item" :canEdit="item.recruiter_id === user.data.id"/>
             </v-list-item>
           </template>
           <template #actions>
@@ -106,7 +106,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["job"]),
+    ...mapState(["job",'user']),
   },
 };
 </script>

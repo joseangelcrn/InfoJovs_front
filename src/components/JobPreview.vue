@@ -12,16 +12,25 @@
     </v-list-item-content>
     <v-list-item-icon class="mt-6">
       <v-btn icon class="align-center" :to="{name:'jobDetails',params:{id:job.id}}" > <v-icon>mdi-eye</v-icon> </v-btn>
+      <v-btn v-if="canEdit" icon class="align-center" :to="{name:'offerJob',params:{id:job.id}}" > <v-icon>mdi-pencil</v-icon> </v-btn>
     </v-list-item-icon>
   </v-list-item>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
   name: "job-preview",
-  props: ['job'],
+  props: {
+    job: {
+      type: Object,
+      required: true,
+    }
+  },
 
   data() {
-    return {};
+    return {
+      canEdit:false
+    };
   },
   methods: {
     statusColor: function (statusId) {
@@ -44,9 +53,18 @@ export default {
           break;
       }
     },
+    refreshCanEdit: function(){
+      this.canEdit = (this.user.data.id == this.$props.job.recruiter_id);
+    }
+  },
+  computed:{
+    ...mapState(['user'])
   },
   mounted() {
-    // console.log('status',this.$props.job.status);
+    this.refreshCanEdit();
+  },
+  updated() {
+    this.refreshCanEdit();
   },
 };
 </script>
