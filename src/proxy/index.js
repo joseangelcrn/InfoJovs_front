@@ -82,6 +82,10 @@ const createCandidature = async(data)=>{
 
   return await axios.post(host + "/candidature",null,   config);
 }
+
+const infoCandidature = async(jobId)=>{
+  return await axios.get(host + "/candidature/info/"+jobId,   defaultConfig());
+}
 //Candidatures (-)
 
 
@@ -100,5 +104,6 @@ export default {
   updateJob,
 
   myCandidatures,
-  createCandidature
+  createCandidature,
+  infoCandidature
 };

@@ -4,16 +4,15 @@ const job = {
   namespaced: true,
   state: () => ({
     data: [],
-    pagination:{
-      currentPage:1,
-      perPage:5,
-      lastPage:0,
-      totalItems:0
+    pagination: {
+      currentPage: 1,
+      perPage: 5,
+      lastPage: 0,
+      totalItems: 0,
     },
-    candidatures:[]
+    candidatures: [],
   }),
   mutations: {
-    
     //Jobs
     setJobs: function (state, data) {
       state.data = data;
@@ -27,32 +26,44 @@ const job = {
     },
 
     //Candidatures
-    setCandidatures : function(state,data){
+    setCandidatures: function (state, data) {
       state.candidatures = data;
     },
-    //Jobs Pagination 
-    setPagination: function (state,data){
+    //Jobs Pagination
+    setPagination: function (state, data) {
       state.pagination = data;
     },
-    setCurrentPage: function(state,data){
-      console.log('seteo de pagina a '+data);
+    setCurrentPage: function (state, data) {
+      console.log("seteo de pagina a " + data);
       state.pagination.currentPage = data;
-    }
+    },
   },
   actions: {
-    search: async function ({ commit,state }, filter) {
-      console.log('vuex- search actions ');
-      console.log('vuex - filter ',filter);
-      let response = await proxy.searchJobs({...filter,...state.pagination})
+    search: async function ({ commit, state }, filter) {
+      console.log("vuex- search actions ");
+      console.log("vuex - filter ", filter);
+      let response = await proxy.searchJobs({ ...filter, ...state.pagination });
       console.log(response.data);
-      commit('setJobs',response.data.jobs);
-      commit('setPagination',response.data.pagination);
+      commit("setJobs", response.data.jobs);
+      commit("setPagination", response.data.pagination);
     },
-    myCandidatures: async function ({commit,state}){
+    myCandidatures: async function ({ commit, state }) {
       let response = await proxy.myCandidatures(state.pagination);
-      commit('setCandidatures',response.data.candidatures);
-      commit('setPagination',response.data.pagination);
-    }
+      commit("setCandidatures", response.data.candidatures);
+      commit("setPagination", response.data.pagination);
+    },
+    getJobById: async function ({ commit }, id) {
+      let response = await proxy.getJobById(id);
+      console.log("response - data", response.data);
+      commit("setJobs", response.data.job);
+    },
+    infoCandidature: async function ({ commit, state }, jobId = null) {
+      if (!jobId) {
+        jobId = state.data.id;
+      }
+      let response = await proxy.infoCandidature(jobId);
+      commit('setCandidatures',response.data.candidatures)
+    },
   },
 };
 
