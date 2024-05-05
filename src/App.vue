@@ -24,10 +24,9 @@
                 </v-list-item>
 
                 <v-list-item
-                  v-for="(entry, index) in entries"
+                  v-for="(entry, index) in entriesForCurrentRole"
                   :key="index"
                   :to="entry.url"
-                  :disabled="mustDisabled(entry)"
                   v-on:click="onClickNavLink(entry.title)"
                 >
                   <v-list-item-icon>
@@ -86,6 +85,12 @@ export default {
         url: "/my_candidatures",
         role: "employee",
       }, //Employer
+      {
+        title: "My Jobs",
+        icon: "mdi-briefcase",
+        url: "/my_jobs",
+        role: "recruiter",
+      }, //Recruiter
     ],
   }),
   methods: {
@@ -120,6 +125,11 @@ export default {
   },
   computed: {
     ...mapState(["user", "general"]),
+    entriesForCurrentRole(){
+      return this.entries.filter((entry)=>{
+        return this.user.roles.includes(entry.role) || !entry.role;
+      });
+    }
   },
   mounted: function () {
     //Resolve title:
