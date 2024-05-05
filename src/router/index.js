@@ -8,6 +8,7 @@ import JobCrudView from "@/views/JobCrudView.vue";
 import SignUpView from "@/views/SignUpView.vue";
 import MyCandidaturesView from "@/views/MyCandidaturesView.vue";
 import JobFinderView from "@/views/JobFinderView.vue";
+import JobDetail from "@/views/JobDetail.vue";
 
 Vue.use(VueRouter);
 
@@ -35,6 +36,13 @@ const routes = [
     name: "jobs",
     component: JobFinderView,
     meta:{auth:true}
+  },
+  {
+    path:'/job_details/:id',
+    name:'jobDetails',
+    component:JobDetail,
+    meta:{auth:true}
+    
   },
   {
     path: "/offer_job/:id?",

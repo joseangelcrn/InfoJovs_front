@@ -57,11 +57,7 @@
               three-line
               class="white rounded mt-2"
             >
-              <job-preview
-                :title="item.title"
-                :description="item.description"
-                :tags="item.tags"
-              />
+              <job-preview :job="item"/>
             </v-list-item>
           </template>
           <template #actions>

@@ -6,10 +6,7 @@
         <job-preview
           v-for="(candidature, index) in job.candidatures"
           :key="index"
-          :title="candidature.job.title"
-          :description="candidature.job.description"
-          :statusText="candidature.status.name"
-          :statusColor="statusColor(candidature.status.id)"
+          :job="item"
         />
       </template>
       <template #actions>
@@ -45,26 +42,7 @@ export default {
       console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
       await this.loadMyCandidatures(this.filter);
-    },
-    statusColor: function (statusId) {
-      switch (statusId) {
-        case 1:
-          return "blue-grey";
-          break;
-        case 2:
-          return "primary";
-          break;
-        case 3:
-          return "green";
-          break;
-        case 4:
-          return "red";
-          break;
-
-        default:
-          break;
-      }
-    },
+    } 
   },
   computed: {
     ...mapState(["job"]),
