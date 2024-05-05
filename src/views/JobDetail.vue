@@ -78,9 +78,9 @@
                 v-on:click="register"
                 small
                 class="primary--text"
-                :disabled="alreadyRegistered"
+                :disabled="job.data.alreadyRegistered"
                 :loading="loading"
-                >{{ alreadyRegistered ? "Registered" : "Register" }}</v-btn
+                >{{ job.data.alreadyRegistered ? "Registered" : "Register" }}</v-btn
               >
             </template>
           </main-card>
@@ -104,6 +104,7 @@ export default {
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
+      setAlReadyRegistered: "job/setAlreadyRegistered"
     }),
     ...mapActions({
       getJobById: "job/getJobById",
@@ -113,9 +114,9 @@ export default {
       try {
         this.loading = true;
         let response = await this.$proxy.createCandidature({
-          job_id: this.job.id,
+          job_id: this.job.data.id,
         });
-        this.alreadyRegistered = true;
+        this.setAlReadyRegistered(true);
         this.loading = false;
 
         this.manageModal({
@@ -126,6 +127,7 @@ export default {
           },
         });
       } catch (error) {
+        this.loading = false;
         console.log("error", error);
         this.manageModal({
           title: "Error",
@@ -173,7 +175,8 @@ export default {
   mounted: async function () {
     console.log("id = " + this.$route.params.id);
     try {
-      this.getJobById(this.$route.params.id);
+      await this.getJobById(this.$route.params.id);
+      console.log('job',this.job);
     } catch (error) {
       console.log("error", error);
 
@@ -186,6 +189,7 @@ export default {
         },
       });
     }
+    console.log('already = '+this.job.data.alreadyRegistered);
   },
 };
 </script>

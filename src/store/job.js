@@ -24,6 +24,9 @@ const job = {
       let filteredData = state.data.filter((item) => item.id !== id);
       state.data = filteredData;
     },
+    setAlreadyRegistered: function(state,isRegistered){
+      state.data.alreadyRegistered = isRegistered;
+    },
 
     //Candidatures
     setCandidatures: function (state, data) {
@@ -54,8 +57,9 @@ const job = {
     },
     getJobById: async function ({ commit }, id) {
       let response = await proxy.getJobById(id);
-      console.log("response - data", response.data);
-      commit("setJobs", response.data.job);
+      let job = response.data.job;
+      job.alreadyRegistered = response.data.alreadyRegistered;
+      commit("setJobs", job);
     },
     infoCandidature: async function ({ commit, state }, jobId = null) {
       if (!jobId) {
