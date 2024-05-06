@@ -17,6 +17,18 @@
                   v-model="filter.title"
                 ></v-text-field>
               </v-col>
+              <v-col class="d-flex"  sm="3" md="3" lg="3" cols="12">
+                <v-checkbox
+                  color="blue-darken-4"
+                  class="mt-0 white--text align-self-center"
+                  v-model="filter.ignore_own"
+                  :label="textCheckBox"
+                >
+                  <template #label>
+                    <b class="white--text">{{textCheckBox}}</b>
+                  </template>
+                </v-checkbox>
+              </v-col>
               <v-col sm="3" md="3" lg="3" cols="12">
                 <v-text-field
                   solo
@@ -49,7 +61,7 @@
         <h5>Finder result</h5>
         <main-card>
           <template #title>Search results:</template>
-          <template #subtitle>{{ job.data.length }} results</template>
+          <template #subtitle>{{ job.pagination.totalItems }} results</template>
           <template #content>
             <v-list-item
               v-for="(item, index) in job.data"
@@ -57,7 +69,10 @@
               three-line
               class="white rounded mt-2"
             >
-              <job-preview :job="item" :canEdit="item.recruiter_id === user.data.id"/>
+              <job-preview
+                :job="item"
+                :canEdit="item.recruiter_id === user.data.id"
+              />
             </v-list-item>
           </template>
           <template #actions>
@@ -83,6 +98,7 @@ export default {
   data: () => ({
     filter: {
       title: "",
+      ignore_own: false,
     },
   }),
   methods: {
@@ -91,7 +107,7 @@ export default {
     }),
     ...mapMutations({
       setCurrentPage: "job/setCurrentPage",
-      setJobs:'job/setJobs'
+      setJobs: "job/setJobs",
     }),
     onSearch: async function () {
       await this.setCurrentPage(1);
@@ -99,7 +115,7 @@ export default {
       console.log("filter = ", this.filter);
       await this.searchJobs(this.filter);
     },
-    onChangePage:async function (newCurrentPage) {
+    onChangePage: async function (newCurrentPage) {
       console.log("on change page !");
       console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
@@ -107,7 +123,13 @@ export default {
     },
   },
   computed: {
-    ...mapState(["job",'user']),
+    ...mapState(["job", "user"]),
+    textCheckBox() {
+      if (this.user.roles.includes("recruiter")) {
+        return "Ignore my offers";
+      }
+      return "Ignore my Candidatures";
+    },
   },
   beforeMount() {
     this.setJobs([]);
