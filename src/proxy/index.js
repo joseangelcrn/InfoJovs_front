@@ -21,7 +21,6 @@ const login = async (email, password) => {
 };
 
 const signUp = async (data) => {
-  console.log('url = '+host+'/signup');
   return await axios.post(host + "/signup", null, {
     params: { ...data },
   });

@@ -45,10 +45,6 @@ export default {
     };
   },
   created() {
-    // console.log("created !");
-    // console.log(this.$props);
-    console.log("vuex modal  - created");
-    console.log(this.modal);
   },
   methods: {
     onBtnOk: function () {

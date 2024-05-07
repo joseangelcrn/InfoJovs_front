@@ -2,8 +2,6 @@ import router from "@/router";
 import store from "@/store";
 
 const setTitle = (paramTitle = null) => {
-  console.log("setTitle");
-  console.log("router", router);
   let text = "";
 
   if (!paramTitle) {

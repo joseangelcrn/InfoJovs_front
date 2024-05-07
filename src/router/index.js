@@ -72,7 +72,6 @@ const router = new VueRouter({
 
 
 router.beforeEach(async(to, from, next) => {
-  console.log("middleware");
   let token = null;
   let data = null;
   let roles = [];

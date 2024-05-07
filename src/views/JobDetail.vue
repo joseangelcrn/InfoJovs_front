@@ -102,20 +102,16 @@ export default {
     textAreaHeight() {
       console.log('computed text area height');
       if (!this.job.data || this.job.data.length === 0) {
-        console.log(200);
         return 200;
       }
 
       let length = this.job.data.description.length;
       if (length <= 300) {
-        console.log(300);
         return 250;
       } else if (length > 300 && length <= 600) {
-        console.log(400);
         return 400;
       }
 
-      console.log(600);
       return 600;
     },
     displayAdditionalInfo() {
