@@ -4,6 +4,7 @@ import user from './user'
 import job from './job'
 import modal from './modal'
 import general from './general'
+import professionalProfile from './professionalProfile'
 
 Vue.use(Vuex)
 
@@ -12,6 +13,7 @@ export default new Vuex.Store({
     user:user,
     job:job,
     modal:modal,
-    general:general
+    general:general,
+    professionalProfile:professionalProfile
   }
 })

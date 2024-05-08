@@ -29,8 +29,13 @@ const capitalizeFirstLetter = (string) => {
 
 const pluck = (arr, key) => arr.map(i => i[key]);
 
+const ucfirst = (string)=>{
+  return capitalizeFirstLetter(string);
+}
+
 export default {
   setTitle,
   capitalizeFirstLetter,
-  pluck
+  pluck,
+  ucfirst
 };

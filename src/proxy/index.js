@@ -36,6 +36,14 @@ const logout = async () => {
 const userInfo = async () => {
   return await axios.get(host + "/user/info",   defaultConfig());
 };
+
+const getProfessionalProfiles = async (filters) =>{
+  const config = defaultConfig();
+  config.params = filters;
+  
+  return await axios.get(host + "/professional_profiles/search",   config);
+}
+
 //User Info (-)
 
 //Jobs (+)
@@ -47,7 +55,7 @@ const searchJobs = async (filters) =>{
 
 };
 
-const createJob = async(data)=>{
+const createJob = async(data = {})=>{
   const config = defaultConfig();
   config.params = data;
   console.log('params backend ',config);
@@ -87,7 +95,11 @@ const infoCandidature = async(jobId)=>{
 }
 //Candidatures (-)
 
-
+//Roles (+)
+const getAllRoles = async ()=>{
+  return await axios.get(host+"/roles")
+}
+//Roles (-)
 
 export default {
 
@@ -96,6 +108,7 @@ export default {
   logout,
 
   userInfo,
+  getProfessionalProfiles,
 
   searchJobs,
   getJobById,
@@ -104,5 +117,7 @@ export default {
 
   myCandidatures,
   createCandidature,
-  infoCandidature
+  infoCandidature,
+
+  getAllRoles
 };

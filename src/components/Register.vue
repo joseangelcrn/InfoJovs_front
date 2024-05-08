@@ -68,6 +68,64 @@
         outlined
         @keypress.enter="register"
       ></v-text-field>
+      <v-combobox
+        v-model="roleSelect.model"
+        solo
+        label="Role"
+        color="primary"
+        item-text="name"
+        outlined
+        :items="roleSelect.items"
+        :error="errors.role.length > 0"
+        :error-messages="errors.role"
+        @change="resetProfiles"
+      >
+      </v-combobox>
+
+      <v-autocomplete
+        v-model="profileInput.model"
+        solo
+        :items="profiles.data"
+        :loading="profileInput.loading"
+        :search-input.sync="profileInput.search"
+        :disabled="!roleSelect.model"
+        outlined
+        color="primary"
+        no-data-text="No Results"
+        hide-selected
+        item-text="title"
+        item-value="id"
+        label="Professional Profile"
+        :error="errors.profile.length > 0"
+        :error-messages="errors.profile"
+      ></v-autocomplete>
+      <!-- <v-menu
+        ref="birthday"
+        v-model="birthday.menu"
+        :close-on-content-click="false"
+        transition="scale-transition"
+        offset-y
+        max-width="290px"
+        min-width="auto"
+      >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="birthday.data"
+            label="Date"
+            hint="MM/DD/YYYY format"
+            persistent-hint
+            prepend-icon="mdi-calendar"
+            v-bind="attrs"
+            @blur="birthday.data = parseDate(dateFormatted)"
+            v-on="on"
+          ></v-text-field>
+        </template>
+        <v-date-picker
+          v-model="birthday.data"
+          no-title
+          @input="birthday.menu = false"
+        ></v-date-picker>
+      </v-menu> -->
 
       <div class="d-flex justify-space-between">
         <div>
@@ -90,8 +148,8 @@
 </template>
 
 <script>
-import router from '@/router';
-import { mapActions, mapMutations } from "vuex";
+import router from "@/router";
+import { mapActions, mapMutations, mapState } from "vuex";
 export default {
   data: () => ({
     name: "",
@@ -100,26 +158,32 @@ export default {
     email: "",
     password: "",
     repeatPassword: "",
-    errors: {
-      name: [],
-      firstSurname: [],
-      secondSurname: [],
-      email: [],
-      password: [],
-      repeatPassword: [],
+    profileInput: {
+      model: null,
+      loading: false,
+      search: null,
     },
+    roleSelect: {
+      model: null,
+      items: [],
+    },
+    birthday: {
+      menu:false,
+      data:new Date()
+    },
+    errors: null,
   }),
 
   methods: {
     ...mapActions({
       signUp: "user/signup",
+      searchProfiles: "professionalProfile/search",
     }),
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
     }),
-    register: async function () {
-      console.log("register !");
+    setupErrors: function () {
       this.errors = {
         name: [],
         firstSurname: [],
@@ -127,7 +191,12 @@ export default {
         email: [],
         password: [],
         repeatPassword: [],
+        profile: [],
+        role: [],
       };
+    },
+    register: async function () {
+      this.setupErrors();
 
       if (this.name.trim().length == 0) {
         this.errors.name.push("Name is required");
@@ -147,6 +216,10 @@ export default {
         this.errors.repeatPassword.push("Repeat Password is required");
       } else if (this.password != this.repeatPassword) {
         this.errors.repeatPassword.push("Passwords are different");
+      } else if (!this.roleSelect.model) {
+        this.errors.role.push("Role is required");
+      } else if (!this.profileInput.model) {
+        this.errors.profile.push("Profile is required");
       } else {
         //register in backend..
         try {
@@ -156,14 +229,16 @@ export default {
             second_surname: this.secondSurname,
             email: this.email,
             password: this.password,
+            role_id: this.roleSelect.model.id,
+            professional_profile_id: this.profileInput.model,
           });
-          console.log('sign up OK !! ');
+          console.log("sign up OK !! ");
           this.manageModal({
             title: "Congratulations !",
             text: "You have been registered successfully !",
             onClickYes: () => {
               console.log("Si modificado");
-              router.push({name:'login'});
+              router.push({ name: "login" });
               this.hideModal();
             },
           });
@@ -184,6 +259,49 @@ export default {
           ) != null
       );
     },
+    resetProfiles: function () {
+      this.profileInput.model = null;
+      this.profileInput.items = null;
+    },
+    // formatDate: function(){
+    //   if (!date) return null
+
+    //   const [month, day, year] = date.split('/')
+    //   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
+    // }
+  },
+  computed: {
+    ...mapState({
+      profiles: "professionalProfile",
+    }),
+    profileInputSearch() {
+      return this.profileInput.search;
+    },
+    // computedBirthdayFormatted () {
+    //     return this.formatDate(this.date)
+    //   },
+  },
+  watch: {
+    profileInputSearch: async function (val) {
+      console.log("watch - search ");
+      console.log("value = " + val);
+
+      // Items have already been requested
+      if (this.profileInput.loading) return;
+
+      console.log("call ajax !");
+      this.profileInput.loading = true;
+      await this.searchProfiles({ title: val, role_id: this.roleSelect.model });
+      this.profileInput.loading = false;
+    },
+    // date (val) {
+    //     this.birthday.data = this.formatDate(this.date)
+    //   },
+  },
+  created: async function () {
+    this.setupErrors();
+    let response = await this.$proxy.getAllRoles();
+    this.roleSelect.items = response.data;
   },
 };
 </script>
