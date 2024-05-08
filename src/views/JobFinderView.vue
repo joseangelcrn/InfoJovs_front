@@ -125,7 +125,7 @@ export default {
   computed: {
     ...mapState(["job", "user"]),
     textCheckBox() {
-      if (this.user.roles.includes("recruiter")) {
+      if (this.$common.hasRole('recruiter')) {
         return "Ignore my offers";
       }
       return "Ignore my Candidatures";

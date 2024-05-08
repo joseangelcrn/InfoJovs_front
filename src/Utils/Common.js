@@ -34,10 +34,7 @@ const ucfirst = (string) => {
 };
 
 const hasRole = (needed) => {
-  // let userRoles = user.state. ?? [];
-  console.log("user roles = ", store.getters['user/getRoles']);
   let userRoles = store.getters['user/getRoles'];
-
   userRoles = userRoles.map(function (role) {
     return role.toLowerCase();
   });

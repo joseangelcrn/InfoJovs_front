@@ -29,7 +29,7 @@
             </template>
             <template #actions>
               <v-btn
-                v-if="user.roles.includes('employee')"
+                v-if="$common.hasRole('employee')"
                 v-on:click="register"
                 small
                 class="primary--text"
@@ -116,7 +116,7 @@ export default {
     },
     displayAdditionalInfo() {
       return (
-        this.user.roles.includes("recruiter") &&
+        this.$common.hasRole('recruiter') &&
         this.user.data.id === this.job.data.recruiter_id
       );
     },
