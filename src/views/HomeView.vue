@@ -13,11 +13,11 @@
               ></v-list-item-avatar>
               <v-list-item-content class="white--text">
                 <div class="text-overline mb-4 white--text">
-                  {{user.data.name}}
+                  {{user.data?.name}}
                 </div>
 
                 <v-list-item-title class="text-h5 mb-1">
-                  {{user.data.professional_profile.title}}
+                  {{user.data?.professional_profile.title}}
                 </v-list-item-title>
                 <v-list-item-subtitle
                   >I develop frontend and backend applications
@@ -37,7 +37,7 @@
                   Applications</span
                 >
                 <v-btn
-                  v-if="user.roles.includes('employee')"
+                  v-if="$common.hasRole('employee')"
                   elevation="2"
                   max-width="150"
                   :to="{ name: 'myCandidatures' }"

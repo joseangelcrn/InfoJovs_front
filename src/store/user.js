@@ -37,12 +37,13 @@ const user = {
       let response = await proxy.userInfo(state.token);
       let user = response.data.user;
       let roles = response.data.roles;
+      console.log('roles = ',roles);
       commit("setUser", user);
       commit("setRoles", roles);
     },
     logout: async function ({commit}){
       let response = await proxy.logout();
-      commit('setUser',null);
+      commit('setUser',null); 
       commit('removeToken');
     }
   },
