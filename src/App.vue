@@ -102,14 +102,6 @@ export default {
       await this.userLogout();
       this.$router.push({ name: "login" });
     },
-    mustDisabled: function (entry) {
-      let entryRole = entry.role;
-      if (entryRole == null || this.user.roles.includes(entryRole)) {
-        return false;
-      }
-
-      return true;
-    },
     onClickNavLink: function (title) {
       this.$common.setTitle(title);
     },
