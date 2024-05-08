@@ -99,33 +99,49 @@
         :error="errors.profile.length > 0"
         :error-messages="errors.profile"
       ></v-autocomplete>
-      <!-- <v-menu
-        ref="birthday"
-        v-model="birthday.menu"
-        :close-on-content-click="false"
-        transition="scale-transition"
-        offset-y
-        max-width="290px"
-        min-width="auto"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-text-field
-            v-model="birthday.data"
-            label="Date"
-            hint="MM/DD/YYYY format"
-            persistent-hint
-            prepend-icon="mdi-calendar"
-            v-bind="attrs"
-            @blur="birthday.data = parseDate(dateFormatted)"
-            v-on="on"
-          ></v-text-field>
-        </template>
-        <v-date-picker
+      <v-menu
+      ref="menu"
+      v-model="birthday.menu"
+      :close-on-content-click="false"
+      :return-value.sync="birthday.data"
+      transition="scale-transition"
+      offset-y
+      min-width="auto"
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-text-field
           v-model="birthday.data"
-          no-title
-          @input="birthday.menu = false"
-        ></v-date-picker>
-      </v-menu> -->
+          solo
+          label="Picker in menu"
+          readonly
+          outlined
+          v-bind="attrs"
+          v-on="on"
+        ></v-text-field>
+      </template>
+      <v-date-picker
+        v-model="birthday.date"
+        no-title
+        scrollable
+      >
+        <v-spacer></v-spacer>
+        <v-btn
+          text
+          color="primary"
+          @click="birthday.menu = false"
+        >
+          Cancel
+        </v-btn>
+        <v-btn
+          text
+          color="primary"
+          @click="$refs.menu.save(birthday.data)"
+        >
+          OK
+        </v-btn>
+      </v-date-picker>
+    </v-menu>
+
 
       <div class="d-flex justify-space-between">
         <div>
@@ -169,7 +185,8 @@ export default {
     },
     birthday: {
       menu:false,
-      data:new Date()
+      data:(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+
     },
     errors: null,
   }),
@@ -231,6 +248,7 @@ export default {
             password: this.password,
             role_id: this.roleSelect.model.id,
             professional_profile_id: this.profileInput.model,
+            birthdate:this.birthday.data
           });
           console.log("sign up OK !! ");
           this.manageModal({
@@ -262,13 +280,7 @@ export default {
     resetProfiles: function () {
       this.profileInput.model = null;
       this.profileInput.items = null;
-    },
-    // formatDate: function(){
-    //   if (!date) return null
-
-    //   const [month, day, year] = date.split('/')
-    //   return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`
-    // }
+    }
   },
   computed: {
     ...mapState({
@@ -277,9 +289,6 @@ export default {
     profileInputSearch() {
       return this.profileInput.search;
     },
-    // computedBirthdayFormatted () {
-    //     return this.formatDate(this.date)
-    //   },
   },
   watch: {
     profileInputSearch: async function (val) {
@@ -293,10 +302,7 @@ export default {
       this.profileInput.loading = true;
       await this.searchProfiles({ title: val, role_id: this.roleSelect.model });
       this.profileInput.loading = false;
-    },
-    // date (val) {
-    //     this.birthday.data = this.formatDate(this.date)
-    //   },
+    }
   },
   created: async function () {
     this.setupErrors();
