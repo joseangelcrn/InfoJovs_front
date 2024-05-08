@@ -59,11 +59,8 @@ export default {
     ...mapState(["modal"]),
     colorType(){
       if (this.modal.type == 'error') {
-        console.log('red');
         return 'red';
       }
-      
-      console.log('primary');
       return 'primary';
     },
     colorTypeButton(){

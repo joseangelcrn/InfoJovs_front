@@ -212,7 +212,6 @@ export default {
       try {
         let response = await this.$proxy.getJobById(this.id);
         let { job } = response.data;
-        console.log(job.recruiter_id, this.user.data.id);
         if (job.recruiter_id != this.user.data.id) {
           this.manageModal({
             title: "Error",
