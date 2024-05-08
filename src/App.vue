@@ -120,8 +120,9 @@ export default {
   computed: {
     ...mapState(["user", "general"]),
     entriesForCurrentRole(){
+      console.log('debug here');
       return this.entries.filter((entry)=>{
-        return this.user.roles.includes(entry.role) || !entry.role;
+        return this.$common.hasRole(entry.role);
       });
     }
   },

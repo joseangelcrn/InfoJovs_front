@@ -46,6 +46,9 @@ const user = {
       commit('removeToken');
     }
   },
+  getters:{
+    getRoles: state => state.roles
+  }
 };
 
 export default user;
