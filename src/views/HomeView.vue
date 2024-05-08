@@ -13,11 +13,11 @@
               ></v-list-item-avatar>
               <v-list-item-content class="white--text">
                 <div class="text-overline mb-4 white--text">
-                  José Ángel Cabeza Rodiguez-Navas
+                  {{user.data.name}}
                 </div>
 
                 <v-list-item-title class="text-h5 mb-1">
-                  Full-Stack Developer
+                  {{user.data.professional_profile.title}}
                 </v-list-item-title>
                 <v-list-item-subtitle
                   >I develop frontend and backend applications
