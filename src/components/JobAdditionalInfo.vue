@@ -45,13 +45,15 @@
                             class="d-flex justify-center"
                             style="background-color: white"
                           >
-                            <v-col cols="10">
+                            <div>
                               <Bar
+                                ref="chart_status"
                                 v-if="chartLoaded"
                                 :data="chartDataComputed"
                                 :options="chartData.options"
+                                :style="{minHeight:'300px'}"
                               />
-                            </v-col>
+                            </div>
                           </v-row>
                         </template>
                       </main-card>
@@ -76,6 +78,8 @@
     </v-row>
   </div>
 </template>
+<style>
+</style>
 <script>
 import { mapActions, mapState } from "vuex";
 import MainCard from "./MainCard.vue";
@@ -121,7 +125,10 @@ export default {
         datasets: [],
         options: {
           responsive: true,
+          maintainAspectRatio:false,
           plugins: {
+            responsive: true,
+            maintainAspectRatio: false,
             tooltip: {
               bodyColor: "white",
               backgroundColor: "#03A9F4",
@@ -142,7 +149,7 @@ export default {
               labels: {
                 // This more specific font property overrides the global property
                 font: {
-                  size: 26,
+                  size: 18,
                 },
               },
             },
@@ -156,7 +163,6 @@ export default {
       infoCandidature: "job/infoCandidature",
     }),
     seeAdditionalInfo: async function () {
-      console.log("creating chart !");
       const response = await this.$proxy.getJobAdditionalInfo(
         this.$props.jobId
       );
@@ -173,7 +179,12 @@ export default {
       });
 
       this.chartLoaded = true;
-      console.log(statusNames, statusData);
+    },
+
+    resizeEventHandler(e) {
+      console.log("resize event handler !");
+      this.$refs.chart_status;
+      console.log(this.$refs.chart_status);
     },
   },
   computed: {
