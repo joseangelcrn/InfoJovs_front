@@ -25,7 +25,7 @@
                   </v-textarea>
                 </v-col>
               </v-row>
-              <job-additional-info v-if="displayAdditionalInfo"></job-additional-info>
+              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id"></job-additional-info>
             </template>
             <template #actions>
               <v-btn

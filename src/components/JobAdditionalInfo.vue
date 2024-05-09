@@ -35,12 +35,25 @@
                   <!-- Candidatures -->
                   <!-- Candidates -->
                   <v-tabs fixed background-color="primary">
-                    <v-tab > Main Info </v-tab>
-                    <v-tab > Candidatures </v-tab>
-                    <v-tab > Candidates </v-tab>
+                    <v-tab> Main Info </v-tab>
+                    <v-tab> Candidatures </v-tab>
+                    <v-tab> Candidates </v-tab>
                     <v-tab-item>
                       <main-card class="mt-2">
-                        <template #title>Main Info</template>
+                        <template #content>
+                          <v-row
+                            class="d-flex justify-center"
+                            style="background-color: white"
+                          >
+                            <v-col cols="10">
+                              <Bar
+                                v-if="chartLoaded"
+                                :data="chartDataComputed"
+                                :options="chartData.options"
+                              />
+                            </v-col>
+                          </v-row>
+                        </template>
                       </main-card>
                     </v-tab-item>
                     <v-tab-item>
@@ -65,15 +78,77 @@
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import MainCard from './MainCard.vue';
+import MainCard from "./MainCard.vue";
+import { Bar } from "vue-chartjs";
+import {
+  Chart as ChartJS,
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale,
+} from "chart.js";
+
+ChartJS.register(
+  Title,
+  Tooltip,
+  Legend,
+  BarElement,
+  CategoryScale,
+  LinearScale
+);
+
 export default {
-  components: { MainCard },
+  components: { MainCard, Bar },
   name: "job-additional-info",
-  props: {},
+  props: {
+    stats: {
+      type: Object,
+    },
+    jobId: {
+      type: Number,
+      require: true,
+    },
+  },
 
   data() {
     return {
       dialog: false,
+      chartLoaded: false,
+      chartData: {
+        labels: [""],
+        datasets: [],
+        options: {
+          responsive: true,
+          plugins: {
+            tooltip: {
+              bodyColor: "white",
+              backgroundColor: "#03A9F4",
+            },
+            title: {
+              display: true,
+              text: "Candidature Statuses",
+              color: "#03A9F4",
+              position: "top",
+              align: "center",
+              font: {
+                weight: "bold",
+                size: 30,
+              },
+            },
+            legend: {
+              position: "bottom",
+              labels: {
+                // This more specific font property overrides the global property
+                font: {
+                  size: 26,
+                },
+              },
+            },
+          },
+        },
+      },
     };
   },
   methods: {
@@ -81,17 +156,32 @@ export default {
       infoCandidature: "job/infoCandidature",
     }),
     seeAdditionalInfo: async function () {
-      console.log("see candidates ");
-      try {
-        await this.infoCandidature();
-        console.log(this.job.candidatures);
-      } catch (error) {
-        console.log("error", error);
-      }
+      console.log("creating chart !");
+      const response = await this.$proxy.getJobAdditionalInfo(
+        this.$props.jobId
+      );
+      var { status, profiles } = response.data;
+      var statusNames = this.$common.pluck(status, "name");
+      var statusData = this.$common.pluck(status, "amount");
+
+      status.forEach((item) => {
+        this.chartData.datasets.push({
+          label: [item.name],
+          backgroundColor: [this.$common.getStatusColor(item.id, false)],
+          data: [item.amount],
+        });
+      });
+
+      this.chartLoaded = true;
+      console.log(statusNames, statusData);
     },
   },
   computed: {
     ...mapState(["user", "job"]),
+
+    chartDataComputed() {
+      return this.chartData;
+    },
   },
   mounted() {},
   updated() {},

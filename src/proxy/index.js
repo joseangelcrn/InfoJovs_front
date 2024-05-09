@@ -72,6 +72,10 @@ const updateJob = async(data)=>{
 const getJobById = async (id) => {
   return await axios.get(host + "/job/"+id,  defaultConfig());
 }
+
+const getJobAdditionalInfo = async (id)=>{
+  return await axios.get(host+"/job/additional_info/"+id,defaultConfig())
+}
 //Jobs (-)
 
 //Candidatures (+)
@@ -114,6 +118,7 @@ export default {
   getJobById,
   createJob,
   updateJob,
+  getJobAdditionalInfo,
 
   myCandidatures,
   createCandidature,

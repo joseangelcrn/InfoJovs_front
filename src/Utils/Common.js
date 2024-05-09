@@ -41,10 +41,26 @@ const hasRole = (needed) => {
   return !needed || userRoles.includes(needed.toLowerCase());
 };
 
+const getStatusColor = (statusId,vuetifyClasses = true)=>{
+  switch (statusId) {
+    case 1:
+      return vuetifyClasses ? "blue-grey" :'#607D8B';
+    case 2:
+      return vuetifyClasses ? "primary": '#03A9F4';
+    case 3:
+      return vuetifyClasses ? "green": '#4CAF50';
+    case 4:
+      return vuetifyClasses ? "red": '#F44336';
+    default:
+      return vuetifyClasses ? 'black': '#000000';
+  }
+}
+
 export default {
   setTitle,
   capitalizeFirstLetter,
   pluck,
   ucfirst,
   hasRole,
+  getStatusColor
 };
