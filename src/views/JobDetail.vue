@@ -101,7 +101,11 @@ export default {
     ...mapState(["user", "job"]),
     textAreaHeight() {
       console.log('computed text area height');
-      if (!this.job.data || this.job.data.length === 0) {
+      if (
+        !this.job.data ||
+        this.job.data.length === 0 ||
+        !this.job.data.description
+      ) {
         return 200;
       }
 
