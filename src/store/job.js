@@ -11,6 +11,7 @@ const job = {
       totalItems: 0,
     },
     candidatures: [],
+    total:0,
   }),
   mutations: {
     //Jobs

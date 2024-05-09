@@ -13,31 +13,39 @@
               ></v-list-item-avatar>
               <v-list-item-content class="white--text">
                 <div class="text-overline mb-4 white--text">
-                  {{user.data?.name}}
+                  {{ user.data?.name }}
                 </div>
 
                 <v-list-item-title class="text-h5 mb-1">
-                  {{user.data?.professional_profile.title}}
+                  {{ user.data?.professional_profile.title }}
                 </v-list-item-title>
                 <v-list-item-subtitle class="white--text">
                   <v-chip color="orange" label>
-                    <b>Roles:&nbsp;&nbsp; </b> {{ user.roles.map((role)=>($common.capitalizeFirstLetter(role))).join(",") }}
+                    <b>Roles:&nbsp;&nbsp; </b>
+                    {{
+                      user.roles
+                        .map((role) => $common.capitalizeFirstLetter(role))
+                        .join(",")
+                    }}
                   </v-chip>
-                  </v-list-item-subtitle>
+                </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
             <v-list-item two-line>
-              <v-chip color="indigo white--text" label><b>Birth Date: </b>{{ user.data?.birth_date }}</v-chip>
+              <v-chip color="indigo white--text" label
+                ><b>Birth Date: </b>{{ user.data?.birth_date }}</v-chip
+              >
             </v-list-item>
             <v-divider class="my-2"></v-divider>
-            <v-list-item>
+            <v-list-item v-if="$common.hasRole('employee')">
               <v-list-item-content>
                 <span class="white--text mb-4"
-                  >You have <b class="black--text">{{ jobApplications }}</b> Job
-                  Applications</span
+                  >You have
+                  <b class="black--text">{{
+                    job.pagination.totalItems}}</b>
+                  Job Applications</span
                 >
                 <v-btn
-                  v-if="$common.hasRole('employee')"
                   elevation="2"
                   max-width="150"
                   :to="{ name: 'myCandidatures' }"
@@ -55,20 +63,28 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapActions, mapState } from "vuex";
 export default {
   data() {
     return {
       jobApplications: 9,
     };
   },
+  methods: {
+    ...mapActions({
+      myCandidatures: "job/myCandidatures",
+    }),
+  },
   computed: {
     ...mapState({
       user: "user",
+      job: "job",
     }),
   },
-  mounted() {
-    console.log('user',this.user.data.professional_profile.title);
+  mounted: async function () {
+    if (this.$common.hasRole("Employee")) {
+      await this.myCandidatures();
+    }
   },
 };
 </script>
