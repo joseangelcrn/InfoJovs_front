@@ -54,12 +54,12 @@
                               />
                             </div>
                             <div>
-                              <!-- <Bar
+                              <Bar
                                 v-if="chartLoaded"
                                 :data="profileChart"
                                 :options="profileChart.options"
                                 :style="{ minHeight: '300px' }"
-                              /> -->
+                              />
                             </div>
                           </v-row>
                         </template>
@@ -178,6 +178,7 @@ export default {
       var { status, profiles } = response.data;
       console.log("status", status);
       this.statusChartData = status;
+      this.profileChartData = profiles;
       this.chartLoaded = true;
     },
 
