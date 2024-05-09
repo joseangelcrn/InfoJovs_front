@@ -41,26 +41,23 @@
                     <v-tab-item>
                       <main-card class="mt-2">
                         <template #content>
-                          <v-row
-                            class="d-flex justify-center"
-                            style="background-color: white"
-                          >
-                            <div>
+                          <v-row justify="center" style="background-color: white">
+                            <v-col cols="10">
                               <Bar
                                 v-if="chartLoaded"
                                 :data="statusChart"
                                 :options="statusChart.options"
                                 :style="{ minHeight: '300px' }"
                               />
-                            </div>
-                            <div>
+                            </v-col>
+                            <v-col cols="10">
                               <Bar
                                 v-if="chartLoaded"
                                 :data="profileChart"
                                 :options="profileChart.options"
                                 :style="{ minHeight: '300px' }"
                               />
-                            </div>
+                            </v-col>
                           </v-row>
                         </template>
                       </main-card>
@@ -85,8 +82,6 @@
     </v-row>
   </div>
 </template>
-<style>
-</style>
 <script>
 import { mapActions, mapState } from "vuex";
 import MainCard from "./MainCard.vue";
@@ -193,9 +188,9 @@ export default {
     statusChart() {
       return this.statusChartData;
     },
-    profileChart(){
+    profileChart() {
       return this.profileChartData;
-    }
+    },
   },
   mounted() {},
   updated() {},
