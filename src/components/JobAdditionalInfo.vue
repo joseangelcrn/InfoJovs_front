@@ -47,12 +47,19 @@
                           >
                             <div>
                               <Bar
-                                ref="chart_status"
                                 v-if="chartLoaded"
-                                :data="chartDataComputed"
-                                :options="chartData.options"
-                                :style="{minHeight:'300px'}"
+                                :data="statusChart"
+                                :options="statusChart.options"
+                                :style="{ minHeight: '300px' }"
                               />
+                            </div>
+                            <div>
+                              <!-- <Bar
+                                v-if="chartLoaded"
+                                :data="profileChart"
+                                :options="profileChart.options"
+                                :style="{ minHeight: '300px' }"
+                              /> -->
                             </div>
                           </v-row>
                         </template>
@@ -125,7 +132,7 @@ export default {
         datasets: [],
         options: {
           responsive: true,
-          maintainAspectRatio:false,
+          maintainAspectRatio: false,
           plugins: {
             responsive: true,
             maintainAspectRatio: false,
@@ -156,6 +163,8 @@ export default {
           },
         },
       },
+      statusChartData: {},
+      profileChartData: {},
     };
   },
   methods: {
@@ -167,17 +176,8 @@ export default {
         this.$props.jobId
       );
       var { status, profiles } = response.data;
-      var statusNames = this.$common.pluck(status, "name");
-      var statusData = this.$common.pluck(status, "amount");
-
-      status.forEach((item) => {
-        this.chartData.datasets.push({
-          label: [item.name],
-          backgroundColor: [this.$common.getStatusColor(item.id, false)],
-          data: [item.amount],
-        });
-      });
-
+      console.log("status", status);
+      this.statusChartData = status;
       this.chartLoaded = true;
     },
 
@@ -189,10 +189,12 @@ export default {
   },
   computed: {
     ...mapState(["user", "job"]),
-
-    chartDataComputed() {
-      return this.chartData;
+    statusChart() {
+      return this.statusChartData;
     },
+    profileChart(){
+      return this.profileChartData;
+    }
   },
   mounted() {},
   updated() {},
