@@ -19,15 +19,15 @@
                 <v-list-item-title class="text-h5 mb-1">
                   {{user.data?.professional_profile.title}}
                 </v-list-item-title>
-                <v-list-item-subtitle
-                  >I develop frontend and backend applications
-                </v-list-item-subtitle>
+                <v-list-item-subtitle class="white--text">
+                  <v-chip color="orange" label>
+                    <b>Roles:&nbsp;&nbsp; </b> {{ user.roles.map((role)=>($common.capitalizeFirstLetter(role))).join(",") }}
+                  </v-chip>
+                  </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-            <v-list-item>
-              <v-chip color="orange" label>
-                <b>Roles:&nbsp;&nbsp; </b> {{ user.roles.map((role)=>($common.capitalizeFirstLetter(role))).join(",") }}
-              </v-chip>
+            <v-list-item two-line>
+              <v-chip color="indigo white--text" label><b>Birth Date: </b>{{ user.data?.birth_date }}</v-chip>
             </v-list-item>
             <v-divider class="my-2"></v-divider>
             <v-list-item>
@@ -47,6 +47,7 @@
               </v-list-item-content>
             </v-list-item>
           </template>
+          <template></template>
         </main-card>
       </v-col>
     </v-row>
@@ -65,6 +66,9 @@ export default {
     ...mapState({
       user: "user",
     }),
+  },
+  mounted() {
+    console.log('user',this.user.data.professional_profile.title);
   },
 };
 </script>
