@@ -41,7 +41,23 @@
                     <v-tab-item>
                       <main-card class="mt-2">
                         <template #content>
-                          <v-row justify="center" style="background-color: white">
+                          <v-row class="white my-2 rounded">
+                            <v-col cols="3" align-self="center">
+                              <v-select
+                                dense
+                                solo
+                                :items="jobStatus"
+                                label="Offer status"
+                                outlined
+                                v-model="job.data.active"
+                                @change="changeStatus"
+                              ></v-select>
+                            </v-col>
+                          </v-row>
+                          <v-row
+                            justify="center"
+                            style="background-color: white"
+                          >
                             <v-col cols="10">
                               <Bar
                                 v-if="chartLoaded"
@@ -83,7 +99,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapMutations, mapState } from "vuex";
 import MainCard from "./MainCard.vue";
 import { Bar } from "vue-chartjs";
 import {
@@ -122,65 +138,61 @@ export default {
     return {
       dialog: false,
       chartLoaded: false,
-      chartData: {
-        labels: [""],
-        datasets: [],
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            responsive: true,
-            maintainAspectRatio: false,
-            tooltip: {
-              bodyColor: "white",
-              backgroundColor: "#03A9F4",
-            },
-            title: {
-              display: true,
-              text: "Candidature Statuses",
-              color: "#03A9F4",
-              position: "top",
-              align: "center",
-              font: {
-                weight: "bold",
-                size: 30,
-              },
-            },
-            legend: {
-              position: "bottom",
-              labels: {
-                // This more specific font property overrides the global property
-                font: {
-                  size: 18,
-                },
-              },
-            },
-          },
-        },
-      },
       statusChartData: {},
       profileChartData: {},
+      jobStatus: [
+        { text: "Active", value: 1 },
+        { text: "Inactive", value: 0 },
+      ],
     };
   },
   methods: {
     ...mapActions({
       infoCandidature: "job/infoCandidature",
+      updateActiveValue: "job/updateActiveValue",
+    }),
+    ...mapMutations({
+      manageModal: "modal/manageModal",
+      hideModal: "modal/hide",
+      setActiveOffer:"job/setActive"
     }),
     seeAdditionalInfo: async function () {
       const response = await this.$proxy.getJobAdditionalInfo(
         this.$props.jobId
       );
       var { status, profiles } = response.data;
-      console.log("status", status);
       this.statusChartData = status;
       this.profileChartData = profiles;
       this.chartLoaded = true;
     },
 
-    resizeEventHandler(e) {
-      console.log("resize event handler !");
-      this.$refs.chart_status;
-      console.log(this.$refs.chart_status);
+    changeStatus: async function () {
+      try {
+        let response = await this.updateActiveValue();
+        console.log("response = " + response.data.message);
+        this.manageModal({
+          title: "Info",
+          text: response.data.message,
+          onClickYes: () => {
+            this.hideModal();
+          },
+          onClickNot: () => {
+            this.hideModal();
+          },
+        });
+      } catch (error) {
+        let newActiveValue = this.job.data.active;
+        let rollBackValue = newActiveValue == 1 ? 0 : 1;
+        this.setActiveOffer(rollBackValue);
+        this.manageModal({
+          title: "Error",
+          type: "error",
+          text: error.response.data.message,
+          onClickYes: () => {
+            this.hideModal();
+          },
+        });
+      }
     },
   },
   computed: {
@@ -192,7 +204,9 @@ export default {
       return this.profileChartData;
     },
   },
-  mounted() {},
+  mounted() {
+    console.log(this.job.data);
+  },
   updated() {},
 };
 </script>

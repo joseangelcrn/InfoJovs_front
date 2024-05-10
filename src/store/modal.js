@@ -36,6 +36,8 @@ const modal = {
       state.onClickYes = config.onClickYes;
       state.onClickNot = config.onClickNot;
       state.show = true;
+
+      state.type = null;
       if (config.type) {
         state.type = config.type;        
       }

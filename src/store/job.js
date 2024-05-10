@@ -28,7 +28,9 @@ const job = {
     setAlreadyRegistered: function(state,isRegistered){
       state.data.alreadyRegistered = isRegistered;
     },
-
+    setActive: function(state,isActive){
+      state.data.active = isActive;
+    },
     //Candidatures
     setCandidatures: function (state, data) {
       state.candidatures = data;
@@ -69,6 +71,10 @@ const job = {
       let response = await proxy.infoCandidature(jobId);
       commit('setCandidatures',response.data.candidatures)
     },
+    updateActiveValue: async function ({state}){
+      let {id,active} = state.data;
+      return await proxy.updateJobActiveValue({id,active});
+    }
   },
 };
 
