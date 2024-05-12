@@ -88,6 +88,8 @@
                                 show-select
                                 class="elevation-1"
                                 :loading="candidaturesTable.loading"
+                                sort-by="created_at"
+                                :sort-desc="true"
                               >
                               <template v-slot:item.status.name="{ item }">
                                 <v-chip
@@ -165,10 +167,10 @@ export default {
           { text: 'Surnames', value: 'employee.first_surname' },
           { text: 'Professional Profile', value: 'employee.professional_profile.title' },
           { text: 'Status', value: 'status.name' },
+          { text: 'Created at', value: 'created_at' },
           { text: 'Actions', value: 'actions', sortabble:false },
         ],
         items: [
-          // {name:'jose',surnames:'cabeza',profile:'Full-Stack Developer',status:'Status'}
         ],
         selectedItems: [],
         loading:false
