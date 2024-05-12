@@ -13,7 +13,7 @@
               class="primary--text"
               v-bind="attrs"
               v-on="on"
-              @click="seeAdditionalInfo"
+              @click="seeMainAdditionalInfo"
               >Additional Info</v-btn
             >
           </template>
@@ -33,11 +33,9 @@
                 <v-col>
                   <!-- Additional Info Job Offer -->
                   <!-- Candidatures -->
-                  <!-- Candidates -->
                   <v-tabs fixed background-color="primary">
-                    <v-tab> Main Info </v-tab>
-                    <v-tab> Candidatures </v-tab>
-                    <v-tab> Candidates </v-tab>
+                    <v-tab @click="seeMainAdditionalInfo"> Main Info </v-tab>
+                    <v-tab @click="seeCandidaturesInfo"> Candidatures </v-tab>
                     <v-tab-item>
                       <main-card class="mt-2">
                         <template #content>
@@ -80,12 +78,29 @@
                     </v-tab-item>
                     <v-tab-item>
                       <main-card class="mt-2">
-                        <template #title>Candidatures</template>
-                      </main-card>
-                    </v-tab-item>
-                    <v-tab-item>
-                      <main-card class="mt-2">
-                        <template #title>Candidates</template>
+                        <template #content>
+                          <v-row>
+                            <v-col>
+                              <v-data-table
+                                v-model="candidaturesTable.selectedItems"
+                                :headers="candidaturesTable.headers"
+                                :items="candidaturesTable.items"
+                                show-select
+                                class="elevation-1"
+                                :loading="candidaturesTable.loading"
+                              >
+                              <template v-slot:item.status.name="{ item }">
+                                <v-chip
+                                  dark
+                                  :color="$common.getStatusColor(item.status.id)"
+                                >
+                                {{item.status.name}}
+                                </v-chip>
+                            </template>
+                            </v-data-table>
+                            </v-col>
+                          </v-row>
+                        </template>
                       </main-card>
                     </v-tab-item>
                   </v-tabs>
@@ -144,6 +159,20 @@ export default {
         { text: "Active", value: 1 },
         { text: "Inactive", value: 0 },
       ],
+      candidaturesTable: {
+        headers: [
+          { text: 'Name', value: 'employee.name' },
+          { text: 'Surnames', value: 'employee.first_surname' },
+          { text: 'Professional Profile', value: 'employee.professional_profile.title' },
+          { text: 'Status', value: 'status.name' },
+          { text: 'Actions', value: 'actions', sortabble:false },
+        ],
+        items: [
+          // {name:'jose',surnames:'cabeza',profile:'Full-Stack Developer',status:'Status'}
+        ],
+        selectedItems: [],
+        loading:false
+      },
     };
   },
   methods: {
@@ -154,9 +183,9 @@ export default {
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
-      setActiveOffer:"job/setActive"
+      setActiveOffer: "job/setActive",
     }),
-    seeAdditionalInfo: async function () {
+    seeMainAdditionalInfo: async function () {
       const response = await this.$proxy.getJobAdditionalInfo(
         this.$props.jobId
       );
@@ -164,6 +193,19 @@ export default {
       this.statusChartData = status;
       this.profileChartData = profiles;
       this.chartLoaded = true;
+    },
+    seeCandidaturesInfo: async function(){
+      this.candidaturesTable.items = [];
+      this.candidaturesTable.loading = true;
+      const response = await this.$proxy.getJobAdditionalInfo(
+        this.$props.jobId,
+        'candidatures'
+      );
+      // this.candidaturesTable.items = response.data;
+      console.log('see candidatures info !! = ',response.data.items);
+      this.candidaturesTable.items = response.data.items;
+      this.candidaturesTable.loading = false;
+
     },
 
     changeStatus: async function () {

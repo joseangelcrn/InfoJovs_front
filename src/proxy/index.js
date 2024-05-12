@@ -73,8 +73,9 @@ const getJobById = async (id) => {
   return await axios.get(host + "/job/"+id,  defaultConfig());
 }
 
-const getJobAdditionalInfo = async (id)=>{
-  return await axios.get(host+"/job/additional_info/"+id,defaultConfig())
+const getJobAdditionalInfo = async (id,scope = null)=>{
+  let url = host+"/job/additional_info/"+id+(scope ? "/"+scope : '');
+  return await axios.get(url,defaultConfig())
 }
 
 const updateJobActiveValue = async (data)=>{
