@@ -86,6 +86,7 @@
                                 :headers="candidaturesTable.headers"
                                 :items="candidaturesTable.items"
                                 show-select
+                                item-key="candidature_id"
                                 class="elevation-1"
                                 :loading="candidaturesTable.loading"
                                 sort-by="created_at"
@@ -95,6 +96,7 @@
                                 <v-chip
                                   dark
                                   :color="$common.getStatusColor(item.status.id)"
+                                  @click="onClickChipStatus(item)"
                                 >
                                 {{item.status.name}}
                                 </v-chip>
@@ -238,6 +240,9 @@ export default {
         });
       }
     },
+    onClickChipStatus: function(item){
+     
+    }
   },
   computed: {
     ...mapState(["user", "job"]),
