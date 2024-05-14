@@ -106,7 +106,7 @@ const infoCandidature = async(jobId)=>{
 }
 
 const getAllCandidatureStatuses = async()=>{
-  return await axios.get(host + "/candidature/statuses",   defaultConfig());
+  return await axios.get(host + "/candidature/status",   defaultConfig());
 }
 //Candidatures (-)
 
