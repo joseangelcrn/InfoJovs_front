@@ -110,7 +110,7 @@
                   </v-tabs>
                 </v-col>
               </v-row>
-            </v-card-text>
+            </v-card-text>  
           </v-card>
         </v-dialog>
       </v-col>
@@ -130,6 +130,7 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
+import ModalExtended from './ModalExtended.vue';
 
 ChartJS.register(
   Title,
@@ -141,7 +142,7 @@ ChartJS.register(
 );
 
 export default {
-  components: { MainCard, Bar },
+  components: { MainCard, Bar, ModalExtended },
   name: "job-additional-info",
   props: {
     stats: {
@@ -170,7 +171,7 @@ export default {
           { text: 'Professional Profile', value: 'employee.professional_profile.title' },
           { text: 'Status', value: 'status.name' },
           { text: 'Created at', value: 'created_at' },
-          { text: 'Actions', value: 'actions', sortabble:false },
+          { text: 'Actions', value: 'actions', sortable:false },
         ],
         items: [
         ],
@@ -241,7 +242,14 @@ export default {
       }
     },
     onClickChipStatus: function(item){
-     
+      if (this.candidaturesTable.selectedItems.length > 1) {
+        console.log('Multiple Items');
+        this.$emit('openModal',this.candidaturesTable.selectedItems);
+      }
+      else{
+        console.log('Single Item');
+        this.$emit('openModal',item);
+      }
     }
   },
   computed: {

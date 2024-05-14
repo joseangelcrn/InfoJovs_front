@@ -25,7 +25,50 @@
                   </v-textarea>
                 </v-col>
               </v-row>
-              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id"></job-additional-info>
+              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id" @openModal="openModal"></job-additional-info>
+              <modal-extended style="z-index:10;position:absolute" @clickOutside="closeModal" :show="modals.changeStatus.show">
+                <template #content>
+                  <v-container>
+                    <v-row>
+                      <v-col>
+                        <span class="my-3" v-html="modals.changeStatus.htmlText"/>
+                      </v-col>
+                    </v-row>
+                    <v-row>
+                      <v-col>
+                        <v-select
+                        dense
+                        solo
+                        :items="candidatureStatus.data"
+                        label="New Status"
+                        outlined
+                        v-model="modals.changeStatus.newStatusId"
+                        item-text="name"
+                        item-value="id"
+                      >
+                      <template v-slot:item="{item, on, attrs}">
+                        <v-list-item v-on="on" :class="$common.getStatusColor(item.id)">
+                          <v-list-item-action>
+                            <v-simple-checkbox
+                              :value="attrs.inputValue"
+                              v-on="on"
+                              color="black"
+                              :ripple="false"
+                            ></v-simple-checkbox>
+                          </v-list-item-action>
+                          <v-list-item-content >
+                            <v-list-item-title>
+                              {{ item.name }}
+                            </v-list-item-title>
+                          </v-list-item-content>
+                        </v-list-item>
+                      </template>
+                    </v-select>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </template>
+              </modal-extended>
             </template>
             <template #actions>
               <v-btn
@@ -55,6 +98,13 @@ export default {
       alreadyRegistered: false,
       loading: false,
       infoDialog: false,
+      modals:{
+        changeStatus:{
+          show:false,
+          htmlText:'',
+          newStatusId:null
+        }
+      }
     };
   },
   methods: {
@@ -66,6 +116,7 @@ export default {
     ...mapActions({
       getJobById: "job/getJobById",
       infoCandidature: "job/infoCandidature",
+      getAllCandidatureStatuses:"candidatureStatus/getAll"
     }),
     register: async function () {
       try {
@@ -95,10 +146,25 @@ export default {
           },
         });
       }
+    },
+    openModal: async function(items){
+      console.log('open modal - parent');
+      console.log('data = ',items);
+      await this.getAllCandidatureStatuses();
+      // console.log('check this = ',this.candidatureStatus.data);
+      let itemsLength = items.length ?? 1;
+      this.modals.changeStatus.show = true;
+      this.modals.changeStatus.htmlText = "<h3> Changing status of "+itemsLength+" candidature"+(itemsLength == 1 ? '': 's')+".</h3>"
+      this.modals.changeStatus.items = items;
+      this.modals.changeStatus.newStatusId = null;
+    },
+    closeModal: function(){
+      console.log('close modal');
+      this.modals.changeStatus.show = false;
     }
   },
   computed: {
-    ...mapState(["user", "job"]),
+    ...mapState(["user", "job","candidatureStatus"]),
     textAreaHeight() {
       console.log('computed text area height');
       if (

@@ -104,6 +104,10 @@ const createCandidature = async(data)=>{
 const infoCandidature = async(jobId)=>{
   return await axios.get(host + "/candidature/info/"+jobId,   defaultConfig());
 }
+
+const getAllCandidatureStatuses = async()=>{
+  return await axios.get(host + "/candidature/statuses",   defaultConfig());
+}
 //Candidatures (-)
 
 //Roles (+)
@@ -131,6 +135,7 @@ export default {
   myCandidatures,
   createCandidature,
   infoCandidature,
+  getAllCandidatureStatuses,
 
   getAllRoles
 };

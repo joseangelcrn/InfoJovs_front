@@ -9,6 +9,7 @@ import Modal from './components/Modal.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Common from './Utils/Common'
+import ModalExtended from './components/ModalExtended.vue'
 
 //axios
 Vue.use(VueAxios, axios)
@@ -18,6 +19,7 @@ Vue.config.productionTip = false
 //Global components
 Vue.component('main-card',MainCard);
 Vue.component('modal',Modal);
+Vue.component('modal-extended',ModalExtended);
 
 
 
