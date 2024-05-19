@@ -4,7 +4,7 @@
       <template #title>My Candidatures:</template>
       <template #content>
         <job-preview
-          v-for="(candidature, index) in job.candidatures"
+          v-for="(candidature, index) in candidature.data"
           :key="index"
           :job="candidature.job"
           :candStatus="candidature.status"
@@ -14,9 +14,9 @@
         <v-pagination
           v-on:input="onChangePage"
           color="primary"
-          v-model="job.pagination.currentPage"
-          :total-visible="job.pagination.perPage"
-          :length="job.pagination.lastPage"
+          v-model="candidature.pagination.currentPage"
+          :total-visible="candidature.pagination.perPage"
+          :length="candidature.pagination.lastPage"
         ></v-pagination>
       </template>
     </main-card>
@@ -32,11 +32,10 @@ export default {
   }),
   methods: {
     ...mapActions({
-      loadMyCandidatures: "job/myCandidatures",
+      loadMyCandidatures: "candidature/myCandidatures",
     }),
     ...mapMutations({
-      setCurrentPage: "job/setCurrentPage",
-      setCandidatures:'job/setCandidatures'
+      setCurrentPage: "candidature/setCurrentPage",
     }),
     onChangePage:async function (newCurrentPage) {
       console.log("on change page !");
@@ -46,7 +45,7 @@ export default {
     } 
   },
   computed: {
-    ...mapState(["job"]),
+    ...mapState(["job",'candidature']),
   },
   async mounted() {    
     await this.loadMyCandidatures();

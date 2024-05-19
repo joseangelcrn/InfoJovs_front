@@ -41,8 +41,7 @@
               <v-list-item-content>
                 <span class="white--text mb-4"
                   >You have
-                  <b class="black--text">{{
-                    job.pagination.totalItems}}</b>
+                  <b class="black--text">{{candidature.data.length}}</b>
                   Job Applications</span
                 >
                 <v-btn
@@ -72,16 +71,18 @@ export default {
   },
   methods: {
     ...mapActions({
-      myCandidatures: "job/myCandidatures",
+      myCandidatures: "candidature/myCandidatures",
     }),
   },
   computed: {
     ...mapState({
       user: "user",
       job: "job",
+      candidature:"candidature"
     }),
   },
   mounted: async function () {
+    console.log('mounted !');
     if (this.$common.hasRole("Employee")) {
       await this.myCandidatures();
     }
