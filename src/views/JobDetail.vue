@@ -125,13 +125,14 @@ export default {
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
-      setAlReadyRegistered: "job/setAlreadyRegistered"
+      setAlReadyRegistered: "job/setAlreadyRegistered",
+      deselectAllCandidatures:"candidature/deselectAll"
     }),
     ...mapActions({
       getJobById: "job/getJobById",
       infoCandidature: "job/infoCandidature",
       getAllCandidatureStatuses:"candidatureStatus/getAll",
-      updateCandidatures: 'candidatureStatus/update'
+      updateCandidatures: 'candidature/update'
     }),
     register: async function () {
       try {
@@ -169,7 +170,7 @@ export default {
       // console.log('check this = ',this.candidatureStatus.data);
       let itemsLength = items.length ?? 1;
       this.modals.changeStatus.show = true;
-      this.modals.changeStatus.htmlText = "<h3> Changing status of "+itemsLength+" candidature"+(itemsLength == 1 ? '': 's')+".</h3>"
+      this.modals.changeStatus.htmlText = "<h3> Changing status of "+this.candidature.selectedItems.length+" candidature"+(itemsLength == 1 ? '': 's')+".</h3>"
       this.modals.changeStatus.items = items;
       this.modals.changeStatus.newStatusId = null;
     },
@@ -179,7 +180,7 @@ export default {
     },
     updateCandStatus: async function () {
       console.log('update cand status:  ');
-      let candIds = this.$common.pluck(this.modals.changeStatus.items,'candidature_id');
+      let candIds = this.$common.pluck(this.candidature.selectedItems,'id');
       let newStatusId = this.modals.changeStatus.newStatusId;
       console.log('data to update = ');
       console.log(candIds,newStatusId);
@@ -187,10 +188,12 @@ export default {
         candIds,
         newStatusId
       });
+      this.modals.changeStatus.show = false;
+      this.deselectAllCandidatures();
     }
   },
   computed: {
-    ...mapState(["user", "job","candidatureStatus"]),
+    ...mapState(["user", "job","candidatureStatus",'candidature']),
     textAreaHeight() {
       console.log('computed text area height');
       if (

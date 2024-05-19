@@ -10,7 +10,7 @@ const job = {
       lastPage: 0,
       totalItems: 0,
     },
-    candidatures: [],
+    // candidatures: [],
     total:0,
   }),
   mutations: {
@@ -32,9 +32,9 @@ const job = {
       state.data.active = isActive;
     },
     //Candidatures
-    setCandidatures: function (state, data) {
-      state.candidatures = data;
-    },
+    // setCandidatures: function (state, data) {
+    //   state.candidatures = data;
+    // },
     //Jobs Pagination
     setPagination: function (state, data) {
       state.pagination = data;
@@ -53,24 +53,24 @@ const job = {
       commit("setJobs", response.data.jobs);
       commit("setPagination", response.data.pagination);
     },
-    myCandidatures: async function ({ commit, state }) {
-      let response = await proxy.myCandidatures(state.pagination);
-      commit("setCandidatures", response.data.candidatures);
-      commit("setPagination", response.data.pagination);
-    },
+    // myCandidatures: async function ({ commit, state }) {
+    //   let response = await proxy.myCandidatures(state.pagination);
+    //   commit("setCandidatures", response.data.candidatures);
+    //   commit("setPagination", response.data.pagination);
+    // },
     getJobById: async function ({ commit }, id) {
       let response = await proxy.getJobById(id);
       let job = response.data.job;
       job.alreadyRegistered = response.data.alreadyRegistered;
       commit("setJobs", job);
     },
-    infoCandidature: async function ({ commit, state }, jobId = null) {
-      if (!jobId) {
-        jobId = state.data.id;
-      }
-      let response = await proxy.infoCandidature(jobId);
-      commit('setCandidatures',response.data.candidatures)
-    },
+    // infoCandidature: async function ({ commit, state }, jobId = null) {
+    //   if (!jobId) {
+    //     jobId = state.data.id;
+    //   }
+    //   let response = await proxy.infoCandidature(jobId);
+    //   commit('setCandidatures',response.data.candidatures)
+    // },
     updateActiveValue: async function ({state}){
       let {id,active} = state.data;
       return await proxy.updateJobActiveValue({id,active});

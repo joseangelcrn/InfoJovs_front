@@ -82,11 +82,11 @@
                           <v-row>
                             <v-col>
                               <v-data-table
-                                v-model="candidaturesTable.selectedItems"
+                                v-model="candidature.selectedItems"
                                 :headers="candidaturesTable.headers"
-                                :items="candidaturesTable.items"
+                                :items="candidature.data"
                                 show-select
-                                item-key="candidature_id"
+                                item-key="id"
                                 class="elevation-1"
                                 :loading="candidaturesTable.loading"
                                 sort-by="created_at"
@@ -182,7 +182,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      infoCandidature: "job/infoCandidature",
+      getCandidaturesByJobId: "candidature/getByJobId",
       updateActiveValue: "job/updateActiveValue",
     }),
     ...mapMutations({
@@ -200,16 +200,18 @@ export default {
       this.chartLoaded = true;
     },
     seeCandidaturesInfo: async function(){
-      this.candidaturesTable.items = [];
+      // this.candidaturesTable.items = [];
       this.candidaturesTable.loading = true;
-      const response = await this.$proxy.getJobAdditionalInfo(
-        this.$props.jobId,
-        'candidatures'
-      );
+      // const response = await this.$proxy.getJobAdditionalInfo(
+      //   this.$props.jobId,
+      //   'candidatures'
+      // );
       // this.candidaturesTable.items = response.data;
-      console.log('see candidatures info !! = ',response.data.items);
-      this.candidaturesTable.items = response.data.items;
+      // console.log('see candidatures info !! = ',response.data.items);
+      // this.candidaturesTable.items = response.data.items;
+      await this.getCandidaturesByJobId(this.$props.jobId);
       this.candidaturesTable.loading = false;
+      console.log('candidature data  = ',this.candidature.data);
 
     },
 
@@ -253,7 +255,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user", "job"]),
+    ...mapState(["user", "job",'candidature']),
     statusChart() {
       return this.statusChartData;
     },

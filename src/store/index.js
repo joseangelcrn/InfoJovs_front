@@ -6,6 +6,7 @@ import modal from './modal'
 import general from './general'
 import professionalProfile from './professionalProfile'
 import candidatureStatus from './candidatureStatus'
+import candidature from './candidature'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
     modal:modal,
     general:general,
     professionalProfile:professionalProfile,
-    candidatureStatus:candidatureStatus
+    candidatureStatus:candidatureStatus,
+    candidature:candidature
   }
 })
