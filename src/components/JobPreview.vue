@@ -2,7 +2,7 @@
   <v-list-item three-line class="white rounded mt-2">
     <v-list-item-content>
       <v-list-item-title>{{ job.title }}</v-list-item-title>
-      <v-list-item-subtitle v-if="candStatus" :class="statusColor(candStatus.id)  + '--text'">{{
+      <v-list-item-subtitle v-if="candStatus" :class="$common.getStatusColor(candStatus.id)  + '--text'">{{
         candStatus.name
       }}</v-list-item-subtitle>
       <v-list-item-subtitle>{{ job.description }}</v-list-item-subtitle>
@@ -37,26 +37,6 @@ export default {
     };
   },
   methods: {
-    statusColor: function (statusId) {
-      switch (statusId) {
-        case 1:
-          return "blue-grey";
-          break;
-        case 2:
-          return "primary";
-          break;
-        case 3:
-          return "green";
-          break;
-        case 4:
-          return "red";
-          break;
-
-        default:
-          'black'
-          break;
-      }
-    },
     refreshCanEdit: function(){
       this.canEdit = (this.user.data.id == this.$props.job.recruiter_id);
     }
@@ -66,6 +46,7 @@ export default {
   },
   mounted() {
     this.refreshCanEdit();
+    console.log('test',this.$common);
   },
   updated() {
     this.refreshCanEdit();
