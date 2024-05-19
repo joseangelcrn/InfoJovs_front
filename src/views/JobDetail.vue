@@ -25,17 +25,19 @@
                   </v-textarea>
                 </v-col>
               </v-row>
-              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id" @openModal="openModal"></job-additional-info>
-              <modal-extended style="z-index:10;position:absolute" @clickOutside="closeModal" :show="modals.changeStatus.show">
+              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id" @openModal="openStatusModal"></job-additional-info>
+              <modal-extended style="z-index:10;position:absolute" @clickOutside="closeStatusModal" :show="modals.changeStatus.show">
+                <template #title>
+                  <span class="my-3" v-html="modals.changeStatus.htmlText"/>
+                </template>
                 <template #content>
-                  <v-container>
+                  <v-container class="bg-white">
                     <v-row>
                       <v-col>
-                        <span class="my-3" v-html="modals.changeStatus.htmlText"/>
                       </v-col>
                     </v-row>
                     <v-row>
-                      <v-col>
+                      <v-col style="padding: 0px;">
                         <v-select
                         dense
                         solo
@@ -45,6 +47,7 @@
                         v-model="modals.changeStatus.newStatusId"
                         item-text="name"
                         item-value="id"
+                        :color="$common.getStatusColor(modals.changeStatus.newStatusId)"
                       >
                       <template v-slot:item="{item, on, attrs}">
                         <v-list-item v-on="on" :class="$common.getStatusColor(item.id)">
@@ -67,6 +70,16 @@
                       </v-col>
                     </v-row>
                   </v-container>
+                </template>
+                <template #actions>
+                  <v-btn
+                  v-on:click="updateCandStatus"
+                  small
+                  class="primary--text"
+                  :disabled="!modals.changeStatus.newStatusId"
+                  :loading="loading"
+                  >Update</v-btn
+                >
                 </template>
               </modal-extended>
             </template>
@@ -102,7 +115,8 @@ export default {
         changeStatus:{
           show:false,
           htmlText:'',
-          newStatusId:null
+          newStatusId:null,
+          items:[]
         }
       }
     };
@@ -116,7 +130,8 @@ export default {
     ...mapActions({
       getJobById: "job/getJobById",
       infoCandidature: "job/infoCandidature",
-      getAllCandidatureStatuses:"candidatureStatus/getAll"
+      getAllCandidatureStatuses:"candidatureStatus/getAll",
+      updateCandidatures: 'candidatureStatus/update'
     }),
     register: async function () {
       try {
@@ -147,7 +162,7 @@ export default {
         });
       }
     },
-    openModal: async function(items){
+    openStatusModal: async function(items){
       console.log('open modal - parent');
       console.log('data = ',items);
       await this.getAllCandidatureStatuses();
@@ -158,9 +173,20 @@ export default {
       this.modals.changeStatus.items = items;
       this.modals.changeStatus.newStatusId = null;
     },
-    closeModal: function(){
+    closeStatusModal: function(){
       console.log('close modal');
       this.modals.changeStatus.show = false;
+    },
+    updateCandStatus: async function () {
+      console.log('update cand status:  ');
+      let candIds = this.$common.pluck(this.modals.changeStatus.items,'candidature_id');
+      let newStatusId = this.modals.changeStatus.newStatusId;
+      console.log('data to update = ');
+      console.log(candIds,newStatusId);
+      await this.updateCandidatures({
+        candIds,
+        newStatusId
+      });
     }
   },
   computed: {

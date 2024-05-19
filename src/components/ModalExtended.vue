@@ -7,11 +7,17 @@
     @keydown.esc.stop="clickOutside"
   >
     <template>
-      <v-card>
-        <v-card-text class="mt-3 text-center text-h5">
+      <main-card>
+        <template #title v-if="$slots.title">
+          <slot name="title" />
+        </template>
+        <template #content v-if="$slots.content">
           <slot name="content" />
-        </v-card-text>
-      </v-card>
+        </template>
+        <template #actions v-if="$slots.actions">
+          <slot name="actions" />
+        </template>
+      </main-card>
     </template>
   </v-dialog>
 </template>

@@ -27,7 +27,14 @@ const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const pluck = (arr, key) => arr.map((i) => i[key]);
+const pluck = (arr, key) => {
+if (!Array.isArray(arr)) {
+  const  json = arr;
+  arr =[]
+  arr.push(json); 
+}
+  return  arr.map((i) => i[key])
+};
 
 const ucfirst = (string) => {
   return capitalizeFirstLetter(string);

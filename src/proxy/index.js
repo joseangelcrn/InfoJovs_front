@@ -108,6 +108,16 @@ const infoCandidature = async(jobId)=>{
 const getAllCandidatureStatuses = async()=>{
   return await axios.get(host + "/candidature/status",   defaultConfig());
 }
+
+const updateCandidature = async(newStatusId,candIds)=>{
+  const config = defaultConfig();
+  config.params = {
+    status_id:newStatusId,
+    candidature_ids:candIds
+  }
+console.log('proxy params ',config.params);
+  return await axios.post(host + "/candidature/status",  null,config);
+}
 //Candidatures (-)
 
 //Roles (+)
@@ -136,6 +146,7 @@ export default {
   createCandidature,
   infoCandidature,
   getAllCandidatureStatuses,
+  updateCandidature,
 
   getAllRoles
 };
