@@ -38,6 +38,17 @@ const candidature = {
     },
     deselectAll: function(state){
       state.selectedItems = [];
+    },
+    pushIfNotExists: function(state,newCand){
+      console.log('push if not exists ',newCand);
+      let foundCand = state.selectedItems.filter((cand)=>{
+        return cand.id === newCand.id;
+      });
+
+      if (foundCand.length === 0) {
+        console.log('se agregaa porque aun no esta ');
+        state.selectedItems.push(newCand);
+      }
     }
   },
   actions: {

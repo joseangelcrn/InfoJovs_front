@@ -97,6 +97,7 @@
                                   dark
                                   :color="$common.getStatusColor(item.status.id)"
                                   @click="onClickChipStatus(item)"
+                                  :disabled="disableStatusButtonIfNotSelected(item)"
                                 >
                                 {{item.status.name}}
                                 </v-chip>
@@ -131,6 +132,7 @@ import {
   LinearScale,
 } from "chart.js";
 import ModalExtended from './ModalExtended.vue';
+import candidature from '@/store/candidature';
 
 ChartJS.register(
   Title,
@@ -173,9 +175,6 @@ export default {
           { text: 'Created at', value: 'created_at' },
           { text: 'Actions', value: 'actions', sortable:false },
         ],
-        items: [
-        ],
-        selectedItems: [],
         loading:false
       },
     };
@@ -189,6 +188,7 @@ export default {
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
       setActiveOffer: "job/setActive",
+      pushCandIfNotExists:"candidature/pushIfNotExists"
     }),
     seeMainAdditionalInfo: async function () {
       const response = await this.$proxy.getJobAdditionalInfo(
@@ -244,14 +244,25 @@ export default {
       }
     },
     onClickChipStatus: function(item){
-      if (this.candidaturesTable.selectedItems.length > 1) {
+      this.pushCandIfNotExists(item);
+      if (this.candidature.selectedItems.length > 1) {
         console.log('Multiple Items');
-        this.$emit('openModal',this.candidaturesTable.selectedItems);
+        this.$emit('openModal',this.candidature.selectedItems.length);
       }
       else{
         console.log('Single Item');
         this.$emit('openModal',item);
       }
+    },
+    disableStatusButtonIfNotSelected: function(item){
+      let disabled = false;
+      let selectedIds = this.$common.pluck(this.candidature.selectedItems,'id');
+
+      if (this.candidature.selectedItems.length > 0 && !selectedIds.includes(item.id)) {
+        disabled = true;
+      }
+
+      return disabled;
     }
   },
   computed: {
