@@ -108,6 +108,7 @@ export default {
     ...mapMutations({
       setCurrentPage: "job/setCurrentPage",
       setJobs: "job/setJobs",
+      resetPagination:"job/resetPagination"
     }),
     onSearch: async function () {
       await this.setCurrentPage(1);
@@ -133,6 +134,8 @@ export default {
   },
   beforeMount() {
     this.setJobs([]);
+    this.resetPagination();
+
   },
 };
 </script>

@@ -10,7 +10,6 @@ const job = {
       lastPage: 0,
       totalItems: 0,
     },
-    // candidatures: [],
     total:0,
   }),
   mutations: {
@@ -43,6 +42,14 @@ const job = {
       console.log("seteo de pagina a " + data);
       state.pagination.currentPage = data;
     },
+    resetPagination: function(state){
+      state.pagination =  {
+        currentPage: 1,
+        perPage: 5,
+        lastPage: 0,
+        totalItems: 0,
+      };
+    }
   },
   actions: {
     search: async function ({ commit, state }, filter) {
