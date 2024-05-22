@@ -82,6 +82,24 @@
                 >
                 </template>
               </modal-extended>
+              <v-row v-if="job.data.alreadyRegistered" >
+                <v-col cols="12">
+                  <v-btn
+                    color="white primary--text"
+                    elevation="2"
+                    outlined
+                    @click="show.history = !show.history"
+                  >
+                  <v-icon class="mr-2">mdi-timeline-text-outline</v-icon>
+                  Candidature Timeline
+                  <v-icon class="ml-2" v-if="show.history == true">mdi-toggle-switch</v-icon>
+                  <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
+                </v-btn>
+                </v-col>
+                <v-col v-show="show.history">
+                  <job-history :history="candidatureHistory.data" />
+                </v-col>
+              </v-row>
             </template>
             <template #actions>
               <v-btn
@@ -104,8 +122,10 @@
 <script>
 import JobAdditionalInfo from '@/components/JobAdditionalInfo.vue';
 import { mapActions, mapMutations, mapState } from "vuex";
+import JobHistory from '@/components/JobHistory.vue';
+import candidatureHistory from '@/store/candidatureHistory';
 export default {
-  components: { JobAdditionalInfo },
+  components: { JobAdditionalInfo, JobHistory },
   data() {
     return {
       alreadyRegistered: false,
@@ -118,6 +138,9 @@ export default {
           newStatusId:null,
           items:[]
         }
+      },
+      show:{
+        history:false
       }
     };
   },
@@ -132,7 +155,8 @@ export default {
       getJobById: "job/getJobById",
       infoCandidature: "job/infoCandidature",
       getAllCandidatureStatuses:"candidatureStatus/getAll",
-      updateCandidatures: 'candidature/update'
+      updateCandidatures: 'candidature/update',
+      getHistory:'candidatureHistory/getHistory'
     }),
     register: async function () {
       try {
@@ -193,7 +217,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user", "job","candidatureStatus",'candidature']),
+    ...mapState(["user", "job","candidatureStatus",'candidature','candidatureHistory']),
     textAreaHeight() {
       console.log('computed text area height');
       if (
@@ -223,6 +247,8 @@ export default {
   mounted: async function () {
     try {
       await this.getJobById(this.$route.params.id);
+      await this.getHistory(this.$route.params.id);
+      console.log('history',this.candidatureHistory.data);
     } catch (error) {
 
       this.manageModal({

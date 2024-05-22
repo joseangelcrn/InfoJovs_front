@@ -118,6 +118,11 @@ const updateCandidature = async(newStatusId,candIds)=>{
 console.log('proxy params ',config.params);
   return await axios.post(host + "/candidature/status",  null,config);
 }
+
+const getCandidatureHistory = async(candidatureId)=>{
+  console.log('url = '+host+'/candidature/history/'+candidatureId);
+  return await axios.get(host+'/candidature/history/'+candidatureId,defaultConfig())
+}
 //Candidatures (-)
 
 //Roles (+)
@@ -147,6 +152,7 @@ export default {
   infoCandidature,
   getAllCandidatureStatuses,
   updateCandidature,
+  getCandidatureHistory,
 
   getAllRoles
 };
