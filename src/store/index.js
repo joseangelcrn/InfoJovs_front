@@ -8,6 +8,7 @@ import professionalProfile from './professionalProfile'
 import candidatureStatus from './candidatureStatus'
 import candidature from './candidature'
 import candidatureHistory from './candidatureHistory'
+import question from './question'
 
 Vue.use(Vuex)
 
@@ -20,6 +21,7 @@ export default new Vuex.Store({
     professionalProfile:professionalProfile,
     candidatureStatus:candidatureStatus,
     candidature:candidature,
-    candidatureHistory:candidatureHistory
+    candidatureHistory:candidatureHistory,
+    question:question
   }
 })
