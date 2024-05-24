@@ -27,6 +27,10 @@ Vue.component('modal-extended',ModalExtended);
 Vue.prototype.$proxy = proxy;
 Vue.prototype.$common = Common;
 
+//Global CSS
+require('@/assets/styles/main.css')
+
+
 new Vue({
   router,
   store,
