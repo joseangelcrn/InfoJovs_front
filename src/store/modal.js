@@ -41,6 +41,13 @@ const modal = {
       if (config.type) {
         state.type = config.type;        
       }
+      if (config.textBtnNot){
+        state.textBtnNot = config.textBtnNot;
+      }
+      if (config.textBtnYes){
+        state.textBtnYes = config.textBtnYes;
+      }
+
     }
     
   },

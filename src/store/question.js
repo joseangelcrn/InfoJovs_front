@@ -3,11 +3,11 @@ import common from "@/Utils/Common";
 const question = {
     namespaced: true,
     state: () => ({
-        type: "options", // 1 = Free Text || 2 = Options
+        type: "free", // 1 = Free Text || 2 = Options
 
         title: '', //question
         answer: '',
-        show: true,
+        show: false,
         newAnswer: '', //input v-model
         answerOptions: [
             {text: 'Option 1', edit: false},
@@ -17,18 +17,18 @@ const question = {
 
         ],
         //all questions are store in data ( this will be stored in database)
-        // data:[]
-        data: [
-            {
-                "type": "options", "title": "cc",
-                "answerOptions": [
-                    {"text": "Option 1", "edit": false},
-                    {"text": "Option 2", "edit": false},
-                    {"text": "Option 3", "edit": false},
-                    {"text": "Option 4", "edit": false}
-                ]
-            }
-        ]
+        data:[]
+        // data: [
+        //     {
+        //         "type": "options", "title": "cc",
+        //         "answerOptions": [
+        //             {"text": "Option 1", "edit": false},
+        //             {"text": "Option 2", "edit": false},
+        //             {"text": "Option 3", "edit": false},
+        //             {"text": "Option 4", "edit": false}
+        //         ]
+        //     }
+        // ]
     }),
     mutations: {
         setType: function (state, type) {
@@ -47,7 +47,6 @@ const question = {
             state.type = 'free';
             state.title = '';
             state.answer = '';
-            state.show = false;
             state.newAnswer = '';
             state.answerOptions = [];
         },
@@ -55,7 +54,7 @@ const question = {
             console.log('set edit mode');
             console.log('index = ' + index)
             state.answerOptions = state.answerOptions.map((item, indexMap) => {
-                if (index == indexMap) {
+                if (index === indexMap) {
                     item.edit = true;
                 } else {
                     item.edit = false;
@@ -73,8 +72,6 @@ const question = {
         },
         update: function (state, payload) {
             let {index, new_text} = payload;
-            console.log('update !')
-            console.log('new text = ', new_text)
             state.answerOptions = state.answerOptions.map((item, mapIndex) => {
                 if (mapIndex === index) {
                     item.text = new_text;
@@ -82,10 +79,14 @@ const question = {
                 return item;
             });
         },
-        storeAsNew: function (state) {
-            let {type, title, answerOptions} = state;
-            answerOptions = common.pluck(answerOptions,'text')
-            state.data.push({type, title, answerOptions});
+        store: function (state){
+            let {type,title,answerOptions} = state;
+            state.data.push({type,title,answerOptions})
+        },
+        remove : function (state,index){
+            state.data = state.data.filter((item,filterIndex)=>{
+                return filterIndex !== index;
+            })
         }
 
     },
@@ -104,10 +105,13 @@ const question = {
             commit('update', payload);
             commit('setEditMode', -1);
         },
-        storeAsNew: function ({commit}, payload) {
-            commit('storeAsNew');
+        store: function ({commit}) {
+            commit('store');
             commit('closeModal');
-            commit('reset');
+        },
+        openModal: function ({commit}){
+            commit('reset')
+            commit('openModal');
         }
     }
 };
