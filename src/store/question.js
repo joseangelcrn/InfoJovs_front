@@ -31,12 +31,6 @@ const question = {
         // ]
     }),
     mutations: {
-        setType: function (state, type) {
-            state.type = type;
-        },
-        setTitle: function (state, title) {
-            state.title = title;
-        },
         addAnswer: function (state) {
             let objAnswer = {text: state.newAnswer, edit: false};
             state.answerOptions.push(objAnswer);
@@ -70,7 +64,7 @@ const question = {
             console.log('close questions modal');
             state.show = false;
         },
-        update: function (state, payload) {
+        updateAnswerOption: function (state, payload) {
             let {index, new_text} = payload;
             state.answerOptions = state.answerOptions.map((item, mapIndex) => {
                 if (mapIndex === index) {
@@ -101,18 +95,19 @@ const question = {
     },
 
     actions: {
-        update: function ({commit}, payload) {
-            commit('update', payload);
+        updateAnswerOption: function ({commit}, payload) {
+            commit('updateAnswerOption', payload);
             commit('setEditMode', -1);
         },
         store: function ({commit}) {
             commit('store');
             commit('closeModal');
         },
-        openModal: function ({commit}){
+        openModal: function ({commit},index = null){
             commit('reset')
             commit('openModal');
-        }
+        },
+
     }
 };
 

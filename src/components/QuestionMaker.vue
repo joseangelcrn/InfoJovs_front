@@ -93,7 +93,7 @@
               </v-btn>
               <!--BUTTONS WHEN YOU ARE EDITING ONE ANSWER-->
               <div v-else-if="answer.edit" class="ml-2">
-                <v-btn style="height: 40px" color="white primary--text mr-1" x-small @click="update({index:index,new_text:$refs['edited_answer_'+index][0].$refs.input._value})">
+                <v-btn style="height: 40px" color="white primary--text mr-1" x-small @click="updateAnswerOption({index:index,new_text:$refs['edited_answer_'+index][0].$refs.input._value})">
                   <v-icon>mdi-check</v-icon>
                 </v-btn>
                 <v-btn style="height: 40px" color="white primary--text mr-1" x-small @click="setEditMode(-1)">
@@ -174,7 +174,7 @@ export default {
       // update: "question/update"
     }),
     ...mapActions({
-      update:"question/update",
+      updateAnswerOption:"question/updateAnswerOption",
       storeQuestion:"question/store"
     })
 
