@@ -5,7 +5,7 @@
           {{question.title}}
         </div>
         <div v-if="edit_mode">
-          <v-btn  style="height: 40px" color="white primary--text mr-1" x-small>
+          <v-btn  style="height: 40px" color="white primary--text mr-1" x-small @click="openModal(index)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
           <v-btn   style="height: 40px" color="white red--text mr-1" x-small @click="removeQuestion(index)" >
@@ -50,6 +50,9 @@ export default {
       remove: "question/remove",
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
+    }),
+    ...mapActions({
+      openModal:"question/openModal"
     }),
 
     removeQuestion:function(index){

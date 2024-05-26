@@ -32,7 +32,7 @@
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-row v-if="question.type == 'free'">
+        <v-row v-if="question.type === 'free'">
           <v-col>
             <v-textarea
                 disabled
@@ -112,7 +112,7 @@
           class="primary--text"
           :disabled="disableAddNewQuestion"
           @click="storeQuestion"
-      >Save Question
+      >{{ question.editingIndex !== -1 ? 'Update' : 'Save' }}  Question
       </v-btn
       >
       <v-btn

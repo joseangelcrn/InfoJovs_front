@@ -3,8 +3,8 @@ import common from "@/Utils/Common";
 const question = {
     namespaced: true,
     state: () => ({
-        type: "free", // 1 = Free Text || 2 = Options
-
+        type: "free", // 1 = Free Text (free) || 2 = Options (options)
+        editingIndex:-1, //Flag to know if we are creating or updating
         title: '', //question
         answer: '',
         show: false,
@@ -43,6 +43,7 @@ const question = {
             state.answer = '';
             state.newAnswer = '';
             state.answerOptions = [];
+            state.editingIndex = -1;
         },
         setEditMode: function (state, index) {
             console.log('set edit mode');
@@ -64,6 +65,7 @@ const question = {
             console.log('close questions modal');
             state.show = false;
         },
+        //Update answer options if question type is  'options'
         updateAnswerOption: function (state, payload) {
             let {index, new_text} = payload;
             state.answerOptions = state.answerOptions.map((item, mapIndex) => {
@@ -73,14 +75,43 @@ const question = {
                 return item;
             });
         },
+        //Store and update questions
         store: function (state){
             let {type,title,answerOptions} = state;
-            state.data.push({type,title,answerOptions})
+            if (state.editingIndex !== -1){
+                console.log('updating question')
+                //update existing one
+                state.data = state.data.map((item,index)=>{
+                    if (index === state.editingIndex){
+                        console.log('type = '+type)
+                        item.type = type;
+                        item.title = title;
+                        item.answerOptions = type === 'options' ? answerOptions : [];
+                        console.log('so... answer option = ',item.answerOptions)
+                    }
+                    return item;
+                })
+            }else{
+                //Create new one
+                state.data.push({type,title,answerOptions})
+            }
         },
         remove : function (state,index){
             state.data = state.data.filter((item,filterIndex)=>{
                 return filterIndex !== index;
             })
+        },
+        //Set selected question as current editing element (form)
+        edit: function (state,index){
+            console.log('ediiiit')
+            let question = state.data.find((question,findIndex)=>{
+                return findIndex === index;
+            });
+            let {type,title,answerOptions} = question;
+            state.title = title;
+            state.type = type;
+            state.answerOptions = answerOptions;
+            state.editingIndex = index;
         }
 
     },
@@ -105,9 +136,15 @@ const question = {
         },
         openModal: function ({commit},index = null){
             commit('reset')
-            commit('openModal');
-        },
+            //prevent get events as 'index'
+            if (!isNaN(index)){
+                //Loading data to edit question
+                commit('edit',index);
+            }
 
+            commit('openModal');
+
+        }
     }
 };
 
