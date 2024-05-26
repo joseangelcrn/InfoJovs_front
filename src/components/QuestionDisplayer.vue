@@ -5,10 +5,10 @@
           {{question.title}}
         </div>
         <div v-if="edit_mode">
-          <v-btn  style="height: 40px" color="white primary--text mr-1" x-small @click="openModal(index)">
+          <v-btn  style="height: 30px; width: 30px;"  color="white primary--text mr-1" x-small @click="openModal(index)">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn   style="height: 40px" color="white red--text mr-1" x-small @click="removeQuestion(index)" >
+          <v-btn  style="height: 30px; width: 30px;"  color="white red--text mr-1" x-small @click="removeQuestion(index)" >
             <v-icon>mdi-trash-can</v-icon>
           </v-btn>
         </div>
