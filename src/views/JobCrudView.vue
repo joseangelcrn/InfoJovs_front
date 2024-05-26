@@ -159,7 +159,7 @@ export default {
         description: null,
         tags: null,
       },
-      questionTab:1
+      questionTab:0
     };
   },
   methods: {
