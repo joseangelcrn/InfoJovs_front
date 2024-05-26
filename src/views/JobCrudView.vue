@@ -207,13 +207,10 @@ export default {
             });
             var message = response.data.message;
           }
-
+//todo revise this code , this modal should not display not button.. it has conflicts with other vuex changes in same page
           this.manageModal({
             title: "Info",
-            text: message,
-            onClickYes: () => {
-              this.hideModal();
-            },
+            text: message
           });
         } catch (error) {
           var message =
@@ -255,6 +252,9 @@ export default {
     },
   },
   mounted: async function () {
+
+    this.setQuestionsData([]);
+
     if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
       try {
