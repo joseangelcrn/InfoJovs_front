@@ -69,6 +69,7 @@ const job = {
       let response = await proxy.getJobById(id);
       let job = response.data.job;
       job.alreadyRegistered = response.data.alreadyRegistered;
+      job.questions = JSON.parse(job.questions);
       commit("setJobs", job);
     },
     // infoCandidature: async function ({ commit, state }, jobId = null) {

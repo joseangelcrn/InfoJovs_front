@@ -115,6 +115,13 @@ const question = {
             state.type = type;
             state.answerOptions = answerOptions;
             state.editingIndex = index;
+        },
+        //For employees...
+        addValueField:function(state){
+            state.data = state.data.map((question)=>{
+                question.value = null;
+                return question;
+            })
         }
 
     },

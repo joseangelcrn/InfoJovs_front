@@ -100,6 +100,27 @@
                   <job-history :history="candidatureHistory.data" />
                 </v-col>
               </v-row>
+              <modal-extended class="white" background-content="white" :show="modals.questions.show" @clickOutside="modals.questions.show = false">
+                <template #title>Candidature questions</template>
+                <template #content>
+                  <v-container class="white">
+                    <v-row>
+                      <v-col cols="12" v-for="(question, index ) in question.data">
+                        <question-displayer  :question="question" :index="question"/>
+                      </v-col>
+                    </v-row>
+                  </v-container>
+                </template>
+                <template #actions>
+                  <div class="question_buttons">
+                    <v-btn
+                        small
+                        class="primary--text"
+                        @click="register(true)"
+                    >Register</v-btn>
+                  </div>
+                </template>
+              </modal-extended>
             </template>
             <template #actions>
               <v-btn
@@ -124,8 +145,9 @@ import JobAdditionalInfo from '@/components/JobAdditionalInfo.vue';
 import { mapActions, mapMutations, mapState } from "vuex";
 import JobHistory from '@/components/JobHistory.vue';
 import candidatureHistory from '@/store/candidatureHistory';
+import QuestionDisplayer from "@/components/QuestionDisplayer.vue";
 export default {
-  components: { JobAdditionalInfo, JobHistory },
+  components: {QuestionDisplayer, JobAdditionalInfo, JobHistory },
   data() {
     return {
       alreadyRegistered: false,
@@ -137,6 +159,9 @@ export default {
           htmlText:'',
           newStatusId:null,
           items:[]
+        },
+        questions:{
+          show:false
         }
       },
       show:{
@@ -149,7 +174,9 @@ export default {
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
       setAlReadyRegistered: "job/setAlreadyRegistered",
-      deselectAllCandidatures:"candidature/deselectAll"
+      deselectAllCandidatures:"candidature/deselectAll",
+      addValueFieldToQuestions:"question/addValueField",
+      setQuestionData:"question/setData"
     }),
     ...mapActions({
       getJobById: "job/getJobById",
@@ -158,33 +185,44 @@ export default {
       updateCandidatures: 'candidature/update',
       getHistory:'candidatureHistory/getHistory'
     }),
-    register: async function () {
-      try {
-        this.loading = true;
-        let response = await this.$proxy.createCandidature({
-          job_id: this.job.data.id,
-        });
-        this.setAlReadyRegistered(true);
-        this.loading = false;
+    register: async function (force = false) {
+      //prevent event as param force
+      force = (typeof force === 'boolean' && force === true);
+      console.log('register ! | force = '+force);
 
-        this.manageModal({
-          title: "Info",
-          text: response.data.message,
-          onClickYes: () => {
-            this.hideModal();
-          },
-        });
-      } catch (error) {
-        this.loading = false;
-        console.log("error", error);
-        this.manageModal({
-          title: "Error",
-          type: "error",
-          text: "Oops!.. Something was wrong",
-          onClickYes: () => {
-            this.hideModal();
-          },
-        });
+      if (!force && this.job.data.questions){
+        //Create candidature with questions
+        this.modals.questions.show =true;
+
+      }
+      else{
+        //Create candidature without questions
+        try {
+          this.loading = true;
+          let response = await this.$proxy.createCandidature({
+            job_id: this.job.data.id,
+            questions:this.question.data
+          });
+          this.setAlReadyRegistered(true);
+          this.loading = false;
+          this.modals.questions.show = false;
+
+          this.manageModal({
+            title: "Info",
+            text: response.data.message,
+          });
+        } catch (error) {
+          this.loading = false;
+          console.log("error", error);
+          this.manageModal({
+            title: "Error",
+            type: "error",
+            text: "Oops!.. Something was wrong",
+            onClickYes: () => {
+              this.hideModal();
+            },
+          });
+        }
       }
     },
     openStatusModal: async function(items){
@@ -217,7 +255,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["user", "job","candidatureStatus",'candidature','candidatureHistory']),
+    ...mapState(["user", "job","candidatureStatus",'candidature','candidatureHistory','question']),
     textAreaHeight() {
       console.log('computed text area height');
       if (
@@ -248,7 +286,10 @@ export default {
     try {
       await this.getJobById(this.$route.params.id);
       await this.getHistory(this.$route.params.id);
-      console.log('history',this.candidatureHistory.data);
+      if (this.job.data.questions){
+        this.setQuestionData(this.job.data.questions);
+        this.addValueFieldToQuestions();
+      }
     } catch (error) {
 
       this.manageModal({
@@ -256,6 +297,7 @@ export default {
         type: "error",
         text: "Oops!.. Something was wrong",
         onClickYes: () => {
+          this.modals.questions.show = false;
           this.hideModal();
         },
       });
