@@ -167,6 +167,7 @@ export default {
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
       closeQuestionModal:"question/closeModal",
+      setQuestionsData:"question/setData"
     }),
     ...mapActions({
       openQuestionsModal:"question/openModal",
@@ -194,6 +195,7 @@ export default {
               title: this.title,
               description: this.description,
               tags: this.tags,
+              questions:this.question.data
             });
             var message = response.data.message;
           } else {
@@ -201,6 +203,7 @@ export default {
               title: this.title,
               description: this.description,
               tags: this.tags,
+              questions:this.question.data,
             });
             var message = response.data.message;
           }
@@ -210,7 +213,6 @@ export default {
             text: message,
             onClickYes: () => {
               this.hideModal();
-              this.$router.push({ name: "home" });
             },
           });
         } catch (error) {
@@ -272,6 +274,8 @@ export default {
         this.title = job.title;
         this.description = job.description;
         this.tags = this.$common.pluck(job.tags, "name");
+        this.setQuestionsData(JSON.parse(job.questions))
+
       } catch (error) {
         this.manageModal({
           title: "Error",

@@ -22,13 +22,19 @@
                background-color="white"
                readonly
                no-resize
-               placeholder="Free answer"/>
+               placeholder="Free answer, employees will write their answers here"/>
 
          </div>
-         <div v-else>
-           <ul>
-             <li v-for="(answer,index) in question.answerOptions" >{{answer.text}}</li>
-           </ul>
+         <div v-else class="d-flex flex-column">
+           <v-chip
+                   v-for="(answer,index) in question.answerOptions"
+                   :key="index"
+                   color="white primary--text"
+                   label
+                   :class="{'mt-2' : index > 0}"
+           >
+             {{ answer.text }}
+           </v-chip>
          </div>
        </div>
     </template>

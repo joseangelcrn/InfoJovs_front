@@ -75,6 +75,9 @@ const question = {
                 return item;
             });
         },
+        setData: function (state,data){
+          state.data = data ?? [];
+        },
         //Store and update questions
         store: function (state){
             let {type,title,answerOptions} = state;
