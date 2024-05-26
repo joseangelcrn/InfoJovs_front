@@ -190,7 +190,7 @@ export default {
       } else {
         try {
           if (this.id) {
-            let response = await this.$proxy.updateJob({
+            var response = await this.$proxy.updateJob({
               id: this.id,
               title: this.title,
               description: this.description,
@@ -199,7 +199,7 @@ export default {
             });
             var message = response.data.message;
           } else {
-            let response = await this.$proxy.createJob({
+            var response = await this.$proxy.createJob({
               title: this.title,
               description: this.description,
               tags: this.tags,
@@ -207,10 +207,15 @@ export default {
             });
             var message = response.data.message;
           }
-//todo revise this code , this modal should not display not button.. it has conflicts with other vuex changes in same page
+          let jobId = response.data.job.id;
           this.manageModal({
             title: "Info",
-            text: message
+            text: message,
+            onClickYes:()=>{
+              this.$router.push({ name: 'offerJob', params: { id: jobId }});
+              this.id = jobId
+              this.hideModal();
+            }
           });
         } catch (error) {
           var message =
