@@ -186,7 +186,7 @@ export default {
     }),
 
     disableAddNewQuestion() {
-      let {type, title, answerOptions} = this.question;
+      let {type, title, answerOptions = []} = this.question;
 
       if (title.trim().length == 0 || (type != "free" && answerOptions.length == 0)) {
         return true;

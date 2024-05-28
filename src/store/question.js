@@ -127,6 +127,9 @@ const question = {
     },
     getters: {
         isEditMode: function (state) {
+            if (typeof  state.answerOptions === 'undefined'){
+                state.answerOptions = [];
+            }
             let found = state.answerOptions.filter((item) => {
                 return item.edit === true;
             });

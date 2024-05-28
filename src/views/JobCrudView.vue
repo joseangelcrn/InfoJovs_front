@@ -113,7 +113,7 @@
                             v-for="(item,index) in question.data"
                             :key="index"
                         >
-                          <question-displayer edit_mode="true" :index="index" :question="item"/>
+                          <question-displayer :edit_mode="true" :index="index" :question="item"/>
                         </v-tab-item>
                       </v-tabs-items>
 
