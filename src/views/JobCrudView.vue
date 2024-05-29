@@ -212,7 +212,7 @@ export default {
             title: "Info",
             text: message,
             onClickYes:()=>{
-              this.$router.push({ name: 'offerJob', params: { id: jobId }});
+              // this.$router.push({ name: 'offerJob', params: { id: jobId }});
               this.id = jobId
               this.hideModal();
             }
