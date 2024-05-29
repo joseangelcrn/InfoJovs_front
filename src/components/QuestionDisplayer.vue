@@ -34,6 +34,7 @@
                  color="white primary--text"
                  label
                  :class="{'mt-2' : index > 0}"
+                 style="width: 100%"
              >
                {{ answer.text }}
              </v-chip>

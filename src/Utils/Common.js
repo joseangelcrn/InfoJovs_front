@@ -63,6 +63,9 @@ const getStatusColor = (statusId, vuetifyClasses = true) => {
   }
 };
 
+const deepClone = (data)=>{
+  return JSON.parse(JSON.stringify(data))
+}
 export default {
   setTitle,
   capitalizeFirstLetter,
@@ -70,4 +73,5 @@ export default {
   ucfirst,
   hasRole,
   getStatusColor,
+  deepClone
 };

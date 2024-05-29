@@ -68,12 +68,18 @@ const question = {
         //Update answer options if question type is  'options'
         updateAnswerOption: function (state, payload) {
             let {index, new_text} = payload;
-            state.answerOptions = state.answerOptions.map((item, mapIndex) => {
+
+            // let cloneAnswerOptions =JSON.parse(JSON.stringify(state.answerOptions));
+            let cloneAnswerOptions =common.deepClone(state.answerOptions);
+            console.log('debug here')
+            let updatedAnswerOptions = cloneAnswerOptions.map((item, mapIndex) => {
                 if (mapIndex === index) {
                     item.text = new_text;
                 }
                 return item;
             });
+            state.answerOptions = updatedAnswerOptions;
+
         },
         setData: function (state,data){
           state.data = data ?? [];

@@ -74,7 +74,7 @@
           <div id="answer_container" style="max-height: 150px; overflow-y: scroll;">
             <div class="d-flex" :class="(index !== 0 ? 'mt-1' : '')" v-for="(answer,index) in question.answerOptions">
               <!--DATA WHEN YOU ARE EDITING SOME ANSWER-->
-              <v-text-field :ref="'edited_answer_'+index" v-if="answer.edit" solo outlined dense :value="answer.text">
+              <v-text-field :ref="'edited_answer_'+index" v-if="answer.edit == true" solo outlined dense :value="answer.text">
               </v-text-field>
               <!--DATA WHEN YOU ARE NOT EDITING ANY ANSWER-->
               <v-chip class="mr-auto"
@@ -92,7 +92,7 @@
                 <v-icon>mdi-pencil</v-icon>
               </v-btn>
               <!--BUTTONS WHEN YOU ARE EDITING ONE ANSWER-->
-              <div v-else-if="answer.edit" class="ml-2">
+              <div v-else-if="answer.edit == true" class="ml-2">
                 <v-btn style="height: 40px" color="white primary--text mr-1" x-small @click="updateAnswerOption({index:index,new_text:$refs['edited_answer_'+index][0].$refs.input._value})">
                   <v-icon>mdi-check</v-icon>
                 </v-btn>
