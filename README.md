@@ -115,5 +115,30 @@ It will appear a **Additional Information** button :
 
 ![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/c797eb6f-bf3c-4e88-9edb-b016a06ba01e)
 
-Where you will be able to manage everything related with your job:
+Where you will be able to manage everything related with your job by different tabs:
+
+## Main Info Tab
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/21635079-d4ac-44d3-ac3c-34d726e6d9aa)
+
+You can active or deactive your own jobs.
+In addition, you can see charts with information about your Job, such as : Professional Profiles of employees who applied your Job, or different candidature statuses.
+Also you can select single or multiple candidatures and change status of it :
+
+## Candidatures Tab
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/2f9d5643-7dd1-46ac-b93b-208d8abee224)
+
+Here you can manage candidature statuses  by changing singe or multiple candidatures:
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/7e7d6e54-183f-49ce-a8a9-f2d17519274a)
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/06c0bcfd-39a3-4112-9ad7-d12d8efc09d2)
+
+Also you can see differents answers has been made by employees about Job Offer:
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/24575f4e-1c48-4914-be60-b8a66e05c21b)
+
+
+
 
