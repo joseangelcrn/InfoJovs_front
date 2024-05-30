@@ -17,7 +17,7 @@ An application with two main roles ( **Recruiter** and **Employee** )  where you
 - [x] You can create offers
 - [x] You can close your offers 
 - [x] See how many employees have applied to the offer
-- [x] Change status of candidatures for employees who are applied in your own offers
+- [x] Change status of candidatures for employees who has applied in your own offers
 - [x] You can attach questions to job application. It will be displayed to employees once they will applicate job.
 
 
