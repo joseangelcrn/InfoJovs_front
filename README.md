@@ -105,3 +105,15 @@ Temporary store and saved (db) questions are displayed with a tab system compone
 
 ![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/6e225120-4e1f-4af0-92b7-186b544317ea)
 
+### Manage your Jobs
+
+If you acces  one of your jobs :
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/bbdfa7ed-6d35-4c7d-adce-f54d4d91c18f)
+
+It will appear a **Additional Information** button : 
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/c797eb6f-bf3c-4e88-9edb-b016a06ba01e)
+
+Where you will be able to manage everything related with your job:
+
