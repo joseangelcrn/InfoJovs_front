@@ -17,49 +17,50 @@ const routes = [
     path: "/login",
     name: "login",
     component: LoginView,
-    meta:{auth:false}
+    meta:{auth:false,title:'Login'}
   },
   {
     path: "/signup",
     name: "signup",
     component: SignUpView,
-    meta:{auth:false}
+    meta:{auth:false,title:'SignUp'}
   },
   {
     path: "/home",
     name: "home",
     component: HomeView,
-    meta:{auth:true}
+    meta:{auth:true,title:'Home'}
   },
   {
     path: "/jobs",
     name: "jobs",
     component: JobFinderView,
-    meta:{auth:true}
+    meta:{auth:true,title:'Jobs Finder'}
   },
   {
     path:'/job_details/:id',
     name:'jobDetails',
     component:JobDetail,
-    meta:{auth:true}
+    meta:{auth:true,title:'Job Details'}
     
   },
   {
     path: "/offer_job/:id?",
     name: "offerJob",
     component: JobCrudView,
-    meta:{auth:true,role:'recruiter'}
+    meta:{auth:true,role:'recruiter',title:'Offer Job'}
   },
   {
     path: "/my_candidatures",
     name: "myCandidatures",
     component: MyCandidaturesView,
-    meta:{auth:true,role:'employee'}
+    meta:{auth:true,role:'employee',title:'My Candidatures'}
   },
   {
     path: "*",
     name: "notFound",
-    component: NotFound
+    component: NotFound,
+    meta:{title:'Not Found'}
   },
 ];
 
