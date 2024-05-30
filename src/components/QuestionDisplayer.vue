@@ -21,7 +21,7 @@
                solo
                outlined
                background-color="white"
-               :readonly="edit_mode"
+               :readonly="edit_mode || vuexQuestion.readOnly"
                no-resize
                :placeholder="edit_mode ? 'Free answer, employees will write their answers here' : ''"/>
 
@@ -47,6 +47,7 @@
                    :key="index"
                    :label="answer.text"
                    :value="index"
+                   :readonly="vuexQuestion.readOnly"
                ></v-radio>
             </v-radio-group>
 
@@ -94,6 +95,10 @@ export default {
     }
   },
   computed: {
+
+    ...mapState({
+      vuexQuestion:'question'
+    })
 
   },
   created() {

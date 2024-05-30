@@ -4,6 +4,7 @@ const question = {
     namespaced: true,
     state: () => ({
         type: "free", // 1 = Free Text (free) || 2 = Options (options)
+        readOnly:false, //Global read only
         editingIndex:-1, //Flag to know if we are creating or updating
         title: '', //question
         answer: '',
@@ -128,7 +129,10 @@ const question = {
                 question.value = null;
                 return question;
             })
-        }
+        },
+        setReadOnly: function (state,data){
+            state.readOnly = data;
+}
 
     },
     getters: {

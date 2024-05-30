@@ -102,6 +102,15 @@
                                 {{item.status.name}}
                                 </v-chip>
                             </template>
+                            <template v-slot:item.actions="{ item }">
+                              <v-btn
+                                  color="primary"
+                                  small
+                                  @click="showEmployeeAnswers(item)"
+                              >
+                                <v-icon>mdi-file-question-outline</v-icon>
+                              </v-btn>
+                            </template>
                             </v-data-table>
                             </v-col>
                           </v-row>
@@ -263,6 +272,12 @@ export default {
       }
 
       return disabled;
+    },
+    showEmployeeAnswers: function(item){
+      let {questions}  = item;
+      // console.log('show employee answers = ',questions);
+      questions = this.$common.prepareQuestions(JSON.parse(questions));
+      this.$emit('showEmployeeAnswers',questions);
     }
   },
   computed: {

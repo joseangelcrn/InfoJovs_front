@@ -25,7 +25,7 @@
                   </v-textarea>
                 </v-col>
               </v-row>
-              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id" @openModal="openStatusModal"></job-additional-info>
+              <job-additional-info v-if="displayAdditionalInfo" :jobId="job.data.id" @openModal="openStatusModal" @showEmployeeAnswers="showEmployeeAnswers"></job-additional-info>
               <modal-extended style="z-index:10;position:absolute" @clickOutside="closeStatusModal" :show="modals.changeStatus.show">
                 <template #title>
                   <span class="my-3" v-html="modals.changeStatus.htmlText"/>
@@ -105,14 +105,14 @@
                 <template #content>
                   <v-container class="white">
                     <v-row>
-                      <v-col cols="12" v-for="(question, index ) in question.data">
-                        <question-displayer  :question="question" :index="question"/>
+                      <v-col cols="12" v-for="(question, index ) in question.data" :key="index">
+                        <question-displayer  :question="question" :index="question" />
                       </v-col>
                     </v-row>
                   </v-container>
                 </template>
                 <template #actions>
-                  <div class="question_buttons">
+                  <div class="question_buttons" v-if="!question.readOnly">
                     <v-btn
                         small
                         class="primary--text"
@@ -176,7 +176,8 @@ export default {
       setAlReadyRegistered: "job/setAlreadyRegistered",
       deselectAllCandidatures:"candidature/deselectAll",
       addValueFieldToQuestions:"question/addValueField",
-      setQuestionData:"question/setData"
+      setQuestionData:"question/setData",
+      setGlobalReadOnlyQuestionModal:"question/setReadOnly"
     }),
     ...mapActions({
       getJobById: "job/getJobById",
@@ -193,7 +194,7 @@ export default {
       if (!force && this.job.data.questions){
         //Create candidature with questions
         this.modals.questions.show =true;
-
+        this.setGlobalReadOnlyQuestionModal(false);
       }
       else{
         //Create candidature without questions
@@ -254,6 +255,12 @@ export default {
       });
       this.modals.changeStatus.show = false;
       this.deselectAllCandidatures();
+    },
+    showEmployeeAnswers: function (questions){
+      console.log('parent - show employee answers = ',questions);
+      this.setQuestionData(questions);
+      this.modals.questions.show = true;
+      this.setGlobalReadOnlyQuestionModal(true);
     }
   },
   computed: {

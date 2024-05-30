@@ -66,6 +66,19 @@ const getStatusColor = (statusId, vuetifyClasses = true) => {
 const deepClone = (data)=>{
   return JSON.parse(JSON.stringify(data))
 }
+
+const prepareQuestions = (data)=>{
+
+  let questions = data;
+
+  questions.map((item)=>{
+    if (item.type === 'options' && typeof item.value !== 'undefined'){
+        item.value = parseInt(item.value);
+    }
+  })
+
+  return questions;
+}
 export default {
   setTitle,
   capitalizeFirstLetter,
@@ -73,5 +86,6 @@ export default {
   ucfirst,
   hasRole,
   getStatusColor,
-  deepClone
+  deepClone,
+  prepareQuestions
 };
