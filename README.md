@@ -107,7 +107,7 @@ Temporary store and saved (db) questions are displayed with a tab system compone
 
 ### Manage your Jobs
 
-If you acces  one of your jobs :
+If you access  one of your jobs :
 
 ![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/bbdfa7ed-6d35-4c7d-adce-f54d4d91c18f)
 
