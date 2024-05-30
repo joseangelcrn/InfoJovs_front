@@ -83,7 +83,7 @@ npm run serve
 
 ![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/186edf0f-e631-46ed-9480-4529a4a8ea82)
 
-You can insert Tags to get easily found by employees 
+You can insert Tags to be easily found by employees 
 
 ![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/4b2d41d7-fefd-47b1-8a35-594898790ba0)
 
