@@ -25,8 +25,8 @@ An application with two main roles ( **Recruiter** and **Employee** )  where you
 
 - [x] You can apply offers
 - [x] See your candidatures status
-- [x] You can see an history about your candidatures.
-- [ ] You can create a dynamic CV who recruiters will be able to see to get more information about your professional profile
+- [x] You can see an history of  your candidatures.
+- [ ] You can create a dynamic CV who recruiters will be able to see to get more information of  your professional profile
 - [ ] You can search jobs filtering by different fields
 
       
