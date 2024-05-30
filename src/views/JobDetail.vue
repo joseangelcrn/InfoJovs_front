@@ -199,10 +199,12 @@ export default {
         //Create candidature without questions
         try {
           this.loading = true;
-          let response = await this.$proxy.createCandidature({
+          let params = {
             job_id: this.job.data.id,
             questions:this.question.data
-          });
+          };
+
+          let response = await this.$proxy.createCandidature(params);
           this.setAlReadyRegistered(true);
           this.loading = false;
           this.modals.questions.show = false;
