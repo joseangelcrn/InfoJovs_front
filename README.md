@@ -33,6 +33,10 @@ An application with two main roles ( **Recruiter** and **Employee** )  where you
 
 - [ ] Queue Service to manage notifications when Recruiters changes candidatures statuses of Employees. (RabbitMQ, Kafka... )
 
+### **Others**
+
+- [ ] Improve filters of Job Finder
+
       
 <hr>
 
