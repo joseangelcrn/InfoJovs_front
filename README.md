@@ -29,6 +29,10 @@ An application with two main roles ( **Recruiter** and **Employee** )  where you
 - [ ] You can create a dynamic CV who recruiters will be able to see to get more information of  your professional profile
 - [ ] You can search jobs filtering by different fields
 
+### **Infrastructure**
+
+- [ ] Queue Service to manage notifications when Recruiters changes candidatures statuses of Employees. (RabbitMQ, Kafka... )
+
       
 <hr>
 
