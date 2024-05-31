@@ -141,4 +141,42 @@ Also you can see differents answers has been made by employees about Job Offer:
 
 
 
+## As Employee you can ....
 
+### Access to different entries
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/2466545f-cea8-48ac-9738-23a30da36b36)
+
+### Access to your home view with basic information
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/650a4b1e-c95b-4c88-91d1-69f8dc79b970)
+
+
+Here you will find basic information and number of candidatures you are applied
+
+
+### Access to Job Finder
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/1498648b-1223-4c03-b29c-b655943f8b81)
+
+Where you will be able to find jobs which apply.
+
+### Access to Job Details
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/c47403b2-79cc-4fcf-9ef3-f8d186f5e029)
+
+Here you will find job information and you will be able to apply job. This action will create a candidature.
+
+
+### Access to Candidature timeline 
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/997e1e5e-e933-4bd8-9def-12a76c26814a)
+
+Once you apply Job, you will see current status of your candidature. Every change Recruiter do about your candidature will be displayed here
+
+
+### Access to 'My Candidatures' section
+
+![image](https://github.com/joseangelcrn/InfoJovs_front/assets/47973568/2c5e2546-4b64-4e26-a6e4-60ad555c9a62)
+
+On this view, it will be displayed all of your candidatures and it statuses
