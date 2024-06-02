@@ -10,9 +10,9 @@
         <v-chip  v-for="(tag,index) in job.tags" :key="index" class="mr-1" small color="primary" >{{tag.name}}</v-chip>
       </v-list-item-subtitle>
     </v-list-item-content>
-    <v-list-item-icon class="mt-6">
-      <v-btn icon class="align-center" :to="{name:'jobDetails',params:{id:job.id}}" > <v-icon>mdi-eye</v-icon> </v-btn>
-      <v-btn v-if="canEdit" icon class="align-center" :to="{name:'offerJob',params:{id:job.id}}" > <v-icon>mdi-pencil</v-icon> </v-btn>
+    <v-list-item-icon class="mt-6" style="display: flex; align-items: center;" >
+      <v-btn x-small class="align-center primary white--text" style="height: 25px;width: 25px;" :to="{name:'jobDetails',params:{id:job.id}}" > <v-icon>mdi-eye</v-icon> </v-btn>
+      <v-btn v-if="canEdit" x-small class="align-center primary white--text ml-2" style="height: 25px;width: 25px;" :to="{name:'offerJob',params:{id:job.id}}" > <v-icon>mdi-pencil</v-icon> </v-btn>
     </v-list-item-icon>
   </v-list-item>
 </template>
