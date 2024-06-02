@@ -18,6 +18,44 @@
                 ></v-text-field>
               </v-col>
               <v-col class="d-flex"  sm="3" md="3" lg="3" cols="12">
+                <v-combobox
+                    v-model="filter.tags"
+                    :items="filter.tagsItems"
+                    chips
+                    clearable
+                    multiple
+                    solo
+                    dense
+                    x-small
+                    counter="5"
+                >
+                  <template
+                      v-slot:counter="{props}"
+                  >
+                   <span :class="{'white--text': (props.value <= props.max),'red--text': props.value > props.max}"><b>Tags: </b> {{props.value}}/{{props.max}}</span>
+                  </template>
+                  <template
+                      v-slot:selection="{ attrs, item, select, selected }"
+                  >
+                    <v-chip
+                        class="my-2"
+                        color="primary"
+                        v-bind="attrs"
+                        :input-value="selected"
+                        close
+                        @click="select"
+                        @click:close="removeTag(item)"
+                    >
+                      <strong>{{ item }}</strong
+                      >&nbsp;
+                    </v-chip>
+                  </template>
+                  <template #message="{ message }">
+                    <b class="white rounded-pill pa-3">{{ message }}</b>
+                  </template>
+                </v-combobox>
+              </v-col>
+              <v-col class="d-flex"  sm="3" md="3" lg="3" cols="12">
                 <v-checkbox
                   color="blue-darken-4"
                   class="mt-0 white--text align-self-center"
@@ -29,16 +67,6 @@
                   </template>
                 </v-checkbox>
               </v-col>
-              <v-col sm="3" md="3" lg="3" cols="12">
-                <v-text-field
-                  solo
-                  dense
-                  background-color="white"
-                  outlined
-                  placeholder="Disabled Input"
-                  disabled
-                ></v-text-field>
-              </v-col>
             </v-row>
           </template>
           <template #actions>
@@ -47,6 +75,7 @@
               small
               text
               class="ml-2 white primary--text"
+              :disabled="disableSearchButton"
             >
               Search
             </v-btn>
@@ -99,6 +128,8 @@ export default {
     filter: {
       title: "",
       ignore_own: false,
+      tags:[],
+      tagsItems:[]
     },
   }),
   methods: {
@@ -108,18 +139,18 @@ export default {
     ...mapMutations({
       setCurrentPage: "job/setCurrentPage",
       setJobs: "job/setJobs",
+      resetPagination:"job/resetPagination"
     }),
     onSearch: async function () {
       await this.setCurrentPage(1);
-      console.log("on search !");
-      console.log("filter = ", this.filter);
       await this.searchJobs(this.filter);
     },
     onChangePage: async function (newCurrentPage) {
-      console.log("on change page !");
-      console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
       await this.searchJobs(this.filter);
+    },
+    removeTag: function (item) {
+      this.filter.tags.splice(this.filter.tags.indexOf(item), 1);
     },
   },
   computed: {
@@ -130,9 +161,14 @@ export default {
       }
       return "Ignore my Candidatures";
     },
+    disableSearchButton(){
+      return this.filter.tags.length > 5;
+    }
   },
   beforeMount() {
     this.setJobs([]);
+    this.resetPagination();
+
   },
 };
 </script>

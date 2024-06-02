@@ -28,7 +28,6 @@ import { mapState } from 'vuex';
       })
     },
     created(){
-      console.log('token = ',this.user);
     }
   };
   </script>

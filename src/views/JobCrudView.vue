@@ -88,13 +88,52 @@
                   </v-combobox>
                 </v-col>
               </v-row>
+              <v-row v-if="question.data.length > 0">
+                <v-col cols="12">
+                  <v-sheet elevation="6">
+                    <v-tabs
+                        background-color="blue darken-4"
+                        dark
+                        next-icon="mdi-arrow-right-bold-box-outline"
+                        prev-icon="mdi-arrow-left-bold-box-outline"
+                        show-arrows
+                        v-model="questionTab"
+                    >
+                      <v-tabs-slider color="white"></v-tabs-slider>
+                      <v-tab
+                          v-for="(question,index) in question.data"
+                          :key="index"
+                      >
+                        Question n-{{index+1}}
+                      </v-tab>
+                    </v-tabs>
+
+                      <v-tabs-items v-model="questionTab">
+                        <v-tab-item
+                            v-for="(item,index) in question.data"
+                            :key="index"
+                        >
+                          <question-displayer :edit_mode="true" :index="index" :question="item"/>
+                        </v-tab-item>
+                      </v-tabs-items>
+
+                  </v-sheet>
+                </v-col>
+              </v-row>
             </template>
             <template #actions>
               <v-btn v-on:click="onSave" small class="primary--text">{{
                 id ? "Update" : "Save"
               }}</v-btn>
+              <v-btn
+                v-on:click="openQuestionsModal"
+                small
+                class="light-blue darken-4 primary--text"
+                >Add Question</v-btn
+              >
             </template>
           </main-card>
+            <question-maker />
         </v-col>
       </v-row>
     </v-container>
@@ -103,8 +142,11 @@
 
 <script>
 import router from "@/router";
-import { mapMutations, mapState } from "vuex";
+import {mapActions, mapMutations, mapState} from "vuex";
+import QuestionMaker from '@/components/QuestionMaker.vue';
+import QuestionDisplayer from "@/components/QuestionDisplayer.vue";
 export default {
+  components: {QuestionDisplayer, QuestionMaker },
   data() {
     return {
       id: null,
@@ -117,12 +159,18 @@ export default {
         description: null,
         tags: null,
       },
+      questionTab:0
     };
   },
   methods: {
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
+      closeQuestionModal:"question/closeModal",
+      setQuestionsData:"question/setData"
+    }),
+    ...mapActions({
+      openQuestionsModal:"question/openModal",
     }),
     onSave: async function () {
       this.errors = {
@@ -140,32 +188,34 @@ export default {
       } else if (this.tags.length < 3) {
         this.errors.tags = "Please add, at least, 3 tags.";
       } else {
-        console.log("save Job !");
         try {
           if (this.id) {
-            let response = await this.$proxy.updateJob({
+            var response = await this.$proxy.updateJob({
               id: this.id,
               title: this.title,
               description: this.description,
               tags: this.tags,
+              questions:this.question.data
             });
             var message = response.data.message;
           } else {
-            let response = await this.$proxy.createJob({
+            var response = await this.$proxy.createJob({
               title: this.title,
               description: this.description,
               tags: this.tags,
+              questions:this.question.data,
             });
             var message = response.data.message;
           }
-
+          let jobId = response.data.job.id;
           this.manageModal({
             title: "Info",
             text: message,
-            onClickYes: () => {
+            onClickYes:()=>{
+              // this.$router.push({ name: 'offerJob', params: { id: jobId }});
+              this.id = jobId
               this.hideModal();
-              this.$router.push({ name: "home" });
-            },
+            }
           });
         } catch (error) {
           var message =
@@ -187,13 +237,13 @@ export default {
       let newTag = this.tags[this.tags.length - 1];
     },
     removeTag: function (item) {
-      console.log("remove tag");
       this.tags.splice(this.tags.indexOf(item), 1);
     },
   },
   computed: {
     ...mapState({
       user: "user",
+      question: "question"
     }),
     textAreaHeight() {
       let length = this.description.length;
@@ -207,6 +257,9 @@ export default {
     },
   },
   mounted: async function () {
+
+    this.setQuestionsData([]);
+
     if (typeof this.$route.params.id !== "undefined") {
       this.id = this.$route.params.id;
       try {
@@ -226,8 +279,9 @@ export default {
         this.title = job.title;
         this.description = job.description;
         this.tags = this.$common.pluck(job.tags, "name");
+        this.setQuestionsData(JSON.parse(job.questions))
+
       } catch (error) {
-        console.log('errorrr',error.response.status);
         this.manageModal({
           title: "Error",
           type: "error",

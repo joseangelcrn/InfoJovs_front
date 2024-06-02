@@ -58,14 +58,12 @@ const searchJobs = async (filters) =>{
 const createJob = async(data = {})=>{
   const config = defaultConfig();
   config.params = data;
-  console.log('params backend ',config);
   return await axios.post(host + "/job", null,  config);
 }
 
 const updateJob = async(data)=>{
   const config = defaultConfig();
   config.params = data;
-  console.log('params backend ',config);
   return await axios.put(host + "/job", null,  config);
 }
 
@@ -73,8 +71,9 @@ const getJobById = async (id) => {
   return await axios.get(host + "/job/"+id,  defaultConfig());
 }
 
-const getJobAdditionalInfo = async (id)=>{
-  return await axios.get(host+"/job/additional_info/"+id,defaultConfig())
+const getJobAdditionalInfo = async (id,scope = null)=>{
+  let url = host+"/job/additional_info/"+id+(scope ? "/"+scope : '');
+  return await axios.get(url,defaultConfig())
 }
 
 const updateJobActiveValue = async (data)=>{
@@ -103,6 +102,23 @@ const createCandidature = async(data)=>{
 const infoCandidature = async(jobId)=>{
   return await axios.get(host + "/candidature/info/"+jobId,   defaultConfig());
 }
+
+const getAllCandidatureStatuses = async()=>{
+  return await axios.get(host + "/candidature/status",   defaultConfig());
+}
+
+const updateCandidature = async(newStatusId,candIds)=>{
+  const config = defaultConfig();
+  config.params = {
+    status_id:newStatusId,
+    candidature_ids:candIds
+  }
+  return await axios.post(host + "/candidature/status",  null,config);
+}
+
+const getCandidatureHistory = async(candidatureId)=>{
+  return await axios.get(host+'/candidature/history/'+candidatureId,defaultConfig())
+}
 //Candidatures (-)
 
 //Roles (+)
@@ -130,6 +146,9 @@ export default {
   myCandidatures,
   createCandidature,
   infoCandidature,
+  getAllCandidatureStatuses,
+  updateCandidature,
+  getCandidatureHistory,
 
   getAllRoles
 };

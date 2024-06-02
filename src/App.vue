@@ -120,7 +120,7 @@ export default {
   mounted: function () {
     //Resolve title:
     this.$common.setTitle();
-
+    // console.log('process.env en app.vue = ',process.env)
     //Example how work custom modal =>
     // this.manageModal({
     //   title:'Titulo',

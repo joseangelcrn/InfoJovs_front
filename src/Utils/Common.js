@@ -2,32 +2,23 @@ import router from "@/router";
 import store from "@/store";
 
 const setTitle = (paramTitle = null) => {
-  let text = "";
-
-  if (!paramTitle) {
-    let routes = router.options.routes;
-    let currentPath = window.location.pathname;
-
-    let matchedRoute = routes.filter((item) => {
-      return item.path === currentPath;
-    })[0];
-
-    if (typeof matchedRoute !== "undefined") {
-      text = capitalizeFirstLetter(matchedRoute.name);
-    }
-  } else {
-    text = paramTitle;
-  }
-
-  store.commit("general/setTitle", text);
-  document.title = process.env.VUE_APP_NAME + " - " + text;
+  const title = router.history.current.meta.title ?? null;
+  store.commit("general/setTitle", title);
+  document.title = process.env.VUE_APP_NAME + " - " + title;
 };
 
 const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
-const pluck = (arr, key) => arr.map((i) => i[key]);
+const pluck = (arr, key) => {
+if (!Array.isArray(arr)) {
+  const  json = arr;
+  arr =[]
+  arr.push(json); 
+}
+  return  arr.map((i) => i[key])
+};
 
 const ucfirst = (string) => {
   return capitalizeFirstLetter(string);
@@ -56,6 +47,22 @@ const getStatusColor = (statusId, vuetifyClasses = true) => {
   }
 };
 
+const deepClone = (data)=>{
+  return JSON.parse(JSON.stringify(data))
+}
+
+const prepareQuestions = (data)=>{
+
+  let questions = data;
+
+  questions.map((item)=>{
+    if (item.type === 'options' && typeof item.value !== 'undefined'){
+        item.value = parseInt(item.value);
+    }
+  })
+
+  return questions;
+}
 export default {
   setTitle,
   capitalizeFirstLetter,
@@ -63,4 +70,6 @@ export default {
   ucfirst,
   hasRole,
   getStatusColor,
+  deepClone,
+  prepareQuestions
 };

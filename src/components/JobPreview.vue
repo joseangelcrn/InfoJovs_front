@@ -2,7 +2,7 @@
   <v-list-item three-line class="white rounded mt-2">
     <v-list-item-content>
       <v-list-item-title>{{ job.title }}</v-list-item-title>
-      <v-list-item-subtitle v-if="candStatus" :class="statusColor(candStatus.id)  + '--text'">{{
+      <v-list-item-subtitle v-if="candStatus" :class="$common.getStatusColor(candStatus.id)  + '--text'">{{
         candStatus.name
       }}</v-list-item-subtitle>
       <v-list-item-subtitle>{{ job.description }}</v-list-item-subtitle>
@@ -10,9 +10,9 @@
         <v-chip  v-for="(tag,index) in job.tags" :key="index" class="mr-1" small color="primary" >{{tag.name}}</v-chip>
       </v-list-item-subtitle>
     </v-list-item-content>
-    <v-list-item-icon class="mt-6">
-      <v-btn icon class="align-center" :to="{name:'jobDetails',params:{id:job.id}}" > <v-icon>mdi-eye</v-icon> </v-btn>
-      <v-btn v-if="canEdit" icon class="align-center" :to="{name:'offerJob',params:{id:job.id}}" > <v-icon>mdi-pencil</v-icon> </v-btn>
+    <v-list-item-icon class="mt-6" style="display: flex; align-items: center;" >
+      <v-btn x-small class="align-center primary white--text" style="height: 25px;width: 25px;" :to="{name:'jobDetails',params:{id:job.id}}" > <v-icon>mdi-eye</v-icon> </v-btn>
+      <v-btn v-if="canEdit" x-small class="align-center primary white--text ml-2" style="height: 25px;width: 25px;" :to="{name:'offerJob',params:{id:job.id}}" > <v-icon>mdi-pencil</v-icon> </v-btn>
     </v-list-item-icon>
   </v-list-item>
 </template>
@@ -37,26 +37,6 @@ export default {
     };
   },
   methods: {
-    statusColor: function (statusId) {
-      switch (statusId) {
-        case 1:
-          return "blue-grey";
-          break;
-        case 2:
-          return "primary";
-          break;
-        case 3:
-          return "green";
-          break;
-        case 4:
-          return "red";
-          break;
-
-        default:
-          'black'
-          break;
-      }
-    },
     refreshCanEdit: function(){
       this.canEdit = (this.user.data.id == this.$props.job.recruiter_id);
     }

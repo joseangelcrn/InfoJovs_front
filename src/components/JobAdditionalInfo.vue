@@ -13,7 +13,7 @@
               class="primary--text"
               v-bind="attrs"
               v-on="on"
-              @click="seeAdditionalInfo"
+              @click="seeMainAdditionalInfo"
               >Additional Info</v-btn
             >
           </template>
@@ -33,11 +33,9 @@
                 <v-col>
                   <!-- Additional Info Job Offer -->
                   <!-- Candidatures -->
-                  <!-- Candidates -->
                   <v-tabs fixed background-color="primary">
-                    <v-tab> Main Info </v-tab>
-                    <v-tab> Candidatures </v-tab>
-                    <v-tab> Candidates </v-tab>
+                    <v-tab @click="seeMainAdditionalInfo"> Main Info </v-tab>
+                    <v-tab @click="seeCandidaturesInfo"> Candidatures </v-tab>
                     <v-tab-item>
                       <main-card class="mt-2">
                         <template #content>
@@ -80,18 +78,49 @@
                     </v-tab-item>
                     <v-tab-item>
                       <main-card class="mt-2">
-                        <template #title>Candidatures</template>
-                      </main-card>
-                    </v-tab-item>
-                    <v-tab-item>
-                      <main-card class="mt-2">
-                        <template #title>Candidates</template>
+                        <template #content>
+                          <v-row>
+                            <v-col>
+                              <v-data-table
+                                v-model="candidature.selectedItems"
+                                :headers="candidaturesTable.headers"
+                                :items="candidature.data"
+                                show-select
+                                item-key="id"
+                                class="elevation-1"
+                                :loading="candidaturesTable.loading"
+                                sort-by="created_at"
+                                :sort-desc="true"
+                              >
+                              <template v-slot:item.status.name="{ item }">
+                                <v-chip
+                                  dark
+                                  :color="$common.getStatusColor(item.status.id)"
+                                  @click="onClickChipStatus(item)"
+                                  :disabled="disableStatusButtonIfNotSelected(item)"
+                                >
+                                {{item.status.name}}
+                                </v-chip>
+                            </template>
+                            <template v-slot:item.actions="{ item }">
+                              <v-btn
+                                  color="primary"
+                                  small
+                                  @click="showEmployeeAnswers(item)"
+                              >
+                                <v-icon>mdi-file-question-outline</v-icon>
+                              </v-btn>
+                            </template>
+                            </v-data-table>
+                            </v-col>
+                          </v-row>
+                        </template>
                       </main-card>
                     </v-tab-item>
                   </v-tabs>
                 </v-col>
               </v-row>
-            </v-card-text>
+            </v-card-text>  
           </v-card>
         </v-dialog>
       </v-col>
@@ -111,6 +140,8 @@ import {
   CategoryScale,
   LinearScale,
 } from "chart.js";
+import ModalExtended from './ModalExtended.vue';
+import candidature from '@/store/candidature';
 
 ChartJS.register(
   Title,
@@ -122,7 +153,7 @@ ChartJS.register(
 );
 
 export default {
-  components: { MainCard, Bar },
+  components: { MainCard, Bar, ModalExtended },
   name: "job-additional-info",
   props: {
     stats: {
@@ -144,19 +175,31 @@ export default {
         { text: "Active", value: 1 },
         { text: "Inactive", value: 0 },
       ],
+      candidaturesTable: {
+        headers: [
+          { text: 'Name', value: 'employee.name' },
+          { text: 'Surnames', value: 'employee.first_surname' },
+          { text: 'Professional Profile', value: 'employee.professional_profile.title' },
+          { text: 'Status', value: 'status.name' },
+          { text: 'Created at', value: 'created_at' },
+          { text: 'Actions', value: 'actions', sortable:false },
+        ],
+        loading:false
+      },
     };
   },
   methods: {
     ...mapActions({
-      infoCandidature: "job/infoCandidature",
+      getCandidaturesByJobId: "candidature/getByJobId",
       updateActiveValue: "job/updateActiveValue",
     }),
     ...mapMutations({
       manageModal: "modal/manageModal",
       hideModal: "modal/hide",
-      setActiveOffer:"job/setActive"
+      setActiveOffer: "job/setActive",
+      pushCandIfNotExists:"candidature/pushIfNotExists"
     }),
-    seeAdditionalInfo: async function () {
+    seeMainAdditionalInfo: async function () {
       const response = await this.$proxy.getJobAdditionalInfo(
         this.$props.jobId
       );
@@ -165,11 +208,24 @@ export default {
       this.profileChartData = profiles;
       this.chartLoaded = true;
     },
+    seeCandidaturesInfo: async function(){
+      // this.candidaturesTable.items = [];
+      this.candidaturesTable.loading = true;
+      // const response = await this.$proxy.getJobAdditionalInfo(
+      //   this.$props.jobId,
+      //   'candidatures'
+      // );
+      // this.candidaturesTable.items = response.data;
+      // console.log('see candidatures info !! = ',response.data.items);
+      // this.candidaturesTable.items = response.data.items;
+      await this.getCandidaturesByJobId(this.$props.jobId);
+      this.candidaturesTable.loading = false;
+
+    },
 
     changeStatus: async function () {
       try {
         let response = await this.updateActiveValue();
-        console.log("response = " + response.data.message);
         this.manageModal({
           title: "Info",
           text: response.data.message,
@@ -194,9 +250,34 @@ export default {
         });
       }
     },
+    onClickChipStatus: function(item){
+      this.pushCandIfNotExists(item);
+      if (this.candidature.selectedItems.length > 1) {
+        this.$emit('openModal',this.candidature.selectedItems.length);
+      }
+      else{
+        this.$emit('openModal',item);
+      }
+    },
+    disableStatusButtonIfNotSelected: function(item){
+      let disabled = false;
+      let selectedIds = this.$common.pluck(this.candidature.selectedItems,'id');
+
+      if (this.candidature.selectedItems.length > 0 && !selectedIds.includes(item.id)) {
+        disabled = true;
+      }
+
+      return disabled;
+    },
+    showEmployeeAnswers: function(item){
+      let {questions}  = item;
+      // console.log('show employee answers = ',questions);
+      questions = this.$common.prepareQuestions(JSON.parse(questions));
+      this.$emit('showEmployeeAnswers',questions);
+    }
   },
   computed: {
-    ...mapState(["user", "job"]),
+    ...mapState(["user", "job",'candidature']),
     statusChart() {
       return this.statusChartData;
     },
@@ -205,7 +286,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.job.data);
   },
   updated() {},
 };

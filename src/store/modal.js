@@ -2,13 +2,13 @@ const modal = {
   namespaced: true,
   state: () => ({
     show: false,
-    title: "Default title",
+    title: "Info",
     text: "Default text d",
     textBtnYes:"Ok",
-    type:"info",
-    onClickYes:()=>{ console.log('default on click yes !');},
     textBtnNot:null,
-    onClickNot:()=>{console.log('default on click Not !')}
+    type:"info",
+    onClickYes:null,
+    onClickNot:null
   }),
   mutations: {
     show: function (state) {
@@ -29,20 +29,36 @@ const modal = {
     setOnClickNot: function (state, fn) {
       state.onClickNot = fn;
     },
-
     manageModal: function (state,config){
-      state.title = config.title;
-      state.text = config.text;
-      state.onClickYes = config.onClickYes;
-      state.onClickNot = config.onClickNot;
-      state.show = true;
+      console.log('Manage Modal !!')
+      let {
+        title = 'Info',
+        text='',
+        type= 'info',
+        onClickYes = ()=>{state.show = false},
+        onClickNot = null,
+        textBtnYes = 'Yes',
+        textBtnNot = null,
+      } = config;
 
-      state.type = null;
-      if (config.type) {
-        state.type = config.type;        
-      }
+        // console.log('title = '+title)
+        // console.log('type = '+type)
+        // console.log('text = '+text)
+        // console.log('textBtnYes = '+textBtnYes)
+        // console.log('textBtnNot = '+textBtnNot)
+        // console.log('onClickYes = '+onClickYes)
+        // console.log('onClickNot = '+onClickNot)
+
+        state.show = true;
+        state.title = title;
+        state.type = type;
+        state.text = text;
+        state.textBtnNot = textBtnNot;
+        state.textBtnYes = textBtnYes;
+        state.onClickYes = onClickYes
+        state.onClickNot = onClickNot
     }
-    
+
   },
   actions: {},
 };
