@@ -38,8 +38,6 @@ export default {
       setCurrentPage: "candidature/setCurrentPage",
     }),
     onChangePage:async function (newCurrentPage) {
-      console.log("on change page !");
-      console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
       await this.loadMyCandidatures(this.filter);
     } 

@@ -195,17 +195,12 @@ export default {
     },
   },
   created() {
-    console.log("question maker - created !");
   },
   mounted() {
-    console.log("question maker - mounted !");
     this.loaded = true;
-    console.log('question = ', this.question);
-    console.log('store', this.$store.state.question)
 
   },
   updated() {
-    console.log("question maker - updated !");
 
   },
 };

@@ -189,7 +189,6 @@ export default {
     register: async function (force = false) {
       //prevent event as param force
       force = (typeof force === 'boolean' && force === true);
-      console.log('register ! | force = '+force);
 
       if (!force && this.job.data.questions){
         //Create candidature with questions
@@ -218,7 +217,6 @@ export default {
           });
         } catch (error) {
           this.loading = false;
-          console.log("error", error);
           this.manageModal({
             title: "Error",
             type: "error",
@@ -231,8 +229,6 @@ export default {
       }
     },
     openStatusModal: async function(items){
-      console.log('open modal - parent');
-      console.log('data = ',items);
       await this.getAllCandidatureStatuses();
       // console.log('check this = ',this.candidatureStatus.data);
       let itemsLength = items.length ?? 1;
@@ -242,15 +238,11 @@ export default {
       this.modals.changeStatus.newStatusId = null;
     },
     closeStatusModal: function(){
-      console.log('close modal');
       this.modals.changeStatus.show = false;
     },
     updateCandStatus: async function () {
-      console.log('update cand status:  ');
       let candIds = this.$common.pluck(this.candidature.selectedItems,'id');
       let newStatusId = this.modals.changeStatus.newStatusId;
-      console.log('data to update = ');
-      console.log(candIds,newStatusId);
       await this.updateCandidatures({
         candIds,
         newStatusId
@@ -259,7 +251,6 @@ export default {
       this.deselectAllCandidatures();
     },
     showEmployeeAnswers: function (questions){
-      console.log('parent - show employee answers = ',questions);
       this.setQuestionData(questions);
       this.modals.questions.show = true;
       this.setGlobalReadOnlyQuestionModal(true);
@@ -268,7 +259,6 @@ export default {
   computed: {
     ...mapState(["user", "job","candidatureStatus",'candidature','candidatureHistory','question']),
     textAreaHeight() {
-      console.log('computed text area height');
       if (
         !this.job.data ||
         this.job.data.length === 0 ||

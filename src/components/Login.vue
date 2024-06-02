@@ -74,7 +74,6 @@ export default {
       } else if (this.password.trim().length === 0) {
         this.errors.password.push("Password is required");
       } else {
-        console.log('passss = '+this.password);
         this.login({
           email:this.email,
           password:this.password

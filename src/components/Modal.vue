@@ -48,7 +48,6 @@ export default {
   },
   methods: {
     onBtnOk: function () {
-      console.log("modal - on btn ok ");
 
       if (this.modalOnClickOk) {
         // return this.modalBtnOk.onClick();

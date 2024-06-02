@@ -220,14 +220,12 @@ export default {
       // this.candidaturesTable.items = response.data.items;
       await this.getCandidaturesByJobId(this.$props.jobId);
       this.candidaturesTable.loading = false;
-      console.log('candidature data  = ',this.candidature.data);
 
     },
 
     changeStatus: async function () {
       try {
         let response = await this.updateActiveValue();
-        console.log("response = " + response.data.message);
         this.manageModal({
           title: "Info",
           text: response.data.message,
@@ -255,11 +253,9 @@ export default {
     onClickChipStatus: function(item){
       this.pushCandIfNotExists(item);
       if (this.candidature.selectedItems.length > 1) {
-        console.log('Multiple Items');
         this.$emit('openModal',this.candidature.selectedItems.length);
       }
       else{
-        console.log('Single Item');
         this.$emit('openModal',item);
       }
     },
@@ -290,7 +286,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.job.data);
   },
   updated() {},
 };

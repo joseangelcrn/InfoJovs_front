@@ -46,7 +46,6 @@ export default {
   },
   mounted() {
     this.refreshCanEdit();
-    console.log('test',this.$common);
   },
   updated() {
     this.refreshCanEdit();

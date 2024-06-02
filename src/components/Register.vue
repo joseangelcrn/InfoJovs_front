@@ -250,12 +250,10 @@ export default {
             professional_profile_id: this.profileInput.model,
             birthdate:this.birthday.data
           });
-          console.log("sign up OK !! ");
           this.manageModal({
             title: "Congratulations !",
             text: "You have been registered successfully !",
             onClickYes: () => {
-              console.log("Si modificado");
               router.push({ name: "login" });
               this.hideModal();
             },
@@ -263,8 +261,6 @@ export default {
         } catch (error) {
           var { email = [] } = error.response.data.message;
           this.errors.email = email;
-          console.log("error");
-          console.log(error.response.data.message);
         }
       }
     },
@@ -292,13 +288,10 @@ export default {
   },
   watch: {
     profileInputSearch: async function (val) {
-      console.log("watch - search ");
-      console.log("value = " + val);
 
       // Items have already been requested
       if (this.profileInput.loading) return;
 
-      console.log("call ajax !");
       this.profileInput.loading = true;
       await this.searchProfiles({ title: val, role_id: this.roleSelect.model });
       this.profileInput.loading = false;

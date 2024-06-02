@@ -112,13 +112,9 @@ export default {
     }),
     onSearch: async function () {
       await this.setCurrentPage(1);
-      console.log("on search !");
-      console.log("filter = ", this.filter);
       await this.searchJobs(this.filter);
     },
     onChangePage: async function (newCurrentPage) {
-      console.log("on change page !");
-      console.log(newCurrentPage);
       this.setCurrentPage(newCurrentPage);
       await this.searchJobs(this.filter);
     },

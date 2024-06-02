@@ -82,7 +82,6 @@ export default {
     }),
   },
   mounted: async function () {
-    console.log('mounted !');
     if (this.$common.hasRole("Employee")) {
       await this.myCandidatures();
     }
