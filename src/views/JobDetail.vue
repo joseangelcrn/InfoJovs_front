@@ -206,9 +206,11 @@ export default {
           };
 
           let response = await this.$proxy.createCandidature(params);
+          let {candidature} = response.data;
           this.setAlReadyRegistered(true);
           this.loading = false;
           this.modals.questions.show = false;
+          await this.getHistory(candidature.id);
 
           this.manageModal({
             title: "Info",
