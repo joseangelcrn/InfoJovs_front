@@ -59,7 +59,6 @@ import {mapActions, mapState} from "vuex";
 export default {
   data() {
     return {
-      jobApplications: 9,
     };
   },
   methods: {
