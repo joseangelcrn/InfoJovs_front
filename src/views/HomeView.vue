@@ -38,6 +38,7 @@
                   class="white primary--text"
                   elevation="2"
                   max-width="150"
+                  :disabled="candidature.data.length === 0"
                   :to="{ name: 'myCandidatures' }"
               >
                 My Candidatures
