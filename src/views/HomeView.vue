@@ -44,7 +44,7 @@
               </v-btn
               >
               <v-chip class="white primary--text  align-self-center"
-              >You have <v-chip small class="primary white--text font-weight-bold mx-2">{{ candidature.data.length }}</v-chip> Job Applications</v-chip>
+              >You have <v-chip small class="primary white--text font-weight-bold mx-2">{{ candidature.data.length }}</v-chip> Job Application<span v-if="candidature.data.length > 1">s</span> </v-chip>
             </div>
           </template>
         </main-card>
