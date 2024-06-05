@@ -10,6 +10,7 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import Common from './Utils/Common'
 import ModalExtended from './components/ModalExtended.vue'
+import ToolTip from "@/components/ToolTip.vue";
 
 //axios
 Vue.use(VueAxios, axios)
@@ -20,6 +21,7 @@ Vue.config.productionTip = false
 Vue.component('main-card',MainCard);
 Vue.component('modal',Modal);
 Vue.component('modal-extended',ModalExtended);
+Vue.component('tooltip',ToolTip);
 
 
 
