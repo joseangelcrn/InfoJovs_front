@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip bottom :color="computedColor">
+  <v-tooltip  :right="computedPosition.right" :left="computedPosition.left" :bottom="computedPosition.bottom" :top="computedPosition.top" :color="computedColor">
     <template v-slot:activator="{ on, attrs }">
         <span
             v-bind="attrs"
@@ -16,7 +16,7 @@
 
 export default {
   name:'Tooltip',
-  props:['text','primary'],
+  props:['text','primary','position'],
   data: () => ({
 
   }),
@@ -30,6 +30,29 @@ export default {
         return 'primary white--text';
       }
       return 'white primary--text';
+    },
+    computedPosition(){
+      let position = {
+        top:false,
+        right:false,
+        left:false,
+        bottom:false
+      };
+
+     if (this.$props.position === 'left'){
+        position.left = true;
+      }
+      else if (this.$props.position === 'top'){
+        position.top = true;
+      }
+      else if (this.$props.position === 'bottom'){
+        position.bottom = true;
+      }
+      else {
+         position.right = true;
+     }
+      return position;
+
     }
   },
 };
