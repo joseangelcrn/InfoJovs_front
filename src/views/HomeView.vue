@@ -30,6 +30,11 @@
                   </v-chip>
                 </v-list-item-subtitle>
               </v-list-item-content>
+<!--              <v-list-item-content>-->
+<!--                <tooltip text="Tooltip text" :primary="false">-->
+<!--                    <v-btn>Hola</v-btn>-->
+<!--                </tooltip>-->
+<!--              </v-list-item-content>-->
             </v-list-item>
             <v-list-item two-line>
               <v-chip color="indigo white--text" label
