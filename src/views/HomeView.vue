@@ -62,6 +62,13 @@
             </div>
           </template>
         </main-card>
+        <cv
+            v-if="$common.hasRole('Employee')"
+            :summary="cv.data.summary"
+            :experiences="cv.data.experiences"
+            :skills="cv.data.skills"
+            :editable="true"
+        />
       </v-col>
     </v-row>
   </v-container>
@@ -69,27 +76,31 @@
 
 <script>
 import {mapActions, mapState} from "vuex";
+import Cv from "@/components/Cv.vue";
 
 export default {
+  components: {Cv},
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     ...mapActions({
       myCandidatures: "candidature/myCandidatures",
+      loadCv: "cv/load"
     }),
   },
   computed: {
     ...mapState({
       user: "user",
       job: "job",
-      candidature: "candidature"
+      candidature: "candidature",
+      cv: "cv"
     }),
   },
   mounted: async function () {
     if (this.$common.hasRole("Employee")) {
       await this.myCandidatures();
+      await this.loadCv();
     }
   },
 };

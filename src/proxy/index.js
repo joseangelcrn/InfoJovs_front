@@ -127,6 +127,19 @@ const getAllRoles = async ()=>{
 }
 //Roles (-)
 
+//CV (+)
+const getCvInfo = async(userId = null)=>{
+  let url = host+"/cv/info";
+  console.log('get cv info = ');
+  console.log('user Id = '+userId)
+  if (userId){
+    url+="/"+userId;
+  }
+  console.log('url = '+url)
+  return await axios.get(url,defaultConfig());
+}
+//CV (-)
+
 export default {
 
   login,
@@ -150,5 +163,7 @@ export default {
   updateCandidature,
   getCandidatureHistory,
 
-  getAllRoles
+  getAllRoles,
+
+  getCvInfo
 };

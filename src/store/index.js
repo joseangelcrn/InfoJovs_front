@@ -9,6 +9,7 @@ import candidatureStatus from './candidatureStatus'
 import candidature from './candidature'
 import candidatureHistory from './candidatureHistory'
 import question from './question'
+import cv from "@/store/cv";
 
 Vue.use(Vuex)
 
@@ -22,6 +23,7 @@ export default new Vuex.Store({
     candidatureStatus:candidatureStatus,
     candidature:candidature,
     candidatureHistory:candidatureHistory,
-    question:question
+    question:question,
+    cv:cv
   }
 })
