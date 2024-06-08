@@ -1,7 +1,7 @@
 <template>
   <v-dialog
     transition="dialog-bottom-transition"
-    max-width="600"
+    :width="computedWidth"
     v-model="display"
     @click:outside="clickOutside"
     @keydown.esc.stop="clickOutside"
@@ -24,7 +24,7 @@
 <script>
 export default {
   name: "modal-extended",
-  props: ["show", "title"],
+  props: ["show", "title","width"],
   data() {
     return {};
   },
@@ -43,6 +43,10 @@ export default {
       // setter
       set: function (newValue) {},
     },
+
+    computedWidth(){
+      return this.$props.width ?? 600;
+    }
   },
 };
 </script>

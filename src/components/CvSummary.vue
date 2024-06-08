@@ -41,9 +41,10 @@ export default {
     }
   },
   methods: {
-    editSummary: function (){
-      console.log('CvSummary - edit summary');
-    }
+    ...mapMutations({
+      editSummary:'cv/editSummary'
+    }),
+
   },
   computed: {
     computedSummary(){

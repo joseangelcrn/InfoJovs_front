@@ -10,7 +10,7 @@
       <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold mr-auto" label>
         {{ computedExperience.finish_date }}
       </v-chip>
-      <cv-buttons @edit="editExperience" @remove="removeExperience"/>
+      <cv-buttons @edit="editExperience(computedExperience.id)" @remove="removeExperience"/>
     </div>
     <div class="d-flex mt-2 pa-2 rounded white primary--text">
       <p class="font-weight-bold">{{computedExperience.description}}</p>
@@ -49,9 +49,9 @@ export default {
     }
   },
   methods: {
-    editExperience: function (){
-      console.log('CvExperience - editExperience')
-    },
+      ...mapMutations({
+        editExperience:'cv/editExperience'
+      }),
     removeExperience: function (){
       console.log('CvExperience - removeExperience')
     }
