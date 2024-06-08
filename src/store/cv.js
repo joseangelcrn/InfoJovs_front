@@ -42,6 +42,18 @@ const cv = {
             }
         },
 
+        editSkill: function (state,skillId){
+            let skill = state.data.skills.find((item)=>{
+                return item.id === skillId
+            });
+
+            state.modal = {
+                show: true,
+                type: 'skill',
+                data: common.deepClone(skill),
+            }
+        },
+
         refreshData: function (state,payload){
             let {type,id,data} = payload;
 

@@ -5,12 +5,13 @@
         color="white"
         full-icon="mdi-star-box"
         length="6"
+        readonly
         :value="computedSkill.value"
     ></v-rating>
     <v-chip small class="ml-2 white primary--text align-self-center mr-auto" label>
       <b> {{ computedSkill.name }} </b>
     </v-chip>
-    <cv-buttons class="my-auto" hide_edit/>
+    <cv-buttons class="my-auto" @edit="editSkill(computedSkill.id)"/>
   </div>
 </template>
 <script>
@@ -44,9 +45,9 @@ export default {
     return {}
   },
   methods: {
-    editSkill: function (){
-      console.log('CvSkill - editSkill')
-    },
+    ...mapMutations({
+      editSkill:'cv/editSkill'
+    }),
     removeSkill: function (){
       console.log('CvSkill - removeSkill')
     }

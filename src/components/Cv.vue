@@ -118,7 +118,23 @@
             </v-textarea>
           </div>
         </div>
-
+        <div v-else-if="cv.modal.type === 'skill'">
+          <v-text-field
+              solo
+              v-model="cv.modal.data.name"
+              label="Skill"
+              outlined
+              dense
+              hint="Skill"
+          ></v-text-field>
+          <v-rating
+              background-color="white"
+              color="white"
+              full-icon="mdi-star-box"
+              length="6"
+              v-model="cv.modal.data.value"
+          ></v-rating>
+        </div>
       </template>
       <template #actions>
        <v-btn small class="white primary--text mr-auto">Save</v-btn>
