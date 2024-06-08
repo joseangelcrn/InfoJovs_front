@@ -54,15 +54,17 @@ const cv = {
             }
         },
 
-        refreshData: function (state,payload){
-            let {type,id,data} = payload;
+        refreshData: function (state){
+            console.log('refresh data ')
+            let {type,id,data} = state.modal;
 
             if (type === 'summary'){
                 state.data.summary = data;
             }
             else{ //experience | skill
-                state.data[type] = state.data[type].map((item)=>{
-                    if (item.id === id){
+                let key = type+'s'; // experience = experiences | skill = skills
+                state.data[key] = state.data[key].map((item)=>{
+                    if (item.id === data.id){
                         item = data;
                     }
                     return item;
@@ -78,11 +80,12 @@ const cv = {
             console.log('response cv = ', response.data)
             commit('setData', response.data.cv);
         },
-        store: async function({commit,state}){
+        save: async function({commit,state}){
             let {data,id} = state.modal;
             let response = {};
-            commit('refreshData',response.data);
-        }
+            commit('refreshData');
+            commit('hideModal');
+        },
     },
 };
 

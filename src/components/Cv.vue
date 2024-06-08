@@ -137,8 +137,8 @@
         </div>
       </template>
       <template #actions>
-       <v-btn small class="white primary--text mr-auto">Save</v-btn>
-       <v-btn small class="white red--text">Cancel</v-btn>
+       <v-btn small class="white primary--text mr-auto" @click="save">Save</v-btn>
+       <v-btn small class="white red--text" @click="hideModal" >Cancel</v-btn>
       </template>
     </modal-extended>
   </div>
@@ -193,6 +193,9 @@ export default {
   methods: {
     ...mapMutations({
       hideModal: 'cv/hideModal'
+    }),
+    ...mapActions({
+      save:'cv/save'
     })
   },
   computed: {
