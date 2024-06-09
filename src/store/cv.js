@@ -81,7 +81,6 @@ const cv = {
             }
         },
         pushData: function(state){
-            console.log('vuex - cv | push data');
             if (state.modal.type === 'summary'){
                 state.data.summary = state.modal.data;
             }else{
