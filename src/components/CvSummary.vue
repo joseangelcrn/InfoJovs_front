@@ -1,7 +1,7 @@
 <template>
   <div>
-    <div class="d-flex white--text">
-      <h3 class="mt-2 mr-auto">Summary</h3>
+    <div class="d-flex white--text  blue darken-4 rounded pa-1">
+      <h3 class="my-auto mr-auto align-center">Summary</h3>
       <cv-buttons hide_remove @edit="editSummary"/>
     </div>
     <div class="d-flex mt-2 pa-2 rounded white primary--text">
