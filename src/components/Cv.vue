@@ -48,17 +48,59 @@
                 dense
                 hint="Business"
             ></v-text-field>
-            <v-text-field
-                solo
-                v-model="cv.modal.data.start_date"
-                label="Start date"
-                outlined
-                dense
-                class="mx-2"
-                hint="Start date"
-            ></v-text-field>
-
             <!--START DATE-->
+            <v-menu
+                ref="menu_date_start"
+                v-model="cv.modal.menus.start_date"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                    solo
+                    outlined
+                    dense
+                    class="mx-2"
+                    hint="Finish date"
+                    v-model="cv.modal.data.start_date"
+                    label="Finish Date"
+                    prepend-icon="mdi-calendar"
+                    v-bind="attrs"
+                    v-on="on"
+                    readonly
+                    color="white"
+                    @click="onClickInputDate('start')"
+
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                  v-model="cv.modal.aux.start_date"
+                  no-title
+                  scrollable
+                  color="primary"
+                  persistent
+
+              >
+                <v-spacer></v-spacer>
+                <v-btn
+                    text
+                    color="red"
+                    @click="cv.modal.menus.start_date = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="onClickSaveDate('start')"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
             <!--FINISH DATE-->
             <v-menu
                 ref="menu_date_finish"
@@ -201,6 +243,7 @@ export default {
   methods: {
     ...mapMutations({
       hideModal: 'cv/hideModal',
+      updateStartDate:'cv/updateStartDate',
       updateFinishDate:'cv/updateFinishDate',
       setAuxVar:'cv/setAuxVar'
     }),
@@ -208,10 +251,9 @@ export default {
       save:'cv/save'
     }),
     onClickSaveDate:function(type){
-      console.log('onClickSaveDateFinish = ');
       if (type === 'start'){
-
-
+        this.$refs.menu_date_start.save(this.cv.modal.aux.start_date);
+        this.updateStartDate(this.cv.modal.aux.start_date);
       }
       else if ( type === 'end') {
         this.$refs.menu_date_finish.save(this.cv.modal.aux.finish_date);

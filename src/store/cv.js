@@ -85,6 +85,9 @@ const cv = {
             state.data[key].push(state.modal.data);
         },
 
+        updateStartDate: function(state,data){
+            state.modal.data.start_date = data;
+        },
         updateFinishDate: function(state,data){
             state.modal.data.finish_date = data;
         },
@@ -95,7 +98,6 @@ const cv = {
             }
         },
         setAuxVar: function(state, {key,value}){
-            console.log('vuex cv - setAuxVar')
             state.modal.aux[key] = value;
         }
 
