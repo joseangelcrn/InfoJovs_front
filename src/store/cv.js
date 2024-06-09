@@ -16,6 +16,7 @@ const cv = {
             state.data = data;
         },
         hideModal:function (state){
+            console.log('vuex- hide modal')
             state.modal.show = false;
         },
 
@@ -29,18 +30,6 @@ const cv = {
             }
         },
 
-        createExperience: function (state){
-            state.modal = {
-                show: true,
-                type: 'experience',
-                data: {
-                    business:'',
-                    description:'',
-                    start_date:null,
-                    finish_date:null
-                },
-            }
-        },
 
         editExperience: function (state,experienceId){
             let experience = state.data.experiences.find((item)=>{
@@ -51,6 +40,14 @@ const cv = {
                 show: true,
                 type: 'experience',
                 data: common.deepClone(experience),
+                aux:{
+                    start_date:null,
+                    finish_date:null
+                },
+                menus:{
+                    start_date:false,
+                    finish_date:false,
+                },
             }
         },
 
@@ -90,6 +87,16 @@ const cv = {
 
         updateFinishDate: function(state,data){
             state.modal.data.finish_date = data;
+        },
+        resetAuxVars:function (state){
+            state.modal.aux = {
+                start_date:null,
+                finish_date:null
+            }
+        },
+        setAuxVar: function(state, {key,value}){
+            console.log('vuex cv - setAuxVar')
+            state.modal.aux[key] = value;
         }
 
     },
@@ -109,6 +116,7 @@ const cv = {
             else{
                 commit('pushData');
             }
+            commit('resetAuxVars');
             commit('hideModal');
         },
     },

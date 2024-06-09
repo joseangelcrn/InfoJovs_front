@@ -23,7 +23,7 @@
         </div>
       </template>
     </main-card>
-    <modal-extended @clickOutside="hideModal" :show="cv.modal.show" width="900">
+    <modal-extended @clickOutside="onClickOutsideCvModal" :persistent="computedPersistent"  :show="cv.modal.show" width="900">
       <template #title>
         <span v-if="cv.modal.type" class="my-3">{{ $common.ucfirst(cv.modal.type) }}</span>
       </template>
@@ -69,7 +69,7 @@
             <!--FINISH DATE-->
             <v-menu
                 ref="menu_date_finish"
-                v-model="menus.finish_date"
+                v-model="cv.modal.menus.finish_date"
                 :close-on-content-click="false"
                 transition="scale-transition"
                 offset-y
@@ -95,7 +95,7 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                  v-model="aux_finish_date"
+                  v-model="cv.modal.aux.finish_date"
                   no-title
                   scrollable
                   color="primary"
@@ -105,8 +105,8 @@
                 <v-spacer></v-spacer>
                 <v-btn
                     text
-                    color="primary"
-                    @click="menus.finish_date = false"
+                    color="red"
+                    @click="cv.modal.menus.finish_date = false"
                 >
                   Cancel
                 </v-btn>
@@ -202,18 +202,14 @@ export default {
 
   data() {
     return {
-      menus:{
-        start_date:false,
-        finish_date:false,
-      },
-      aux_start_date:null,
-      aux_finish_date:null
+
     }
   },
   methods: {
     ...mapMutations({
       hideModal: 'cv/hideModal',
-      updateFinishDate:'cv/updateFinishDate'
+      updateFinishDate:'cv/updateFinishDate',
+      setAuxVar:'cv/setAuxVar'
     }),
     ...mapActions({
       save:'cv/save'
@@ -225,20 +221,27 @@ export default {
 
       }
       else if ( type === 'end') {
-        this.$refs.menu_date_finish.save(this.aux_finish_date);
-        this.updateFinishDate(this.aux_finish_date);
+        this.$refs.menu_date_finish.save(this.cv.modal.aux.finish_date);
+        this.updateFinishDate(this.cv.modal.aux.finish_date);
       }
     },
 
     onClickInputDate: function(type){
       if (type === 'start'){
-        this.aux_start_date = this.cv.modal.data.start_date;
+        this.setAuxVar({key:'start_date',value:this.cv.modal.data.start_date})
 
       }else if (type === 'end'){
-        this.aux_finish_date = this.cv.modal.data.finish_date;
-      }
-    }
+        this.setAuxVar({key:'finish_date',value:this.cv.modal.data.finish_date})
 
+      }
+    },
+
+    onClickOutsideCvModal: function(e){
+      if (!this.computedPersistent){
+        this.hideModal()
+      }
+
+    }
   },
   computed: {
     ...mapState({
@@ -256,6 +259,17 @@ export default {
     },
     computedEditable() {
       return this.$props.editable;
+    },
+    computedPersistent(){
+      if (this.cv.modal.type === 'experience'){
+        let {start_date = null,finish_date = null} = this.cv.modal.menus;
+
+        let someMenuIsOpened = (start_date || finish_date);
+
+        return (this.cv.modal.type === 'experience' && someMenuIsOpened);
+      }
+      return false;
+
     }
   },
 };

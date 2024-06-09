@@ -5,6 +5,7 @@
     v-model="display"
     @click:outside="clickOutside"
     @keydown.esc.stop="clickOutside"
+    :persistent="computedPersistent"
   >
     <template>
       <main-card>
@@ -24,7 +25,7 @@
 <script>
 export default {
   name: "modal-extended",
-  props: ["show", "title","width"],
+  props: ["show", "title","width",'persistent'],
   data() {
     return {};
   },
@@ -46,6 +47,9 @@ export default {
 
     computedWidth(){
       return this.$props.width ?? 600;
+    },
+    computedPersistent(){
+      return this.$props.persistent ?? false;
     }
   },
 };
