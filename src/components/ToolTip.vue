@@ -22,7 +22,6 @@ export default {
   }),
   computed: {
     computedText(){
-      console.log('computed text = ',this.$props)
       return this.$props.text;
     },
     computedColor(){

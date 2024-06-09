@@ -30,7 +30,6 @@ const modal = {
       state.onClickNot = fn;
     },
     manageModal: function (state,config){
-      console.log('Manage Modal !!')
       let {
         title = 'Info',
         text='',
@@ -40,14 +39,6 @@ const modal = {
         textBtnYes = 'Yes',
         textBtnNot = null,
       } = config;
-
-        // console.log('title = '+title)
-        // console.log('type = '+type)
-        // console.log('text = '+text)
-        // console.log('textBtnYes = '+textBtnYes)
-        // console.log('textBtnNot = '+textBtnNot)
-        // console.log('onClickYes = '+onClickYes)
-        // console.log('onClickNot = '+onClickNot)
 
         state.show = true;
         state.title = title;
