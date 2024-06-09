@@ -26,7 +26,16 @@
           </div>
       </template>
       <template #content>
-        <div v-show="toggleCv">
+        <div v-if="cv.loading">
+          <v-progress-circular
+              :size="70"
+              :width="15"
+              color="white"
+              indeterminate
+          ></v-progress-circular>
+
+        </div>
+        <div v-else v-show="toggleCv">
 
           <cv-summary :summary="computedSummary" :editable="computedEditable"/>
 

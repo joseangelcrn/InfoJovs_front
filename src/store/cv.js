@@ -9,7 +9,8 @@ const cv = {
             show: false,
             type: null, //summary | experience | skill,
             data: null,
-        }
+        },
+        loading:true
     }),
     mutations: {
         setData: function (state, data) {
@@ -107,15 +108,17 @@ const cv = {
             state.data[type] = state.data[type].filter((item) => {
                 return item.id !== id;
             })
+        },
+        setLoading: function (state,value){
+            state.loading = value;
         }
 
     },
     actions: {
         load: async function ({commit}, userId = null) {
-            console.log('actions load - cv (user id ) = ' + userId)
             let response = await proxy.getCvInfo(userId);
-            console.log('response cv = ', response.data)
             commit('setData', response.data.cv);
+            commit('setLoading',false);
         },
         save: async function ({commit, state}) {
             let {data} = state.modal;
