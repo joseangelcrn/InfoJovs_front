@@ -8,7 +8,7 @@
         {{ computedExperience.start_date }}
       </v-chip>
       <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold mr-auto" label>
-        {{ computedExperience.finish_date }}
+        {{ computedExperience.finish_date  ?? 'Currently'}}
       </v-chip>
       <cv-buttons @edit="editExperience(computedExperience.id)" @remove="removeExperience"/>
     </div>

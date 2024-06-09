@@ -23,6 +23,7 @@
         </div>
       </template>
     </main-card>
+    <!--CRUD MODAL-->
     <modal-extended @clickOutside="onClickOutsideCvModal" :persistent="computedPersistent"  :show="cv.modal.show" width="900">
       <template #title>
         <span v-if="cv.modal.type" class="my-3">{{ $common.ucfirst(cv.modal.type) }}</span>
@@ -126,6 +127,7 @@
                     readonly
                     color="white"
                     @click="onClickInputDate('end')"
+                    clearable
 
                 ></v-text-field>
               </template>
