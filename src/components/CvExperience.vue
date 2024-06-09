@@ -50,16 +50,32 @@ export default {
   },
   methods: {
       ...mapMutations({
-        editExperience:'cv/editExperience'
+        editExperience:'cv/editExperience',
+        manageModal:'modal/manageModal',
+        hideModal:'modal/hide'
       }),
     ...mapActions({
       delete:'cv/delete'
     }),
+
     removeExperience: function (){
-      this.delete({
-        id:this.computedExperience.id,
-        type:'experiences'
-      })
+      this.manageModal({
+        title: "Remove Experience",
+        text: "Are you sure ?",
+        textBtnNot:'No',
+        onClickYes: () => {
+          this.delete({
+            id:this.computedExperience.id,
+            type:'experiences'
+          });
+          this.hideModal();
+        },
+        onClickNot: () => {
+          this.hideModal();
+        },
+      });
+
+
     }
   },
   computed: {

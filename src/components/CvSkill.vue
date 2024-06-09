@@ -46,17 +46,30 @@ export default {
   },
   methods: {
     ...mapMutations({
-      editSkill:'cv/editSkill'
+      editSkill:'cv/editSkill',
+      manageModal:'modal/manageModal',
+      hideModal:'modal/hide'
     }),
     ...mapActions({
       delete:'cv/delete'
     }),
 
     removeSkill: function (){
-      this.delete({
-        id:this.computedSkill.id,
-        type:'skills'
-      })
+      this.manageModal({
+        title: "Remove Skill",
+        text: "Are you sure ?",
+        textBtnNot:'No',
+        onClickYes: () => {
+          this.delete({
+            id:this.computedSkill.id,
+            type:'skills'
+          });
+          this.hideModal();
+        },
+        onClickNot: () => {
+          this.hideModal();
+        },
+      });
     }
   },
   computed: {
