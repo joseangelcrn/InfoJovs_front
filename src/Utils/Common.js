@@ -65,6 +65,69 @@ const prepareQuestions = (data)=>{
 
   return questions;
 }
+
+
+const dateAsHuman = (y,m,d)=>{
+
+  let textYear =  `${y} `+ (y > 1 ? 'Years' : 'Year');
+  let textMonth =` ${m} `+ (m > 1 ? 'Months' : 'Month');
+  let textDay =` ${m} `+(d > 1 ? 'Days' : 'Day');
+
+  if (y == 0){
+    textYear = '';
+  }
+
+  if (m == 0){
+    textMonth = '';
+  }
+
+  if (d == 0){
+    textDay = '';
+  }
+
+  return textYear + textMonth + textDay;
+
+}
+const calculateDiffDates = (start_date, finish_date = null,humanFormat = false)=> {
+  // Si finish_date es null, usamos la fecha actual
+  const endDate = finish_date ? new Date(finish_date) : new Date();
+  const startDate = new Date(start_date);
+
+  // Validar que las fechas sean válidas
+  if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+    throw new Error("Fecha inválida");
+  }
+
+  // Calcular las diferencias
+  let years = endDate.getFullYear() - startDate.getFullYear();
+  let months = endDate.getMonth() - startDate.getMonth();
+  let days = endDate.getDate() - startDate.getDate();
+
+  // Ajustar los valores si es necesario
+  if (days < 0) {
+    months -= 1;
+    days += new Date(endDate.getFullYear(), endDate.getMonth(), 0).getDate();
+  }
+
+  if (months < 0) {
+    years -= 1;
+    months += 12;
+  }
+
+  let data = {
+    y: years,
+    m: months,
+    d: days
+  };
+
+  if (humanFormat){
+
+    return dateAsHuman(data.y,data.m,data.d);
+  }
+  return data;
+}
+
+
 export default {
   setTitle,
   capitalizeFirstLetter,
@@ -73,5 +136,7 @@ export default {
   hasRole,
   getStatusColor,
   deepClone,
-  prepareQuestions
+  prepareQuestions,
+  calculateDiffDates,
+  dateAsHuman
 };

@@ -1,30 +1,56 @@
 <template>
   <div>
-    <main-card class="mt-6">
-      <template #title>CV</template>
-      <template #content>
-
-        <cv-summary :summary="computedSummary" :editable="computedEditable"/>
-
-        <div class="experiences mb-6 white--text">
-          <h3 class="mt-2">Experience</h3>
-          <div class="mt-3" v-for="(experience) in computedExperiences">
-            <cv-experience :experience="experience" :editable="computedEditable"/>
+    <main-card class="mt-6" customClassTitle="d-flex justify-space-between">
+      <template #title>
+          <div class="white--text">
+            CV
           </div>
-        </div>
+          <div v-if="!toggleCv">
+            <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold mr-auto" label>
+              <tooltip text="Your total experience" :primary="false">
+                <b>{{totalExp}}</b>
+              </tooltip>
+            </v-chip>
+          </div>
+          <div>
+            <v-btn
+                color="white primary--text"
+                elevation="2"
+                outlined
+                @click="toggleCvShow"
+                small
+            >
+              <v-icon class="ml-2" v-if="toggleCv">mdi-toggle-switch</v-icon>
+              <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
+            </v-btn>
+          </div>
+      </template>
+      <template #content>
+        <div v-show="toggleCv">
 
-        <div class="skills mt-3">
-          <h3 class="white--text">Skills</h3>
-          <div class="d-flex flex-column">
-            <div v-for="(skill) in computedSkills">
-              <cv-skill :skill="skill" :editable="computedEditable"/>
+          <cv-summary :summary="computedSummary" :editable="computedEditable"/>
+
+          <div class="experiences mb-6 white--text">
+            <h3 class="mt-2">Experience</h3>
+            <div class="mt-3" v-for="(experience) in computedExperiences">
+              <cv-experience :experience="experience" :editable="computedEditable"/>
+            </div>
+          </div>
+
+          <div class="skills mt-3">
+            <h3 class="white--text">Skills</h3>
+            <div class="d-flex flex-column">
+              <div v-for="(skill) in computedSkills">
+                <cv-skill :skill="skill" :editable="computedEditable"/>
+              </div>
             </div>
           </div>
         </div>
       </template>
     </main-card>
     <!--CRUD MODAL-->
-    <modal-extended @clickOutside="onClickOutsideCvModal" :persistent="computedPersistent"  :show="cv.modal.show" width="900">
+    <modal-extended @clickOutside="onClickOutsideCvModal" :persistent="computedPersistent" :show="cv.modal.show"
+                    width="900">
       <template #title>
         <span v-if="cv.modal.type" class="my-3">{{ $common.ucfirst(cv.modal.type) }}</span>
       </template>
@@ -187,8 +213,8 @@
         </div>
       </template>
       <template #actions>
-       <v-btn small class="white primary--text mr-auto" @click="save">Save</v-btn>
-       <v-btn small class="white red--text" @click="hideModal" >Cancel</v-btn>
+        <v-btn small class="white primary--text mr-auto" @click="save">Save</v-btn>
+        <v-btn small class="white red--text" @click="hideModal">Cancel</v-btn>
       </template>
     </modal-extended>
   </div>
@@ -239,43 +265,66 @@ export default {
 
   data() {
     return {
-
+      toggleCv: true,
+      totalExp: null
     }
   },
   methods: {
     ...mapMutations({
       hideModal: 'cv/hideModal',
-      updateStartDate:'cv/updateStartDate',
-      updateFinishDate:'cv/updateFinishDate',
-      setAuxVar:'cv/setAuxVar'
+      updateStartDate: 'cv/updateStartDate',
+      updateFinishDate: 'cv/updateFinishDate',
+      setAuxVar: 'cv/setAuxVar'
     }),
     ...mapActions({
-      save:'cv/save'
+      save: 'cv/save'
     }),
-    onClickSaveDate:function(type){
-      if (type === 'start'){
+    onClickSaveDate: function (type) {
+      if (type === 'start') {
         this.$refs.menu_date_start.save(this.cv.modal.aux.start_date);
         this.updateStartDate(this.cv.modal.aux.start_date);
-      }
-      else if ( type === 'end') {
+      } else if (type === 'end') {
         this.$refs.menu_date_finish.save(this.cv.modal.aux.finish_date);
         this.updateFinishDate(this.cv.modal.aux.finish_date);
       }
     },
 
-    onClickInputDate: function(type){
-      if (type === 'start'){
-        this.setAuxVar({key:'start_date',value:this.cv.modal.data.start_date})
+    onClickInputDate: function (type) {
+      if (type === 'start') {
+        this.setAuxVar({key: 'start_date', value: this.cv.modal.data.start_date})
 
-      }else if (type === 'end'){
-        this.setAuxVar({key:'finish_date',value:this.cv.modal.data.finish_date})
+      } else if (type === 'end') {
+        this.setAuxVar({key: 'finish_date', value: this.cv.modal.data.finish_date})
 
       }
     },
 
-    onClickOutsideCvModal: function(e){
-      if (!this.computedPersistent){
+    onClickOutsideCvModal: function (e) {
+      if (!this.computedPersistent) {
         this.hideModal()
+      }
+    },
+
+    getTotalExp: function(){
+        let data = {y:0,m:0,d:0};
+
+        this.cv.data.experiences.forEach((exp)=>{
+
+          let {y,m,d} = this.$common.calculateDiffDates(exp.start_date,exp.finish_date);
+
+          data.y += y;
+          data.m += m;
+          data.d += d;
+
+        });
+
+        this.totalExp =  this.$common.dateAsHuman(data.y,data.m,data.d);
+    },
+    toggleCvShow: function(){
+      this.toggleCv = !this.toggleCv;
+
+      if (!this.toggleCv){
+        this.getTotalExp();
       }
 
     }
@@ -297,9 +346,9 @@ export default {
     computedEditable() {
       return this.$props.editable;
     },
-    computedPersistent(){
-      if (this.cv.modal.type === 'experience'){
-        let {start_date = null,finish_date = null} = this.cv.modal.menus;
+    computedPersistent() {
+      if (this.cv.modal.type === 'experience') {
+        let {start_date = null, finish_date = null} = this.cv.modal.menus;
 
         let someMenuIsOpened = (start_date || finish_date);
 

@@ -7,8 +7,11 @@
       <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold" label>
         {{ computedExperience.start_date }}
       </v-chip>
-      <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold mr-auto" label>
+      <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold" label>
         {{ computedExperience.finish_date  ?? 'Currently'}}
+      </v-chip>
+      <v-chip small class="ml-2 white primary--text align-self-center font-weight-bold mr-auto" label>
+        {{ $common.calculateDiffDates(computedExperience.start_date,computedExperience.finish_date,true) }}
       </v-chip>
       <cv-buttons @edit="editExperience(computedExperience.id)" @remove="removeExperience"/>
     </div>
@@ -18,21 +21,9 @@
   </div>
 </template>
 <script>
-import { mapActions, mapMutations, mapState } from "vuex";
-import MainCard from "./MainCard.vue";
-import { Bar } from "vue-chartjs";
-import {
-  Chart as ChartJS,
-  Title,
-  Tooltip,
-  Legend,
-  BarElement,
-  CategoryScale,
-  LinearScale,
-} from "chart.js";
-import ModalExtended from './ModalExtended.vue';
-import candidature from '@/store/candidature';
+import {mapActions, mapGetters, mapMutations, mapState} from "vuex";
 import CvButtons from "@/components/CvButtons.vue";
+import common from "../Utils/Common";
 export default {
   name: "cv-experience",
   components: {CvButtons},
@@ -79,6 +70,9 @@ export default {
     }
   },
   computed: {
+    ...mapGetters({
+      diffDates:'cv/diffDates'
+    }),
     computedExperience(){
       return this.$props.experience;
     }
