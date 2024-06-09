@@ -11,7 +11,7 @@
     <v-chip small class="ml-2 white primary--text align-self-center mr-auto" label>
       <b> {{ computedSkill.name }} </b>
     </v-chip>
-    <cv-buttons class="my-auto" @edit="editSkill(computedSkill.id)"/>
+    <cv-buttons class="my-auto" @edit="editSkill(computedSkill.id)" @remove="removeSkill"/>
   </div>
 </template>
 <script>
@@ -48,8 +48,15 @@ export default {
     ...mapMutations({
       editSkill:'cv/editSkill'
     }),
+    ...mapActions({
+      delete:'cv/delete'
+    }),
+
     removeSkill: function (){
-      console.log('CvSkill - removeSkill')
+      this.delete({
+        id:this.computedSkill.id,
+        type:'skills'
+      })
     }
   },
   computed: {

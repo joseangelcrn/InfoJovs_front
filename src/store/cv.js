@@ -99,6 +99,11 @@ const cv = {
         },
         setAuxVar: function(state, {key,value}){
             state.modal.aux[key] = value;
+        },
+        delete: function(state,{id,type}){
+            state.data[type] = state.data[type].filter((item)=>{
+                return item.id !== id;
+            })
         }
 
     },
@@ -121,6 +126,9 @@ const cv = {
             commit('resetAuxVars');
             commit('hideModal');
         },
+        delete: async function({commit},payload){
+            commit('delete',payload)
+        }
     },
 };
 

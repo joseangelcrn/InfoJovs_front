@@ -52,8 +52,14 @@ export default {
       ...mapMutations({
         editExperience:'cv/editExperience'
       }),
+    ...mapActions({
+      delete:'cv/delete'
+    }),
     removeExperience: function (){
-      console.log('CvExperience - removeExperience')
+      this.delete({
+        id:this.computedExperience.id,
+        type:'experiences'
+      })
     }
   },
   computed: {
