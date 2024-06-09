@@ -81,8 +81,14 @@ const cv = {
             }
         },
         pushData: function(state){
-            let key = type+'s'; // experience = experiences | skill = skills
-            state.data[key].push(state.modal.data);
+            console.log('vuex - cv | push data');
+            if (state.modal.type === 'summary'){
+                state.data.summary = state.modal.data;
+            }else{
+                let key = state.modal.type+'s'; // experience = experiences | skill = skills
+                state.data[key].push(state.modal.data);
+            }
+
         },
 
         updateStartDate: function(state,data){
