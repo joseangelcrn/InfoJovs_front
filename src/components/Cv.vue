@@ -30,15 +30,23 @@
 
           <cv-summary :summary="computedSummary" :editable="computedEditable"/>
 
-          <div class="experiences mb-6 white--text">
-            <h3 class="my-4  blue darken-4 rounded pa-1">Experience</h3>
+          <div class="experiences my-6 white--text">
+
+            <div class="d-flex white--text  blue darken-4 rounded pa-1">
+              <h3 class="my-auto mr-auto align-center">Experience</h3>
+              <cv-buttons hide_remove />
+            </div>
+
             <div class="mt-3" v-for="(experience) in computedExperiences">
               <cv-experience :experience="experience" :editable="computedEditable"/>
             </div>
           </div>
 
           <div class="skills mt-3">
-            <h3 class="white--text  blue darken-4 rounded pa-1">Skills</h3>
+            <div class="d-flex white--text  blue darken-4 rounded pa-1">
+              <h3 class="my-auto mr-auto align-center">Skills</h3>
+              <cv-buttons hide_remove />
+            </div>
             <div class="d-flex flex-column">
               <div v-for="(skill) in computedSkills">
                 <cv-skill :skill="skill" :editable="computedEditable"/>
