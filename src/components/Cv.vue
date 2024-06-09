@@ -34,7 +34,7 @@
 
             <div class="d-flex white--text  blue darken-4 rounded pa-1">
               <h3 class="my-auto mr-auto align-center">Experience</h3>
-              <cv-buttons hide_remove />
+              <cv-buttons show_create />
             </div>
 
             <div class="mt-3" v-for="(experience) in computedExperiences">
@@ -45,9 +45,9 @@
           <div class="skills mt-3">
             <div class="d-flex white--text  blue darken-4 rounded pa-1">
               <h3 class="my-auto mr-auto align-center">Skills</h3>
-              <cv-buttons hide_remove />
+              <cv-buttons show_create />
             </div>
-            <div class="d-flex flex-column">
+            <div class="d-flex flex-column mt-3">
               <div v-for="(skill) in computedSkills">
                 <cv-skill :skill="skill" :editable="computedEditable"/>
               </div>

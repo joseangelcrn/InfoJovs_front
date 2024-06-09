@@ -1,10 +1,13 @@
 <template>
   <div>
-    <v-btn v-if="!hide_edit" @click.stop="edit" small class="primary--text mx-3">
+    <v-btn v-if="!hide_edit && !show_create" @click.stop="edit" small class="primary--text mx-3">
       <v-icon  small>mdi-pencil</v-icon>
     </v-btn>
-    <v-btn v-if="!hide_remove" @click.stop="remove" small class="red--text">
+    <v-btn v-if="!hide_remove && !show_create" @click.stop="remove" small class="red--text">
       <v-icon small>mdi-trash-can</v-icon>
+    </v-btn>
+    <v-btn small  v-if="show_create" @click.stop="create"  class="primary--text white">
+      <v-icon class="font-weight-bold" >mdi-plus-box</v-icon>
     </v-btn>
   </div>
 </template>
@@ -36,6 +39,11 @@ export default {
       type: Boolean,
       require: false,
       default: false
+    },
+    show_create:{
+      type:Boolean,
+      require:false,
+      default:false
     }
   },
 
@@ -44,12 +52,13 @@ export default {
   },
   methods: {
     edit() {
-      console.log('cv - button => emit edit')
       this.$emit('edit');
     },
     remove() {
-      console.log('cv - button => emit remove')
       this.$emit('remove');
+    },
+    create(){
+      this.$emit('create');
     }
   },
 };
