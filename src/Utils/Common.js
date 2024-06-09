@@ -4,7 +4,9 @@ import store from "@/store";
 const setTitle = (paramTitle = null) => {
   const title = router.history.current.meta.title ?? null;
   store.commit("general/setTitle", title);
-  document.title = process.env.VUE_APP_NAME + " - " + title;
+  if (title){
+    document.title = process.env.VUE_APP_NAME + " - " + title;
+  }
 };
 
 const capitalizeFirstLetter = (string) => {
