@@ -43,10 +43,23 @@
 
             <div class="d-flex white--text  blue darken-4 rounded pa-1">
               <h3 class="my-auto mr-auto align-center">Experience</h3>
-              <cv-buttons show_create />
+              <div class="d-flex">
+                <v-btn
+                    class="mr-2"
+                    color="white primary--text"
+                    elevation="2"
+                    outlined
+                    @click="toggleExp = !toggleExp"
+                    small
+                >
+                  <v-icon class="ml-2" v-if="toggleExp">mdi-toggle-switch</v-icon>
+                  <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
+                </v-btn>
+                <cv-buttons show_create />
+              </div>
             </div>
 
-            <div class="mt-3" v-for="(experience) in computedExperiences">
+            <div v-show="toggleExp" class="mt-3" v-for="(experience) in computedExperiences">
               <cv-experience :experience="experience" :editable="computedEditable"/>
             </div>
           </div>
@@ -54,10 +67,23 @@
           <div class="skills mt-3">
             <div class="d-flex white--text  blue darken-4 rounded pa-1">
               <h3 class="my-auto mr-auto align-center">Skills</h3>
-              <cv-buttons show_create />
+              <div class="d-flex">
+                <v-btn
+                    class="mr-2"
+                    color="white primary--text"
+                    elevation="2"
+                    outlined
+                    @click="toggleSki = !toggleSki"
+                    small
+                >
+                  <v-icon class="ml-2" v-if="toggleSki">mdi-toggle-switch</v-icon>
+                  <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
+                </v-btn>
+                <cv-buttons show_create />
+              </div>
             </div>
             <div class="d-flex flex-column mt-3">
-              <div v-for="(skill) in computedSkills">
+              <div v-for="(skill) in computedSkills" v-show="toggleSki">
                 <cv-skill :skill="skill" :editable="computedEditable"/>
               </div>
             </div>
@@ -283,6 +309,9 @@ export default {
   data() {
     return {
       toggleCv: true,
+      toggleSum:true,
+      toggleExp:true,
+      toggleSki:true,
       totalExp: null
     }
   },
