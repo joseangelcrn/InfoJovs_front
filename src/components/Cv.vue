@@ -57,14 +57,7 @@
                 class="mx-2"
                 hint="Start date"
             ></v-text-field>
-            <v-text-field
-                solo
-                v-model="cv.modal.data.finish_date"
-                label="Finish date"
-                outlined
-                dense
-                hint="Finish date"
-            ></v-text-field>
+
             <!--START DATE-->
             <!--FINISH DATE-->
             <v-menu
