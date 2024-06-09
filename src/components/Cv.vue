@@ -65,47 +65,60 @@
                 dense
                 hint="Finish date"
             ></v-text-field>
-<!--            <v-menu-->
-<!--                ref="menu"-->
-<!--                v-model="menu"-->
-<!--                :close-on-content-click="false"-->
-<!--                :return-value.sync="date"-->
-<!--                transition="scale-transition"-->
-<!--                offset-y-->
-<!--                min-width="auto"-->
-<!--            >-->
-<!--              <template v-slot:activator="{ on, attrs }">-->
-<!--                <v-text-field-->
-<!--                    v-model="date"-->
-<!--                    label="Picker in menu"-->
-<!--                    prepend-icon="mdi-calendar"-->
-<!--                    readonly-->
-<!--                    v-bind="attrs"-->
-<!--                    v-on="on"-->
-<!--                ></v-text-field>-->
-<!--              </template>-->
-<!--              <v-date-picker-->
-<!--                  v-model="date"-->
-<!--                  no-title-->
-<!--                  scrollable-->
-<!--              >-->
-<!--                <v-spacer></v-spacer>-->
-<!--                <v-btn-->
-<!--                    text-->
-<!--                    color="primary"-->
-<!--                    @click="menu = false"-->
-<!--                >-->
-<!--                  Cancel-->
-<!--                </v-btn>-->
-<!--                <v-btn-->
-<!--                    text-->
-<!--                    color="primary"-->
-<!--                    @click="$refs.menu.save(date)"-->
-<!--                >-->
-<!--                  OK-->
-<!--                </v-btn>-->
-<!--              </v-date-picker>-->
-<!--            </v-menu>-->
+            <!--START DATE-->
+            <!--FINISH DATE-->
+            <v-menu
+                ref="menu_date_finish"
+                v-model="menus.finish_date"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="auto"
+
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                    solo
+                    outlined
+                    dense
+                    class="mx-2"
+                    hint="Finish date"
+                    v-model="cv.modal.data.finish_date"
+                    label="Finish Date"
+                    prepend-icon="mdi-calendar"
+                    v-bind="attrs"
+                    v-on="on"
+                    readonly
+                    color="white"
+                    @click="onClickInputDate('end')"
+
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                  v-model="aux_finish_date"
+                  no-title
+                  scrollable
+                  color="primary"
+                  persistent
+
+              >
+                <v-spacer></v-spacer>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="menus.finish_date = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="onClickSaveDate('end')"
+                >
+                  OK
+                </v-btn>
+              </v-date-picker>
+            </v-menu>
           </div>
           <div class="d-flex mt-2">
             <v-textarea
@@ -188,15 +201,44 @@ export default {
   },
 
   data() {
-    return {}
+    return {
+      menus:{
+        start_date:false,
+        finish_date:false,
+      },
+      aux_start_date:null,
+      aux_finish_date:null
+    }
   },
   methods: {
     ...mapMutations({
-      hideModal: 'cv/hideModal'
+      hideModal: 'cv/hideModal',
+      updateFinishDate:'cv/updateFinishDate'
     }),
     ...mapActions({
       save:'cv/save'
-    })
+    }),
+    onClickSaveDate:function(type){
+      console.log('onClickSaveDateFinish = ');
+      if (type === 'start'){
+
+
+      }
+      else if ( type === 'end') {
+        this.$refs.menu_date_finish.save(this.aux_finish_date);
+        this.updateFinishDate(this.aux_finish_date);
+      }
+    },
+
+    onClickInputDate: function(type){
+      if (type === 'start'){
+        this.aux_start_date = this.cv.modal.data.start_date;
+
+      }else if (type === 'end'){
+        this.aux_finish_date = this.cv.modal.data.finish_date;
+      }
+    }
+
   },
   computed: {
     ...mapState({

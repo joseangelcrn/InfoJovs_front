@@ -9,7 +9,6 @@ const cv = {
             show: false,
             type: null, //summary | experience | skill,
             data: null,
-            id: null //summary dont need it
         }
     }),
     mutations: {
@@ -27,6 +26,19 @@ const cv = {
                 show: true,
                 type: 'summary',
                 data: common.deepClone(summary),
+            }
+        },
+
+        createExperience: function (state){
+            state.modal = {
+                show: true,
+                type: 'experience',
+                data: {
+                    business:'',
+                    description:'',
+                    start_date:null,
+                    finish_date:null
+                },
             }
         },
 
@@ -56,7 +68,7 @@ const cv = {
 
         refreshData: function (state){
             console.log('refresh data ')
-            let {type,id,data} = state.modal;
+            let {type,data} = state.modal;
 
             if (type === 'summary'){
                 state.data.summary = data;
@@ -70,6 +82,14 @@ const cv = {
                     return item;
                 })
             }
+        },
+        pushData: function(state){
+            let key = type+'s'; // experience = experiences | skill = skills
+            state.data[key].push(state.modal.data);
+        },
+
+        updateFinishDate: function(state,data){
+            state.modal.data.finish_date = data;
         }
 
     },
@@ -81,9 +101,14 @@ const cv = {
             commit('setData', response.data.cv);
         },
         save: async function({commit,state}){
-            let {data,id} = state.modal;
+            let {data} = state.modal;
             let response = {};
-            commit('refreshData');
+            if (data.id){
+                commit('refreshData');
+            }
+            else{
+                commit('pushData');
+            }
             commit('hideModal');
         },
     },
