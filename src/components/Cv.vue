@@ -65,9 +65,9 @@
                     outlined
                     dense
                     class="mx-2"
-                    hint="Finish date"
+                    hint="Start date"
                     v-model="cv.modal.data.start_date"
-                    label="Finish Date"
+                    label="Start Date"
                     prepend-icon="mdi-calendar"
                     v-bind="attrs"
                     v-on="on"
