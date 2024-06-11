@@ -31,6 +31,28 @@ const cv = {
             }
         },
 
+        createExperience: function(state){
+            console.log('cv - vuex create experience')
+            state.modal = {
+                show: true,
+                type: 'experience',
+                data: {
+                    business:null,
+                    description:null,
+                    start_date:null,
+                    finish_date:null
+                },
+                aux: {
+                    start_date: null,
+                    finish_date: null
+                },
+                menus: {
+                    start_date: false,
+                    finish_date: false,
+                },
+            };
+        },
+
         editExperience: function (state, experienceId) {
             let experience = state.data.experiences.find((item) => {
                 return item.id === experienceId
@@ -48,7 +70,7 @@ const cv = {
                     start_date: false,
                     finish_date: false,
                 },
-            }
+            };
         },
 
         editSkill: function (state, skillId) {
@@ -63,9 +85,9 @@ const cv = {
             }
         },
 
-        refreshData: function (state) {
+        refreshData: function (state,payload) {
             console.log('refresh data ')
-            let {type, data} = state.modal;
+            let {type, data} = payload;
 
             if (type === 'summary') {
                 state.data.summary = data;
@@ -121,10 +143,25 @@ const cv = {
             commit('setLoading',false);
         },
         save: async function ({commit, state}) {
-            let {data} = state.modal;
-            let response = {};
-            if (data.id) {
-                commit('refreshData');
+            var dataToBackend = {};
+            if (state.modal.type === 'summary'){
+                dataToBackend = {
+                    summary:state.modal.data,
+                    type:state.modal.type
+                }
+            }else{
+                let modalData = state.modal.data;
+                modalData.type = state.modal.type;
+                dataToBackend = {
+                    ...modalData,
+                    type:state.modal.type
+                };
+            }
+
+            let response = await proxy.saveCv(dataToBackend);
+            let responseData = response.data;
+            if (responseData.data.id) {
+                commit('refreshData',responseData);
             } else {
                 commit('pushData');
             }

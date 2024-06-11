@@ -138,6 +138,12 @@ const getCvInfo = async(userId = null)=>{
   console.log('url = '+url)
   return await axios.get(url,defaultConfig());
 }
+const saveCv = async(params)=>{
+  let url = host+"/cv";
+  let config = defaultConfig();
+  config.params = params;
+  return await axios.post(url,null,config)
+};
 //CV (-)
 
 export default {
@@ -165,5 +171,6 @@ export default {
 
   getAllRoles,
 
-  getCvInfo
+  getCvInfo,
+  saveCv
 };

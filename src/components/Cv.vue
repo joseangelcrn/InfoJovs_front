@@ -55,7 +55,7 @@
                   <v-icon class="ml-2" v-if="toggleExp">mdi-toggle-switch</v-icon>
                   <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
                 </v-btn>
-                <cv-buttons show_create />
+                <cv-buttons show_create @create="createExperience" />
               </div>
             </div>
 
@@ -320,7 +320,8 @@ export default {
       hideModal: 'cv/hideModal',
       updateStartDate: 'cv/updateStartDate',
       updateFinishDate: 'cv/updateFinishDate',
-      setAuxVar: 'cv/setAuxVar'
+      setAuxVar: 'cv/setAuxVar',
+      createExperience:'cv/createExperience',
     }),
     ...mapActions({
       save: 'cv/save'
