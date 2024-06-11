@@ -79,7 +79,7 @@
                   <v-icon class="ml-2" v-if="toggleSki">mdi-toggle-switch</v-icon>
                   <v-icon class="ml-2" v-else>mdi-toggle-switch-off</v-icon>
                 </v-btn>
-                <cv-buttons show_create />
+                <cv-buttons show_create @create="createSkill"/>
               </div>
             </div>
             <div class="d-flex flex-column mt-3">
@@ -322,6 +322,7 @@ export default {
       updateFinishDate: 'cv/updateFinishDate',
       setAuxVar: 'cv/setAuxVar',
       createExperience:'cv/createExperience',
+      createSkill:'cv/createSkill',
     }),
     ...mapActions({
       save: 'cv/save'

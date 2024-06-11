@@ -73,6 +73,16 @@ const cv = {
             };
         },
 
+        createSkill: function (state){
+            state.modal = {
+                show: true,
+                type: 'skill',
+                data: {
+                    name:null,
+                    value:1
+                },
+            };
+        },
         editSkill: function (state, skillId) {
             let skill = state.data.skills.find((item) => {
                 return item.id === skillId
