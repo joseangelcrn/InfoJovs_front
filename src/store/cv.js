@@ -17,7 +17,6 @@ const cv = {
             state.data = data;
         },
         hideModal: function (state) {
-            console.log('vuex- hide modal')
             state.modal.show = false;
         },
 
@@ -32,7 +31,6 @@ const cv = {
         },
 
         createExperience: function(state){
-            console.log('cv - vuex create experience')
             state.modal = {
                 show: true,
                 type: 'experience',
@@ -57,7 +55,6 @@ const cv = {
             let experience = state.data.experiences.find((item) => {
                 return item.id === experienceId
             });
-            console.log('exp id = ' + experienceId)
             state.modal = {
                 show: true,
                 type: 'experience',
@@ -96,7 +93,6 @@ const cv = {
         },
 
         refreshData: function (state,payload) {
-            console.log('refresh data ')
             let {type, data} = payload;
 
             if (type === 'summary') {
