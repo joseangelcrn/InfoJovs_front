@@ -149,7 +149,7 @@ const deleteCvComponent = async(params)=>{
   let url = host+"/cv";
   let config = defaultConfig();
   config.params = params;
-  return await axios.delete(url,null,config)
+  return await axios.delete(url,config)
 };
 //CV (-)
 

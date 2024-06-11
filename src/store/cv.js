@@ -168,8 +168,10 @@ const cv = {
             commit('resetAuxVars');
             commit('hideModal');
         },
-        delete: async function ({commit}, payload) {
-            commit('delete', payload)
+        delete: async function ({commit}, {id,type}) {
+
+            let response = await proxy.deleteCvComponent({id,type});
+            commit('delete', {id,type})
         }
     },
 };
