@@ -2,7 +2,7 @@
   <div>
     <main-card class="mt-6" customClassTitle="d-flex justify-space-between">
       <template #title>
-          <div class="white--text">
+          <div class="blue--text text--darken-4">
             CV
           </div>
           <div v-if="!toggleCv">
@@ -14,9 +14,8 @@
           </div>
           <div>
             <v-btn
-                color="white primary--text"
+                color="blue darken-4  white--text"
                 elevation="2"
-                outlined
                 @click="toggleCvShow"
                 small
             >
