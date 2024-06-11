@@ -158,7 +158,7 @@ const cv = {
                 };
             }
 
-            let response = await proxy.saveCv(dataToBackend);
+            let response = await proxy.saveCvComponent(dataToBackend);
             let responseData = response.data;
             if (responseData.data.id) {
                 commit('refreshData',responseData);
