@@ -101,12 +101,15 @@ const cv = {
                 })
             }
         },
-        pushData: function (state) {
+        pushData: function (state,payload) {
+
+            let {type, data} = payload;
+
             if (state.modal.type === 'summary') {
-                state.data.summary = state.modal.data;
+                state.data.summary = data;
             } else {
-                let key = state.modal.type + 's'; // experience = experiences | skill = skills
-                state.data[key].push(state.modal.data);
+                let key =type + 's'; // experience = experiences | skill = skills
+                state.data[key].push(data);
             }
 
         },
@@ -160,10 +163,10 @@ const cv = {
 
             let response = await proxy.saveCvComponent(dataToBackend);
             let responseData = response.data;
-            if (responseData.data.id) {
+            if (state.modal.data.id) {
                 commit('refreshData',responseData);
             } else {
-                commit('pushData');
+                commit('pushData',responseData);
             }
             commit('resetAuxVars');
             commit('hideModal');
